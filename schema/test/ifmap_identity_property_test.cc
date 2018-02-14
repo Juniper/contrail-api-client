@@ -74,7 +74,7 @@ class IdentityPropertyTest : public ::testing::Test {
 
 TEST_F(IdentityPropertyTest, Parse) {
     pugi::xml_parse_result result =
-            xdoc_.load_file("controller/src/schema/testdata/ifmap_identity_property_1.xml");
+            xdoc_.load_file("src/contrail-api-client/schema/testdata/ifmap_identity_property_1.xml");
     EXPECT_TRUE(result);
 
     IFMapServerParser::RequestList requests;
@@ -96,7 +96,7 @@ TEST_F(IdentityPropertyTest, Parse) {
 TEST_F(IdentityPropertyTest, EncodeDecode) {
     pugi::xml_parse_result result =
     xdoc_.load_file(
-        "controller/src/schema/testdata/ifmap_identity_property_1.xml");
+        "src/contrail-api-client/schema/testdata/ifmap_identity_property_1.xml");
     EXPECT_TRUE(result);
 
     IFMapServerParser::RequestList requests;
