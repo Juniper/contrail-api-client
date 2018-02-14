@@ -99,7 +99,7 @@ class LinkAttrTest : public ::testing::Test {
 
 TEST_F(LinkAttrTest, Decode) {
     pugi::xml_parse_result result =
-            xdoc_.load_file("controller/src/schema/testdata/ifmap_link_attr_1.xml");
+            xdoc_.load_file("src/contrail-api-client/schema/testdata/ifmap_link_attr_1.xml");
     EXPECT_TRUE(result);
 
     IFMapServerParser::RequestList requests;
@@ -153,7 +153,7 @@ TEST_F(LinkAttrTest, Decode) {
 
 TEST_F(LinkAttrTest, AgentEncodeDecode) {
     pugi::xml_parse_result result =
-            xdoc_.load_file("controller/src/schema/testdata/ifmap_link_attr_1.xml");
+            xdoc_.load_file("src/contrail-api-client/schema/testdata/ifmap_link_attr_1.xml");
     EXPECT_TRUE(result);
 
     IFMapServerParser::RequestList requests;
