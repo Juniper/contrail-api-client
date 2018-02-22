@@ -22,7 +22,7 @@ env.Prepend(LIBS = ['db', 'xmpp', 'peer_sandesh', 'sandesh', 'sandeshvns',
                     'process_info', 'io', 'crypto', 'ssl', 'base', 'gunit',
                     'pugixml', 'cassandra_cql', 'SimpleAmqpClient', 'rabbitmq',
                     'cassandra', 'gendb', 'http', 'http_parser',
-                    'curl', 'ifmap_vnc', 'bgp_schema', 'boost_regex', 'xml'])
+                    'curl', 'ifmap_vnc', 'ifmap_server', 'bgp_schema', 'boost_regex', 'xml'])
 
 lib_ifmap_server = File('../../ifmap/libifmap_server.a')
 
@@ -78,4 +78,4 @@ env.Alias('src/schema:display_name_test',
 
 test = env.TestSuite('schema-test', test_list)
 
-env.Alias('controller/src/schema:test', test)
+env.Alias('src/contrail-api-client/schema:test', test)
