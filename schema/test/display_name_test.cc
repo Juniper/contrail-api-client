@@ -25,7 +25,7 @@ class DisplayNameTest : public ::testing::Test {
 
 TEST_F(DisplayNameTest, Load) {
     pugi::xml_parse_result result =
-            xdoc_.load_file("controller/src/schema/testdata/display_name.xml");
+            xdoc_.load_file("src/contrail-api-client/schema/testdata/display_name.xml");
     EXPECT_TRUE(result);
 
     IFMapServerParser::RequestList requests;
