@@ -244,6 +244,8 @@
     <xsd:element name='loop-count' type='BgpAsPathLoopCount' default='0' required='optional' operation='CRUD'
          description='For routing loop detection, loop-count is the number of times the local bgp-routers AS is
             allowed in the AS_PATH attribute.'/>
+    <xsd:element name='local-autonomous-system' type='xsd:integer' default='0' required='optional' operations='CRUD'
+         description='Local autonomous system number used for this session'/>
     <xsd:element name='address-families' type='AddressFamilies' required='optional' operations='CRUD'
          description='BGP address families supported on this session.'/>
     <xsd:element name='auth-data' type='AuthenticationData' required='optional' operations='CRUD'
