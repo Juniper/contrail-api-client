@@ -199,6 +199,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="deny" required='exclusive'/>
         <xsd:enumeration value="pass" required='exclusive'/>
+        <xsd:enumeration value="reject" required='exclusive'/>
     </xsd:restriction>
 </xsd:simpleType>
 
@@ -763,7 +764,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='List of plugin specific properties (property, value)'/>
     </xsd:all>
 </xsd:complexType>
-  
+
 <xsd:element name="id-perms" type="IdPermsType"/>
 <!--#IFMAP-SEMANTICS-IDL Property('id-perms', 'all', 'system-only', 'R',
                                   'System maintained identity, time  and permissions data.') -->
@@ -1865,8 +1866,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Allowed address pairs, list of (IP address, MAC) for this interface'/>
     </xsd:all>
 </xsd:complexType>
-  
-  
+
+
 
 <!-- Ecmp nexthop load balance criteria -->
 <!--#IFMAP-SEMANTICS-IDL
@@ -2201,7 +2202,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='This virtual router agent represents TOR services node. It is responsible for DHCP, DNS and multicast for host sitting behind the TOR'/>
     </xsd:restriction>
 </xsd:simpleType>
-  
+
 
 <xsd:element name="virtual-router-type" type="VirtualRouterType"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -2263,7 +2264,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Link('physical-router-physical-interface',
           'physical-router', 'physical-interface', ['has'], 'optional', 'CRUD',
           'Physical interfaces on physical routers.') -->
-          
+
 <xsd:element name="logical-interface" type="ifmap:IdentityType"/>
 <xsd:element name="physical-router-logical-interface"/>
 <xsd:element name="physical-interface-logical-interface"/>
@@ -2729,7 +2730,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='UUID of a virtual-router on which this service instance need to spawn. Used to spawn services on CPE device when Nova is not present'/>
     </xsd:sequence>
 </xsd:complexType>
-  
+
 <xsd:element name='service-instance' type='ifmap:IdentityType'/>
 <xsd:element name='service-instance-properties' type='ServiceInstanceType'/>
 <!-- #IFMAP-SEMANTICS-IDL
