@@ -25,7 +25,7 @@ class IdPermsTest : public ::testing::Test {
 
 TEST_F(IdPermsTest, Load) {
     pugi::xml_parse_result result =
-            xdoc_.load_file("controller/src/schema/testdata/id_perms.xml");
+            xdoc_.load_file("src/contrail-api-client/schema/testdata/id_perms.xml");
     EXPECT_TRUE(result);
 
     IFMapServerParser::RequestList requests;
