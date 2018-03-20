@@ -58,7 +58,7 @@ setup_sources = [
 
 setup_sources_rules = []
 for file in setup_sources:
-    setup_sources_rules.append(env.Install("", "#/controller/src/api-lib/" + file))
+    setup_sources_rules.append(env.Install("", "#src/contrail-api-client/api-lib/" + file))
 
 remote_setup_sources = [
            '#/controller/src/base/version.info'
@@ -79,7 +79,7 @@ local_sources = [
 
 local_sources_rules = []
 for file in local_sources:
-    local_sources_rules.append(env.Install("vnc_api", "#/controller/src/api-lib/" + file))
+    local_sources_rules.append(env.Install("vnc_api", "#src/contrail-api-client/api-lib/" + file))
 
 generateds_rule = env.Install("vnc_api/gen", "#/controller/src/config/common/generatedssuper.py")
 cfixture_rule = env.Install("vnc_api/gen", "#/controller/src/config/common/cfixture.py")
