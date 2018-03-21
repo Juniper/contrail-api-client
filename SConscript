@@ -12,7 +12,8 @@ Import('contrail_common_io_doc_files')
 #Import('controller_vns_sandesh_doc_files')
 
 subdirs = [
-          'schema',
+          'api-lib',
+          'schema'
            ]
 
 
