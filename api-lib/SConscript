@@ -10,13 +10,13 @@ env = BuildEnv.Clone()
 cd_cmd = 'cd ' + Dir('.').path + ' && '
 
 autogen_infra_sources = [
-                 '#/tools/generateds/generateDS.py',
-                 '#/tools/generateds/TypeGenerator.py',
-                 '#/tools/generateds/ccmap.py',
-                 '#/tools/generateds/idl_parser.py',
-                 '#/tools/generateds/ifmap_global.py',
-                 '#/tools/generateds/ifmap_model.py',
-                 '#/tools/generateds/ifmap_frontend.py',
+                 '#/src/contrail-api-client/generateds/generateDS.py',
+                 '#/src/contrail-api-client/generateds/TypeGenerator.py',
+                 '#/src/contrail-api-client/generateds/ccmap.py',
+                 '#/src/contrail-api-client/generateds/idl_parser.py',
+                 '#/src/contrail-api-client/generateds/ifmap_global.py',
+                 '#/src/contrail-api-client/generateds/ifmap_model.py',
+                 '#/src/contrail-api-client/generateds/ifmap_frontend.py',
                 ]
 
 autogen_sources = [
@@ -27,7 +27,7 @@ autogen_sources = [
                  '#src/contrail-api-client/schema/smi-base.xsd',
                 ]
 
-autogen_script = File('#tools/generateds/generateDS.py').path
+autogen_script = File('#src/contrail-api-client/generateds/generateDS.py').path
 autogen_cmd = '%s -f -o %s -g ifmap-frontend' % (autogen_script, Dir('vnc_api/gen/resource').path)
 
 generated_files = [ 
@@ -58,7 +58,7 @@ setup_sources = [
 
 setup_sources_rules = []
 for file in setup_sources:
-    setup_sources_rules.append(env.Install("", "#src/contrail-api-client/api-lib/" + file))
+    setup_sources_rules.append(env.Install("", "#/controller/src/api-lib/" + file))
 
 remote_setup_sources = [
            '#/controller/src/base/version.info'
@@ -79,7 +79,7 @@ local_sources = [
 
 local_sources_rules = []
 for file in local_sources:
-    local_sources_rules.append(env.Install("vnc_api", "#src/contrail-api-client/api-lib/" + file))
+    local_sources_rules.append(env.Install("vnc_api", "#/controller/src/api-lib/" + file))
 
 generateds_rule = env.Install("vnc_api/gen", "#/controller/src/config/common/generatedssuper.py")
 cfixture_rule = env.Install("vnc_api/gen", "#/controller/src/config/common/cfixture.py")
