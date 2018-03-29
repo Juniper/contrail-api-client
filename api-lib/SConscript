@@ -61,7 +61,7 @@ for file in setup_sources:
     setup_sources_rules.append(env.Install("", "#/src/contrail-api-client/api-lib/" + file))
 
 remote_setup_sources = [
-           '#/controller/src/base/version.info'
+           '#/src/contrail-api-client/base/version.info'
           ]
 
 remote_setup_sources_rules = []
@@ -81,15 +81,15 @@ local_sources_rules = []
 for file in local_sources:
     local_sources_rules.append(env.Install("vnc_api", "#/src/contrail-api-client/api-lib/" + file))
 
-generateds_rule = env.Install("vnc_api/gen", "#/controller/src/config/common/generatedssuper.py")
-cfixture_rule = env.Install("vnc_api/gen", "#/controller/src/config/common/cfixture.py")
+generateds_rule = env.Install("vnc_api/gen", "#/src/contrail-api-client/api-lib/generatedssuper.py")
+cfixture_rule = env.Install("vnc_api/gen", "#/src/contrail-api-client/api-lib/cfixture.py")
 
 sdist_depends = [generated_rule, generateds_rule, cfixture_rule]
 sdist_depends.extend(setup_sources_rules)
 sdist_depends.extend(remote_setup_sources_rules)
 sdist_depends.extend(local_sources_rules)
 sdist_gen = env.Command('dist/vnc_api-{}.tar.gz'\
-                        .format(open(File('#/controller/src/base/version.info').abspath, 'r')\
+                        .format(open(File('#/src/contrail-api-client/base/version.info').abspath, 'r')\
                         .read().strip('\n').strip('\t')),
                         'setup.py', cd_cmd + 'python setup.py sdist')
 
@@ -111,7 +111,6 @@ if 'install' in BUILD_TARGETS:
 
 env.Alias('install', env.Install(env['INSTALL_CONF'], 'vnc_api_lib.ini'))
 
-env.SetupPyTestSuiteWithDeps(sdist_gen, '/config/common/dist/cfgm_common-0.1dev.tar.gz')
 
 # Local Variables:
 # mode: python
