@@ -168,19 +168,19 @@
 
 <xsd:element name="policy-management" type="ifmap:IdentityType"/>
 <xsd:element name="config-root-policy-management"/>
-    <!--#IFMAP-SEMANTICS-IDL
-        Link('config-root-policy-management',
-             'config-root', 'policy-management', ['has'], 'optional', 'CRUD',
-             'Global level policy-management object re-grouping global '
-             'policy resources.') -->
+<!--#IFMAP-SEMANTICS-IDL
+    Link('config-root-policy-management',
+         'config-root', 'policy-management', ['has'], 'optional', 'CRUD',
+         'Global level policy-management object re-grouping global '
+         'policy resources.') -->
+<!--#IFMAP-SEMANTICS-IDL
+     Property('enable-security-policy-draft', 'global-system-config', 'optional', 'CRUD') -->
 <xsd:element name="project-policy-management"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('project-policy-management',
           'project', 'policy-management', ['has'], 'optional', 'CRUD',
           'Project level policy-management object re-grouping project policy '
           'resources') -->
-<!--#IFMAP-SEMANTICS-IDL
-     Property('enable-security-policy-draft', 'policy-management', 'optional', 'CRUD') -->
 <xsd:element name="policy-management-service-group"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('policy-management-service-group',
