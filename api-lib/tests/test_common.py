@@ -11,8 +11,6 @@ import json
 import logging
 
 sys.path.insert(0, '../../../../build/debug/api-lib/')
-sys.path.insert(0, '../../../../build/debug/config/api-server/')
-sys.path.insert(0, '../../../../build/debug/config/common/')
 
 from vnc_api import vnc_api
 
