@@ -1139,6 +1139,38 @@ class VncApi(object):
     # end prop_list_get
 
     @check_homepage
+    def execute_job(self, job_template_fq_name, job_template_id=None,
+                    job_input=None, device_list=None):
+        if job_template_fq_name is None or job_template_id is None:
+            raise ValueError(
+                "Either job_template_fq_name or job_template_id must be "\
+                "specified with valid value")
+
+        body = None
+        if job_template_fq_name:
+            body = { 'job_template_fq_name': job_template_fq_name }
+        else:
+            body = { 'job_template_id': job_template_id }
+
+        if job_input is None:
+            job_input = {}
+        body['input'] = job_input
+        if device_list:
+            body['params'] = { 'device_list': device_list }
+
+        json_body = json.dumps(body)
+        uri = self._action_uri['execute-job']
+        try:
+            content = self._request_server(OP_POST, uri, data=json_body)
+        except HttpError as he:
+            if he.status_code == 404:
+                return None
+            raise he
+
+        return json.loads(content)
+    # end execute_job
+
+    @check_homepage
     def ref_update(self, obj_type, obj_uuid, ref_type, ref_uuid,
                    ref_fq_name, operation, attr=None):
         if ref_type.endswith(('_refs', '-refs')):
