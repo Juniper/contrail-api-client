@@ -2,6 +2,7 @@
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 import logging
+from collections import OrderedDict
 import requests
 from requests.exceptions import ConnectionError
 
@@ -152,7 +153,7 @@ class ApiServerSession(object):
         self.max_conns_per_pool = max_conns_per_pool
         self.max_pools = max_pools
         self.logger = logger
-        self.api_server_sessions = {}
+        self.api_server_sessions = OrderedDict()
         self.active_session = (None, None)
         self.create()
     # end __init__
@@ -562,7 +563,7 @@ class VncApi(object):
                     retry_count -= 1
                     time.sleep(1)
             else:
-                # connected succesfully
+                # connected successfully
                 break
     # end __init__
 

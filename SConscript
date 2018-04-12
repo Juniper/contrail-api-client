@@ -2,7 +2,6 @@
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
-# -*- mode: python; -*-
 # src directory
 
 import sys
