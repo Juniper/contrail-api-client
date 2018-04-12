@@ -1,2 +1,2 @@
-gevent==1.1a2
+gevent
 requests
