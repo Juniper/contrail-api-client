@@ -94,7 +94,7 @@ class TestVncApi(test_common.TestCase):
                 body=json.dumps({'href': "http://127.0.0.1:8082",
                                  'links': links}))
 
-        vnc_api.VncApi()
+        vnc_api.VncApi(conf_file='/tmp/fake-config-file')
     # end test_server_has_more_types_than_client
 
     def test_supported_auth_strategies(self):
@@ -208,12 +208,11 @@ class TestVncApi(test_common.TestCase):
     # end test_multiple_server_all_servers_down
 
     def test_only_security_resources_have_read_draft_method(self):
-        api = vnc_api.VncApi()
         for object_type, resource_type in all_resource_type_tuples:
             method_name = '%s_read_draft' % object_type
-            if object_type in vnc_api.VncApi._SECURITY_OBJECT_TYPES:
-                self.assertTrue(hasattr(api, method_name))
+            if object_type in self._vnc_lib._SECURITY_OBJECT_TYPES:
+                self.assertTrue(hasattr(self._vnc_lib, method_name))
             else:
-                self.assertFalse(hasattr(api, method_name))
+                self.assertFalse(hasattr(self._vnc_lib, method_name))
 
 # end class TestVncApi

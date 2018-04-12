@@ -501,7 +501,7 @@ class VncApi(object):
                     retry_count -= 1
                     time.sleep(1)
             else:
-                # connected succesfully
+                # connected successfully
                 break
     # end __init__
 
