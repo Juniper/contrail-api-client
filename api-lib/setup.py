@@ -1,57 +1,54 @@
-#
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
-from setuptools import setup, Command
+#  Licensed under the Apache License, Version 2.0 (the "License"); you may
+#  not use this file except in compliance with the License. You may obtain
+#  a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#  License for the specific language governing permissions and limitations
+#  under the License.
+#
 
-import os
 import re
+from setuptools import setup, find_packages
 
 
-class RunTestsCommand(Command):
-    description = "Test command to run testr in virtualenv"
-    user_options = [
-        ('coverage', 'c',
-         "Generate code coverage report"),
-    ]
-    boolean_options = ['coverage']
-
-    def initialize_options(self):
-        self.coverage = False
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        logfname = 'test.log'
-        args = '-V'
-        if self.coverage:
-            logfname = 'coveragetest.log'
-            args += ' -c'
-        rc_sig = os.system('./run_tests.sh %s' % args)
-        if rc_sig >> 8:
-            os._exit(rc_sig >> 8)
-        with open(logfname) as f:
-            if not re.search('\nOK', ''.join(f.readlines())):
-                os._exit(1)
+def requirements(filename):
+    with open(filename) as f:
+        lines = f.read().splitlines()
+    c = re.compile(r'\s*#.*')
+    return filter(bool, map(lambda y: c.sub('', y).strip(), lines))
 
 
 setup(
-    name='vnc_api',
-    # version='0.1dev',
-    version=open('vnc_api/version.info', 'r+').read().strip('\n').strip('\t'),
-    packages=['vnc_api',
-              'vnc_api.gen',
-              'vnc_api.gen.heat',
-              'vnc_api.gen.heat.resources',
-              'vnc_api.gen.heat.template',
-              'vnc_api.gen.heat.env',
-              ],
-    long_description="VNC API Library Package",
-    package_data={'': ['*.yaml', '*.env', '*.info']},
-    install_requires=[
-        'requests>=1.1.0'
+    name='contrail-api-client',
+    description="Contrail VNC Configuration API client library",
+    long_description=open('README.md').read(),
+    license='Apache-2',
+    author='OpenContrail',
+    author_email='dev@lists.opencontrail.org',
+    url='http://www.opencontrail.org/documentation/api/r4.1/',
+    version=open('version.info', 'r+').read().strip('\n').strip('\t'),
+    classifiers=[
+        'Environment :: OpenContrail',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+        'License :: OSI Approved :: Apache Software License',
+        'Operating System :: POSIX :: Linux',
+        'Development Status :: 5 - Production/Stable',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
     ],
-    cmdclass={
-        'run_tests': RunTestsCommand,
-    },
+    packages=find_packages(),
+    install_requires=requirements('requirements.txt'),
+    tests_require=requirements('test-requirements.txt'),
+    package_data={'etc/contrail/': ['vnc_api_lib.ini']},
+    keywords='contrail vnc api client library',
+    test_suite="vnc_api.tests",
 )
