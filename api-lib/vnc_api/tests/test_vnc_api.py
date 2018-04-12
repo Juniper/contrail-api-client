@@ -94,7 +94,7 @@ class TestVncApi(test_common.TestCase):
                 body=json.dumps({'href': "http://127.0.0.1:8082",
                                  'links': links}))
 
-        vnc_api.VncApi()
+        vnc_api.VncApi(conf_file='/tmp/fake-config-file')
     # end test_server_has_more_types_than_client
 
     def test_supported_auth_strategies(self):
@@ -136,16 +136,20 @@ class TestVncApi(test_common.TestCase):
 
     def test_multiple_server_roundrobin_session(self):
         httpretty.register_uri(
-                httpretty.GET, "http://127.0.0.2:8082/",
-                body=json.dumps({'href': "http://127.0.0.2:8082",
+                httpretty.GET, "http://127.1.0.1:8082/",
+                body=json.dumps({'href': "http://127.1.0.1:8082",
                                  'links': []}))
-        api_servers = ['127.0.0.3', '127.0.0.2', '127.0.0.1']
+        httpretty.register_uri(
+                httpretty.GET, "http://127.1.0.2:8082/",
+                body=json.dumps({'href': "http://127.1.0.2:8082",
+                                 'links': []}))
+        api_servers = ['127.1.0.3', '127.1.0.2', '127.1.0.1']
         vnclib = vnc_api.VncApi(
                 api_server_host=api_servers)
 
-        # Try connecting to api-server with one node(127.0.0.3) down
+        # Try connecting to api-server with one node(127.1.0.3) down
         # Expected the connection to round robin between
-        # 127.0.0.2 and 127.0.0.1
+        # 127.1.0.2 and 127.1.0.1
         response = vnclib._request_server(OP_GET, url='/')
         index = api_servers.index(urlparse(response['href']).hostname)
         for i in range(6):
@@ -160,20 +164,24 @@ class TestVncApi(test_common.TestCase):
 
     def test_multiple_server_all_servers_down(self):
         httpretty.register_uri(
-                httpretty.GET, "http://127.0.0.2:8082/",
-                body=json.dumps({'href': "http://127.0.0.2:8082",
+                httpretty.GET, "http://127.2.0.1:8082/",
+                body=json.dumps({'href': "http://127.2.0.1:8082",
                                  'links': []}))
         httpretty.register_uri(
-                httpretty.GET, "http://127.0.0.3:8082/",
-                body=json.dumps({'href': "http://127.0.0.3:8082",
+                httpretty.GET, "http://127.2.0.2:8082/",
+                body=json.dumps({'href': "http://127.2.0.2:8082",
+                                 'links': []}))
+        httpretty.register_uri(
+                httpretty.GET, "http://127.2.0.3:8082/",
+                body=json.dumps({'href': "http://127.2.0.3:8082",
                                  'links': []}))
         vnclib = vnc_api.VncApi(
-                api_server_host=['127.0.0.3', '127.0.0.2', '127.0.0.1'])
+                api_server_host=['127.2.0.3', '127.2.0.2', '127.2.0.1'])
         # Connect to a server
         # Expected to connect to first server
         response = vnclib._request_server(OP_GET, url='/')
         self.assertEqual(
-                response['href'], 'http://127.0.0.2:8082')
+                response['href'], 'http://127.2.0.2:8082')
 
         # Bring down all fake servers
         httpretty.disable()
@@ -191,29 +199,28 @@ class TestVncApi(test_common.TestCase):
         # Expected to connect to first server
         response = vnclib._request_server(OP_GET, url='/')
         self.assertEqual(
-                response['href'], 'http://127.0.0.3:8082')
+                response['href'], 'http://127.2.0.3:8082')
         # Connect to a server
         # Expected to connect to second server
         response = vnclib._request_server(OP_GET, url='/')
         self.assertEqual(
-                response['href'], 'http://127.0.0.2:8082')
+                response['href'], 'http://127.2.0.2:8082')
         # Expected to connect to third server
         response = vnclib._request_server(OP_GET, url='/')
         self.assertEqual(
-                response['href'], 'http://127.0.0.1:8082')
+                response['href'], 'http://127.2.0.1:8082')
         # Expected to connect to first server
         response = vnclib._request_server(OP_GET, url='/')
         self.assertEqual(
-                response['href'], 'http://127.0.0.3:8082')
+                response['href'], 'http://127.2.0.3:8082')
     # end test_multiple_server_all_servers_down
 
     def test_only_security_resources_have_read_draft_method(self):
-        api = vnc_api.VncApi()
         for object_type, resource_type in all_resource_type_tuples:
             method_name = '%s_read_draft' % object_type
-            if object_type in vnc_api.VncApi._SECURITY_OBJECT_TYPES:
-                self.assertTrue(hasattr(api, method_name))
+            if object_type in self._vnc_lib._SECURITY_OBJECT_TYPES:
+                self.assertTrue(hasattr(self._vnc_lib, method_name))
             else:
-                self.assertFalse(hasattr(api, method_name))
+                self.assertFalse(hasattr(self._vnc_lib, method_name))
 
 # end class TestVncApi
