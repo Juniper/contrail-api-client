@@ -43,7 +43,7 @@ env.Append(CPPPATH = [env['TOP']])
 
 def CCMapTest(env, testname):
     targets = env.IFMapAutogen(testname + '.xsd')
-    cc_files = filter(lambda x: re.match(r'(.*)\.cc$', x.abspath), targets)
+    cc_files = [x for x in targets if re.match(r'(.*)\.cc$', x.abspath)]
     cc_files.append(File(testname + '_test.cc'))
     test = env.Program(testname,  cc_files)
     return test
