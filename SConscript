@@ -7,9 +7,6 @@
 
 import sys
 import platform
-Import('contrail_common_base_doc_files')
-Import('contrail_common_io_doc_files')
-#Import('controller_vns_sandesh_doc_files')
 
 subdirs = [
           'api-lib',
@@ -59,23 +56,10 @@ elif sys.platform.startswith('darwin'):
 if sys.platform.startswith('freebsd'):
     BuildEnv.Prepend(LINKFLAGS = ['-lprocstat'])
 
-#
-# Message documentation for common modules
-#
-
-# base
-BuildEnv['BASE_DOC_FILES'] = contrail_common_base_doc_files
-
-# IO
-BuildEnv['IO_DOC_FILES'] = contrail_common_io_doc_files
-
-# SANDESH
-#BuildEnv['VNS_SANDESH_DOC_FILES'] = controller_vns_sandesh_doc_files
 
 BuildEnv['INSTALL_DOC_PKG'] = BuildEnv['INSTALL_DOC'] + '/contrail-docs/html'
 BuildEnv['INSTALL_MESSAGE_DOC'] = BuildEnv['INSTALL_DOC_PKG'] + '/messages'
 
-#BuildEnv.SConscript(dirs=['vnsw'], exports='BuildEnv')
 
 for dir in subdirs:
     BuildEnv.SConscript(dir + '/SConscript',

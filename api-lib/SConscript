@@ -9,25 +9,27 @@ env = BuildEnv.Clone()
 
 cd_cmd = 'cd ' + Dir('.').path + ' && '
 
+repo_top = env['api_repo_path']
+
 autogen_infra_sources = [
-                 '#/src/contrail-api-client/generateds/generateDS.py',
-                 '#/src/contrail-api-client/generateds/TypeGenerator.py',
-                 '#/src/contrail-api-client/generateds/ccmap.py',
-                 '#/src/contrail-api-client/generateds/idl_parser.py',
-                 '#/src/contrail-api-client/generateds/ifmap_global.py',
-                 '#/src/contrail-api-client/generateds/ifmap_model.py',
-                 '#/src/contrail-api-client/generateds/ifmap_frontend.py',
+                 repo_top + '/generateds/generateDS.py',
+                 repo_top + '/generateds/TypeGenerator.py',
+                 repo_top + '/generateds/ccmap.py',
+                 repo_top + '/generateds/idl_parser.py',
+                 repo_top + '/generateds/ifmap_global.py',
+                 repo_top + '/generateds/ifmap_model.py',
+                 repo_top + '/generateds/ifmap_frontend.py',
                 ]
 
 autogen_sources = [
-                 '#src/contrail-api-client/schema/all_cfg.xsd',
-                 '#src/contrail-api-client/schema/vnc_cfg.xsd',
-                 '#src/contrail-api-client/schema/bgp_schema.xsd',
-                 '#src/contrail-api-client/schema/ietf-l3vpn-schema.xsd',
-                 '#src/contrail-api-client/schema/smi-base.xsd',
+                 repo_top + '/schema/all_cfg.xsd',
+                 repo_top + '/schema/vnc_cfg.xsd',
+                 repo_top + '/schema/bgp_schema.xsd',
+                 repo_top + '/schema/ietf-l3vpn-schema.xsd',
+                 repo_top + '/schema/smi-base.xsd',
                 ]
 
-autogen_script = File('#src/contrail-api-client/generateds/generateDS.py').path
+autogen_script = File(repo_top + '/generateds/generateDS.py').path
 autogen_cmd = '%s -f -o %s -g ifmap-frontend' % (autogen_script, Dir('vnc_api/gen/resource').path)
 
 generated_files = [ 
@@ -42,7 +44,7 @@ generated_files = [
 env.Append(ENV = {'HEAT_BUILDTOP' : Dir(env['TOP']).abspath})
 
 generated_rule = env.Command(generated_files,
-                             '#src/contrail-api-client/schema/all_cfg.xsd',
+                             repo_top + '/schema/all_cfg.xsd',
                              autogen_cmd + ' $SOURCE')
 
 setup_sources = [
@@ -58,10 +60,10 @@ setup_sources = [
 
 setup_sources_rules = []
 for file in setup_sources:
-    setup_sources_rules.append(env.Install("", "#/src/contrail-api-client/api-lib/" + file))
+    setup_sources_rules.append(env.Install("", repo_top + "/api-lib/" + file))
 
 remote_setup_sources = [
-           '#/src/contrail-api-client/base/version.info'
+           repo_top+ '/base/version.info'
           ]
 
 remote_setup_sources_rules = []
@@ -79,17 +81,17 @@ local_sources = [
 
 local_sources_rules = []
 for file in local_sources:
-    local_sources_rules.append(env.Install("vnc_api", "#/src/contrail-api-client/api-lib/" + file))
+    local_sources_rules.append(env.Install("vnc_api", file))
 
-generateds_rule = env.Install("vnc_api/gen", "#/src/contrail-api-client/api-lib/generatedssuper.py")
-cfixture_rule = env.Install("vnc_api/gen", "#/src/contrail-api-client/api-lib/cfixture.py")
+generateds_rule = env.Install("vnc_api/gen", "generatedssuper.py")
+cfixture_rule = env.Install("vnc_api/gen", "cfixture.py")
 
 sdist_depends = [generated_rule, generateds_rule, cfixture_rule]
 sdist_depends.extend(setup_sources_rules)
 sdist_depends.extend(remote_setup_sources_rules)
 sdist_depends.extend(local_sources_rules)
 sdist_gen = env.Command('dist/vnc_api-{}.tar.gz'\
-                        .format(open(File('#/src/contrail-api-client/base/version.info').abspath, 'r')\
+                        .format(open(File(repo_top + '/base/version.info').abspath, 'r')\
                         .read().strip('\n').strip('\t')),
                         'setup.py', cd_cmd + 'python setup.py sdist')
 
