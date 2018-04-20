@@ -1613,14 +1613,15 @@ class VncApi(object):
         return self.set_tags(obj, tags_dict)
 
     def _security_policy_draft(self, action, scope):
-        """Commit or revert pending resources on a given scope
+        """Commit or discard pending resources on a given scope
 
-        :param action: specify action to be done: commit or revert
+        :param action: specify action to be done: commit or discard
         :param scope: Scope that own the pending security resource (aka. Global
             global policy management or project)
         """
-        if action not in ['commit', 'revert']:
-            raise ValueError("Only 'commit' or 'revert' actions are supported")
+        if action not in ['commit', 'discard']:
+            msg = "Only 'commit' or 'discard' actions are supported"
+            raise ValueError(msg)
 
         url = self._action_uri['security-policy-draft']
         data = {
@@ -1638,11 +1639,11 @@ class VncApi(object):
         """
         self._security_policy_draft('commit', scope)
 
-    def revert_security(self, scope):
-        """Revert pending resources on a given scope
+    def discard_security(self, scope):
+        """discard pending resources on a given scope
 
-        :param scope: Scope that own the pending security resource to revert
+        :param scope: Scope that own the pending security resource to discard
             (aka. Global global policy management or project)
         """
-        self._security_policy_draft('revert', scope)
+        self._security_policy_draft('discard', scope)
 # end class VncApi
