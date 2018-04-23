@@ -991,7 +991,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('plugin-tuning', 'global-system-config', 'optional', 'CRUD',
               'Various Orchestration system plugin(interface) parameters, like Openstack Neutron plugin.') -->
 
-<xsd:element name="ibgp-auto-mesh" type="xsd:boolean"/>
+<xsd:element name="ibgp-auto-mesh" type="xsd:boolean" default='true'/>
 <!-- Automatically create an iBGP mesh if set to True -->
 <!--#IFMAP-SEMANTICS-IDL
      Property('ibgp-auto-mesh', 'global-system-config', 'optional', 'CRUD',
