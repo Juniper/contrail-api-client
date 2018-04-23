@@ -20,32 +20,35 @@ if env['CC'] == 'gcc':
 
 env['CCFLAGS'].append(env['CPPDEFPREFIX'] + 'RAPIDJSON_NAMESPACE=contrail_rapidjson')
 
+def get_sources(targets):
+    return [x for x in targets if re.match(r'(.*)\.cc$', x.abspath)]
+
 targets = env.IFMapAutogen('vnc_cfg.xsd')
-lib_srcs = filter(lambda x: re.match(r'(.*)\.cc$', x.abspath), targets)
+lib_srcs = get_sources(targets)
 lib = env.Library('ifmap_vnc', lib_srcs)
 
 targets = env.IFMapAutogen('bgp_schema.xsd')
-lib_srcs = filter(lambda x: re.match(r'(.*)\.cc$', x.abspath), targets)
+lib_srcs = get_sources(targets)
 lib = env.Library('bgp_schema', lib_srcs)
 
 targets = env.TypeAutogen('xmpp_unicast.xsd')
-lib_srcs = filter(lambda x: re.match(r'(.*)\.cc$', x.abspath), targets)
+lib_srcs = get_sources(targets)
 lib = env.Library('xmpp_unicast', lib_srcs)
 
 targets = env.TypeAutogen('xmpp_multicast.xsd')
-lib_srcs = filter(lambda x: re.match(r'(.*)\.cc$', x.abspath), targets)
+lib_srcs = get_sources(targets)
 lib = env.Library('xmpp_multicast', lib_srcs)
 
 targets = env.TypeAutogen('xmpp_mvpn.xsd')
-lib_srcs = filter(lambda x: re.match(r'(.*)\.cc$', x.abspath), targets)
+lib_srcs = get_sources(targets)
 lib = env.Library('xmpp_mvpn', lib_srcs)
 
 targets = env.TypeAutogen('xmpp_enet.xsd')
-lib_srcs = filter(lambda x: re.match(r'(.*)\.cc$', x.abspath), targets)
+lib_srcs = get_sources(targets)
 lib = env.Library('xmpp_enet', lib_srcs)
 
 targets = env.TypeAutogen('services.xsd')
-lib_srcs = filter(lambda x: re.match(r'(.*)\.cc$', x.abspath), targets)
+lib_srcs = get_sources(targets)
 lib = env.Library('services', lib_srcs)
 
 env.SConscript('test/SConscript', exports='BuildEnv', duplicate = 0)
