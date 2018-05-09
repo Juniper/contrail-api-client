@@ -531,6 +531,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Currently this option is not supported'/>
         <xsd:element name="reverse-resolution"  type="xsd:boolean" default="false" required='optional'
              description='Allow reverse DNS resolution, ip to name mapping'/>
+        <xsd:element name="negative-cache-ttl-seconds" type="xsd:integer"  required='optional'
+             description='Default Time To Live for negative caching of DNS queries'/>
     </xsd:all>
 </xsd:complexType>
 
