@@ -2046,12 +2046,17 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Link('instance-ip-physical-router',
           'instance-ip', 'physical-router', ['ref'], 'optional', 'CRUD',
           'This instance ip is used as IRB address on the referenced physical router (e.g.MX), In case of OVSDB TOR usecase this address will be used as default gateway for Host behind the TOR.') -->
-
 <xsd:element name="instance-ip-virtual-router"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('instance-ip-virtual-router',
           'instance-ip', 'virtual-router', ['ref'], 'optional', 'CRUD',
           'Reference to virtual router of this instance ip.') -->
+<xsd:element name="instance-ip-logical-interface"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('instance-ip-logical-interface',
+          'instance-ip', 'logical-interface', ['ref'], 'optional', 'CRUD',
+          'Reference to the logical interface that this instance ip is assigned to.') -->
+
 <xsd:element name="subnet" type="ifmap:IdentityType"/>
 <xsd:element name="subnet-ip-prefix" type="SubnetType"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -2337,7 +2342,6 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('link-aggregation-group-lacp-enabled', 'link-aggregation-group', 'required', 'CRUD',
               'Flag to turn on or off Link Aggregation Control Protocol (LACP) on this link aggregation group.') -->
-
 <xsd:element name="link-aggregation-group-physical-interface"/>
 <!--#IFMAP-SEMANTICS-IDL
     Link('link-aggregation-group-physical-interface', 'link-aggregation-group', 'physical-interface', ['ref'], 'optional', 'CRUD',
@@ -2346,7 +2350,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <xsd:simpleType name="PhysicalInterfaceType">
      <xsd:restriction base='xsd:string'>
          <xsd:enumeration value='regular'/>
-         <xsd:enumeration value='lag'/>
+         <xsd:enumeration value='ae'/>
+         <xsd:enumeration value='irb'/>
      </xsd:restriction>
 </xsd:simpleType>
 
@@ -2365,6 +2370,14 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
          <xsd:enumeration value='e2-provider'/>
          <xsd:enumeration value='e2-internet'/>
          <xsd:enumeration value='e2-vrr'/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="RoutingBridgingRole">
+     <xsd:restriction base='xsd:string'>
+         <xsd:enumeration value='centrally-routed-bridging'/>
+         <xsd:enumeration value='edge-routed-bridging'/>
+         <xsd:enumeration value='route-reflector'/>
      </xsd:restriction>
 </xsd:simpleType>
 
@@ -2419,6 +2432,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('physical-router-role', 'physical-router', 'optional', 'CRUD',
               'Physical router role (e.g spine or leaf), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
+
+<xsd:element name="routing-bridging-role" type="RoutingBridgingRole"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('routing-bridging-role', 'physical-router', 'optional', 'CRUD',
+              'Routing-bridging role (e.g. CRB, ERB, etc.), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
 
 <xsd:element name="physical-router-snmp" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -3688,6 +3706,12 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 </xsd:complexType>
 
 <xsd:element name="fabric" type="ifmap:IdentityType"/>
+
+<xsd:element name="fabric-network-ipam"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('fabric-network-ipam',
+             'fabric', 'network-ipam', ['ref'], 'optional', 'CRUD',
+             'Each fabric has multiple network IPAM objects required by ZTP of the fabric: one for management IPs, one for loopback IPs, and one for the fabric interface IPs.') -->
 
 <xsd:element name="global-system-config-fabric"/>
 <!--#IFMAP-SEMANTICS-IDL
