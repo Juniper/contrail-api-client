@@ -2046,12 +2046,17 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Link('instance-ip-physical-router',
           'instance-ip', 'physical-router', ['ref'], 'optional', 'CRUD',
           'This instance ip is used as IRB address on the referenced physical router (e.g.MX), In case of OVSDB TOR usecase this address will be used as default gateway for Host behind the TOR.') -->
-
 <xsd:element name="instance-ip-virtual-router"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('instance-ip-virtual-router',
           'instance-ip', 'virtual-router', ['ref'], 'optional', 'CRUD',
           'Reference to virtual router of this instance ip.') -->
+<xsd:element name="instance-ip-logical-interface"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('instance-ip-logical-interface',
+          'instance-ip', 'logical-interface', ['ref'], 'optional', 'CRUD',
+          'Reference to the logical interface that this instance ip is assigned to.') -->
+
 <xsd:element name="subnet" type="ifmap:IdentityType"/>
 <xsd:element name="subnet-ip-prefix" type="SubnetType"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -2258,6 +2263,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('physical-interface-mac-addresses', 'physical-interface', 'optional', 'CRUD',
               'MAC addresses on this physical interface.') -->
 
+<xsd:element name="physical-interface-port-id" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('physical-interface-port-id', 'physical-interface', 'optional', 'CRUD',
+              'port id of this physical interface. This port id is used in LLDP to identify a physical port on the peering device') -->
+
 <xsd:element name="physical-router-physical-interface"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('physical-router-physical-interface',
@@ -2337,7 +2347,6 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('link-aggregation-group-lacp-enabled', 'link-aggregation-group', 'required', 'CRUD',
               'Flag to turn on or off Link Aggregation Control Protocol (LACP) on this link aggregation group.') -->
-
 <xsd:element name="link-aggregation-group-physical-interface"/>
 <!--#IFMAP-SEMANTICS-IDL
     Link('link-aggregation-group-physical-interface', 'link-aggregation-group', 'physical-interface', ['ref'], 'optional', 'CRUD',
@@ -2367,6 +2376,22 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
          <xsd:enumeration value='e2-vrr'/>
      </xsd:restriction>
 </xsd:simpleType>
+
+<xsd:simpleType name="RoutingBridgingRole">
+     <xsd:restriction base='xsd:string'>
+         <xsd:enumeration value='centrally-routed-bridging'/>
+         <xsd:enumeration value='edge-routed-bridging'/>
+         <xsd:enumeration value='route-reflector'/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="PhysicalRolesType">
+     <xsd:element name="physical-role" type="PhysicalRouterRole" maxOccurs="unbounded"/>
+</xsd:complexType>
+
+<xsd:complexType name="RoutingBridgingRolesType">
+    <xsd:element name="rb-role" type="RoutingBridgingRole" maxOccurs="unbounded"/>
+</xsd:complexType>
 
 <xsd:element name="logical-interface-type" type="LogicalInterfaceType"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -2419,6 +2444,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('physical-router-role', 'physical-router', 'optional', 'CRUD',
               'Physical router role (e.g spine or leaf), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
+
+<xsd:element name="routing-bridging-role" type="RoutingBridgingRolesType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('routing-bridging-role', 'physical-router', 'optional', 'CRUD',
+              'Routing-bridging role (e.g. CRB, ERB, etc.), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
 
 <xsd:element name="physical-router-snmp" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -3686,8 +3716,19 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description="Namespace as MAC addresses"/>
     </xsd:choice>
 </xsd:complexType>
+<xsd:complexType name="FabricSubnetsType">
+    <xsd:all>
+        <xsd:element name="ipam-subnets" type="IpamSubnetType" maxOccurs="unbounded"/>
+    </xsd:all>
+</xsd:complexType>
 
 <xsd:element name="fabric" type="ifmap:IdentityType"/>
+
+<xsd:element name="fabric-network-ipam" type="FabricSubnetsType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('fabric-network-ipam',
+             'fabric', 'network-ipam', ['ref'], 'optional', 'CRUD',
+             'Each fabric has multiple network IPAM objects required by ZTP of the fabric: one for management IPs, one for loopback IPs, and one for the fabric interface IPs.') -->
 
 <xsd:element name="global-system-config-fabric"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -3711,6 +3752,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      ListProperty('fabric-credentials', 'fabric', 'optional', 'CRUD',
               'List of device credentials to manage the network devices in the fabric.') -->
 
+<xsd:element name="fabric-address-allocation-mode" type="AddressAllocationModeType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('fabric-address-allocation-mode', 'fabric', 'optional', 'CRUD',
+               'Address allocation mode for fabric IPs (management, loopback, interface, etc.).') -->
+
 <xsd:element name="fabric-namespace" type="ifmap:IdentityType"/>
 
 <xsd:element name="fabric-fabric-namespace"/>
@@ -3726,6 +3772,88 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('fabric-namespace-value', 'fabric-namespace', 'optional', 'CRUD',
               'namespace value of type defined by the namespace-type.') -->
+
+<xsd:complexType name="CardType">
+    <xsd:all>
+        <xsd:element name="name" type="xsd:string" required="true"/>
+    </xsd:all>
+</xsd:complexType>
+<xsd:complexType name="CardsType">
+    <xsd:element name="card" type="CardType" maxOccurs="unbounded"/>
+</xsd:complexType>
+<xsd:complexType name="HardwareType">
+    <xsd:all>
+        <xsd:element name="platform" type="xsd:string" required="true"/>
+        <xsd:element name="cards" type="CardsType" required="optional"/>
+    </xsd:all>
+</xsd:complexType>
+<xsd:complexType name="HardwareListType">
+    <xsd:element name="hardware" type="HardwareType" maxOccurs="unbounded"/>
+</xsd:complexType>
+
+<xsd:element name="node-profile" type="ifmap:IdentityType"/>
+<!--Node profile contains the meta-data to profile/categorize the devices so that a list of
+    supported capabilities/roles by the device are known to the system. For example, we can
+    define a node profile to specify list of capabilities/roles supported by a set of QFX10K
+    devices with certain hardware/software installed. It also contains the default config
+    parameter values for each supported roles/capability. These are the config parameters
+    that are not modeled in the VNC data model. They could be vendor specific config parameters
+    that we allow user to tweak via API or some kind of auto generated UI from job template input
+    schema. The UML diagram for node-profile can be found at
+    https://github.com/jnpr-tjiang/cfm-data-model/blob/master/5.0.1-data-model/images/node_profile.png-->
+<xsd:element name="node-profile-vendor" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('node-profile-vendor', 'node-profile', 'required', 'CRUD',
+              'Vendor name (e.g. Juniper) that this node profile can be used for.') -->
+<xsd:element name="node-profile-device-family" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('node-profile-device-family', 'node-profile', 'required', 'CRUD',
+              'Device family name that this node profile can be used to match.') -->
+<xsd:element name="node-profile-hardware-list" type="HardwareListType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('node-profile-hardware-list', 'node-profile', 'required', 'CRUD',
+              'List of device hardware info that node profile can be used to match.') -->
+<xsd:element name="node-profile-physical-roles" type="PhysicalRolesType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('node-profile-physical-roles', 'node-profile', 'required', 'CRUD',
+              'List of capable physical roles supported by the devices that matches one of the hardware list defined in this node profile.') -->
+<xsd:element name="node-profile-routing-bridging-roles" type="RoutingBridgingRolesType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('node-profile-routing-bridging-roles', 'node-profile', 'required', 'CRUD',
+              'List of capable routing/bridging roles supported by the devices that matches one of the hardware list defined in this node profile.') -->
+<xsd:element name="global-system-config-node-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('global-system-config-node-profile', 'global-system-config', 'node-profile', ['has'], 'optional', 'CRUD',
+             'list of node profiles supported by the system.') -->
+<xsd:element name="fabric-node-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('fabric-node-profile', 'fabric', 'node-profile', ['ref'], 'optional', 'CRUD',
+             'node profiles assignd to the fabric.') -->
+<xsd:element name="physical-router-node-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-node-profile', 'physical-router', 'node-profile', ['ref'], 'optional', 'CRUD',
+             'Node profile assigned to the physical router during device discovery/onboarding.') -->
+
+<xsd:element name="role-config" type="ifmap:IdentityType"/>
+<!--This resource exposes to users additional parameters to configure a specify physical or routing/switching roles.
+    These are the config parameters that are mot modeled in VNC data model and we don't want to hard code in the
+    fabric ansible playbooks. These could be vendor specific parameters or could be extended by the field or customer
+    who might want to tweak the playbooks. The schema for the role config are defined in the job-template.input_schema.
+    This schema could be used by the UI to generically render the form for user to edit the config. -->
+<xsd:element name="node-profile-role-config"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('node-profile-role-config', 'node-profile', 'role-config', ['has'], 'optional', 'CRUD',
+             'list of role configs for those physical or routing/bridging roles defined in the node-profile.') -->
+<xsd:element name="role-config-job-template"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('role-config-job-template', 'role-config', 'job-template', ['ref'], 'optional', 'CRUD',
+             'This reference associates the role config to a job-template that contains a playbook that generates device
+              specific role config and deploys it to the device. The role-config.config attribtue value must be in JSON
+              format and conform to the input_schema defined in the job-template.') -->
+<xsd:element name="role-config-config" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('role-config-config', 'role-config', 'required', 'CRUD',
+              'role config in JSON format. This JSON config must conform to the input-schema of the job template for the role provisioning.') -->
 
 <xsd:element name="multicast-group" type="ifmap:IdentityType"/>
 <!--Identifier "multicast-group" is a node to which all multicast groups
