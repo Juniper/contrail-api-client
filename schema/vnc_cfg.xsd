@@ -2237,9 +2237,9 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
     Link('physical-router-device-image', 'physical-router', 'device-image', ['ref'], 'optional', 'CRUD',
          'Intended device image for this PRouter. Each PRouter can have one and only one device image assigned. If this image is successfully installed on the PRouter, the PRouterUVE.os_version should match the os-version property of the image') -->
 
-<xsd:element name="physical-router-link-aggregation-group"/>
+<xsd:element name="physical-router-port-group"/>
 <!--#IFMAP-SEMANTICS-IDL
-    Link('physical-router-link-aggregation-group', 'physical-router', 'link-aggregation-group', ['has'], 'optional', 'CRUD',
+    Link('physical-router-port-group', 'physical-router', 'port-group', ['has'], 'optional', 'CRUD',
          'List of link aggregation groups on this PRouter.') -->
 
 <xsd:element name="physical-interface" type="ifmap:IdentityType"/>
@@ -2283,6 +2283,12 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <xsd:complexType name="DevicePlatformListType">
     <xsd:element name="platform-name" type="xsd:string" maxOccurs="unbounded"/>
 </xsd:complexType>
+
+<xsd:simpleType name="PortGroupType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="lag"/>
+    </xsd:restriction>
+</xsd:simpleType>
 
 <xsd:element name="device-image" type="ifmap:IdentityType"/>
 
@@ -2332,21 +2338,25 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('device-image-sha1', 'device-image', 'optional', 'CRUD',
               'sha1 checksum of the image file that was uploaded to the image server.') -->
 
-<xsd:element name="link-aggregation-group" type="ifmap:IdentityType"/>
-<xsd:element name="link-aggregation-group-lacp-enabled" type="xsd:boolean"/>
+<xsd:element name="port-group" type="ifmap:IdentityType"/>
+<xsd:element name="port-group-type" type="PortGroupType"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('link-aggregation-group-lacp-enabled', 'link-aggregation-group', 'required', 'CRUD',
+     Property('port-group-type', 'port-group', 'required', 'CRUD',
+              'port group type such as LAG.') -->
+<xsd:element name="port-group-lacp-enabled" type="xsd:boolean"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('port-group-lacp-enabled', 'port-group', 'required', 'CRUD',
               'Flag to turn on or off Link Aggregation Control Protocol (LACP) on this link aggregation group.') -->
-
-<xsd:element name="link-aggregation-group-physical-interface"/>
+<xsd:element name="port-group-physical-interface"/>
 <!--#IFMAP-SEMANTICS-IDL
-    Link('link-aggregation-group-physical-interface', 'link-aggregation-group', 'physical-interface', ['ref'], 'optional', 'CRUD',
+    Link('port-group-physical-interface', 'port-group', 'physical-interface', ['ref'], 'optional', 'CRUD',
          'All the interfaces that belongs to the LAG. There should be exact one ref edge that points to the lag interface and two or more ref-edges points to the regular interfaces.') -->
 
 <xsd:simpleType name="PhysicalInterfaceType">
      <xsd:restriction base='xsd:string'>
          <xsd:enumeration value='regular'/>
-         <xsd:enumeration value='lag'/>
+         <xsd:enumeration value='ae'/>
+         <xsd:enumeration value='irb'/>
      </xsd:restriction>
 </xsd:simpleType>
 
@@ -2365,6 +2375,14 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
          <xsd:enumeration value='e2-provider'/>
          <xsd:enumeration value='e2-internet'/>
          <xsd:enumeration value='e2-vrr'/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="RoutingBridgingRole">
+     <xsd:restriction base='xsd:string'>
+         <xsd:enumeration value='crb'/>
+         <xsd:enumeration value='erb'/>
+         <xsd:enumeration value='rr'/>
      </xsd:restriction>
 </xsd:simpleType>
 
@@ -2419,6 +2437,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('physical-router-role', 'physical-router', 'optional', 'CRUD',
               'Physical router role (e.g spine or leaf), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
+
+<xsd:element name="routing-bridging-role" type="RoutingBridgingRole"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('routing-bridging-role', 'physical-router', 'optional', 'CRUD',
+              'Routing-bridging role (e.g. CRB, ERB, etc.), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
 
 <xsd:element name="physical-router-snmp" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -3687,6 +3710,12 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
     </xsd:choice>
 </xsd:complexType>
 
+<xsd:simpleType name="PhysicalLinkType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="ethernet"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:element name="fabric" type="ifmap:IdentityType"/>
 
 <xsd:element name="global-system-config-fabric"/>
@@ -3726,6 +3755,21 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('fabric-namespace-value', 'fabric-namespace', 'optional', 'CRUD',
               'namespace value of type defined by the namespace-type.') -->
+
+<xsd:element name="physical-link" type="ifmap:IdentityType"/>
+<!--physical link that connects devices in the fabric. The link name follows the naming convention "<left-mac>-<right-mac>". The left MAC is always alphabetically lower than the right MAC. This ensures the unique link name between two physical interfaces -->
+<xsd:element name="physical-link-type" type="PhysicalLinkType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('physical-link-type', 'physical-link', 'optional', 'CRUD',
+              'Physical link type such as ethernet') -->
+<xsd:element name="fabric-physical-link"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('fabric-physical-link', 'fabric', 'physical-link', ['has'], 'optional', 'CRUD',
+             'list of physical links in the fabric that connecct physical routers') -->
+<xsd:element name="physical-interface-physical-link"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-interface-physical-link', 'physical-interface', 'physical-link', ['ref'], 'optional', 'CRUD',
+          'Physical interface at each end of the physical link that connects physical routers in the fabric.') -->
 
 <xsd:element name="multicast-group" type="ifmap:IdentityType"/>
 <!--Identifier "multicast-group" is a node to which all multicast groups
