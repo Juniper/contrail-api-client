@@ -20,7 +20,7 @@ JavaTypeMap = {
     'xsd:string': 'String',
     'xsd:integer': 'Integer',
     'xsd:unsignedInt': 'Integer',
-    'xsd:boolean': 'boolean',
+    'xsd:boolean': 'Boolean',
     'xsd:unsignedLong' : 'Long',
     'xsd:dateTime': 'java.util.Date',
     'xsd:time': 'Long'
