@@ -128,6 +128,8 @@
          description='Administratively up or down.'/>
     <xsd:element name='vendor' type='xsd:string' required='optional' operations='CRUD'
          description='Vendor name for this BGP router, contrail, juniper or cisco etc.'/>
+    <xsd:element name='cluster-id' type='xsd:integer' required='optional' operations='CRUD'
+         description='Cluster Id for this BGP router.'/>
     <xsd:element name='autonomous-system' type='xsd:integer' required='true' operations='CUR'
          description='Autonomous System number for this BGP router. Currently only 16 bit AS number is supported. For contrail control nodes this has to be equal to global AS number.'/>
     <xsd:element name='identifier' type='smi:IpAddress' required='true' operations='CUR'
