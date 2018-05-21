@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 """
 Synopsis:
     Generate Python classes from XML Schema definition.
@@ -808,11 +808,12 @@ if __name__ == '__main__':
                                             'ifmap-frontend',
                                             'ifmap-backend',
                                             'device-api',
+                                            'abstract-device-api',
                                             'java-api',
                                             'golang-api',
                                             'contrail-json-schema',
                                             'json-schema'):
-                    raise RuntimeError('Option --generator-category must be "type", service", "ifmap-frontend", "ifmap-backend", "device-api", "java-api", "golang-api", "contrail-json-schema" or "json-schema".')
+                    raise RuntimeError('Option --generator-category must be "type", service", "ifmap-frontend", "ifmap-backend", "device-api", "abstract-device-api", "java-api", "golang-api", "contrail-json-schema" or "json-schema".')
         if showVersion:
             print 'generateDS.py version %s' % VERSION
             sys.exit(0)
@@ -1088,6 +1089,7 @@ if __name__ == '__main__':
         elif (self.genCategory == 'ifmap-backend' or
               self.genCategory == 'ifmap-frontend' or
               self.genCategory == 'device-api' or
+              self.genCategory == 'abstract-device-api' or
               self.genCategory == 'java-api' or
               self.genCategory == 'golang-api' or
               self.genCategory == 'contrail-json-schema' or

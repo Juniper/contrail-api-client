@@ -9,6 +9,7 @@ from ifmap_parser import IFMapParserGenerator
 from ifmap_frontend import IFMapApiGenerator
 from java_api import JavaApiGenerator
 from device_api import DeviceApiGenerator
+from abstract_device_api import AbstractDeviceApiGenerator
 from golang_api import GoLangApiGenerator
 from json_schemagen import JsonSchemaGenerator
 from contrail_json_schemagen import ContrailJsonSchemaGenerator
@@ -190,6 +191,11 @@ class IFMapGenerator(object):
                                     self._Identifiers, self._Metadata)
         apigen.Generate(self._Parser.outFilename)
 
+    def _GenerateAbstractDeviceApi(self, xsd_root):
+        apigen = AbstractDeviceApiGenerator(self._Parser, xsd_root,
+                                    self._Identifiers, self._Metadata)
+        apigen.Generate(self._Parser.outFilename)
+
     def _GenerateGoLangApi(self, xsd_root):
         apigen = GoLangApiGenerator(self._Parser, self._cTypesDict,
                                     self._Identifiers, self._Metadata)
@@ -223,6 +229,8 @@ class IFMapGenerator(object):
             self._GenerateJavaApi(root)
         elif self._genCategory == 'device-api':
             self._GenerateDeviceApi(root)
+        elif self._genCategory == 'abstract-device-api':
+            self._GenerateAbstractDeviceApi(root)
         elif self._genCategory == 'golang-api':
             self._GenerateGoLangApi(root)
         elif self._genCategory == 'contrail-json-schema':
