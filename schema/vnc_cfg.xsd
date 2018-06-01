@@ -604,6 +604,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='timestamp when subnet object gets created'/>
         <xsd:element name="last-modified" type="xsd:dateTime" required='optional'
              description='timestamp when subnet object gets updated'/>
+        <xsd:element name="subscriber-tag" type="xsd:string" required='optional'
+          description='This represents subscribers assigned ip addresses from this subnet for fabric peer network'/>
     </xsd:all>
 </xsd:complexType>
 
@@ -2010,6 +2012,10 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('subnet-uuid', 'instance-ip', 'optional', 'CR',
               'This instance ip was allocated from this Subnet(UUID).') -->
+<xsd:element name="instance-ip-subscriber-tag" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('instance-ip-subscriber-tag', 'instance-ip', 'optional', 'CR',
+              'This instance ip belongs to one of the subscribers in the subscriber-tag.') -->
 <xsd:element name="instance-ip-secondary" type="xsd:boolean" default='false'/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('instance-ip-secondary', 'instance-ip', 'optional', 'CRUD',
