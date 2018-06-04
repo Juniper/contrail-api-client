@@ -1559,6 +1559,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('vxlan-network-identifier', 'logical-router', 'optional', 'CRUD',
               'The VNI that needs to be associated with the internal VN if vxlan_routing mode is enabled.') -->
 
+<xsd:element name="logical-router-mode" type="LogicalRouterType" default="ExternalGateway"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('logical-router-mode', 'logical-router', 'optional', 'CRUD',
+              'Type of virtual-network this logical-router is associated with.') -->
+
 <xsd:element name="router-external" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
      Exclude('router-external', ['backend']);
@@ -3020,28 +3025,26 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'logical-router', 'route-table', ['ref'], 'optional', 'CRUD',
           'Reference to the route table attached to this logical router. By attaching route table, system will create static routes with the route target only of route targets linked to this logical router') -->
 
-<xsd:simpleType name="LogicalRouterVirtualNetworkEnumType">
+<xsd:simpleType name="LogicalRouterType">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="ExternalGateway"
             description='Virtual network is used as external gateway for this logical router. This link will cause a SNAT to be spawned between all networks connected to logical router and external network.'/>
-        <xsd:enumeration value="InternalVirtualNetwork"
-            description='Virtual-network is used for EVPN Layer3 packets routing. This network is used to route packets from all children EVPN Layer2 networks linked this logical-router'/>
+        <xsd:enumeration value="EVPNType2"
+            description='Virtual-network is used for EVPN Type 2 Layer3 packets routing. This network is used to route packets from all children EVPN Layer2 networks linked this logical-router using solely route-target based route-leaking mechanism'/>
+        <xsd:enumeration value="EVPNType5"
+            description='Virtual-network is used for EVPN Type 5 Layer3 packets routing. This network is used to route packets from all children EVPN Layer2 networks linked this logical-router'/>
     </xsd:restriction>
 </xsd:simpleType>
-
-<xsd:complexType name="LogicalRouterVirtualNetworkType">
-    <xsd:element name="logical-router-virtual-network-type" type="LogicalRouterVirtualNetworkEnumType" required='optional' default='ExternalGateway'/>
-</xsd:complexType>
 
 <!--
     Link a virtual network used as the external gateway for source NAT support
     (aka external gateway in OpenStack Neutron API) or as the L3VN for routing in evpn (aka evpn type-5 prefix based routing).
 -->
-<xsd:element name="logical-router-virtual-network" type="LogicalRouterVirtualNetworkType"/>
+<xsd:element name="logical-router-virtual-network"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('logical-router-virtual-network',
           'logical-router', 'virtual-network', ['ref'], 'optional', 'CRUD',
-          'Reference to a virtual network. Please refer to link attribute for additional details') -->
+          'Reference to a virtual network. Please refer to LogicalRouterType for additional details') -->
 
 <!--
     Link a logical router to a virtual network used for external connectivity.
