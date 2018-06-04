@@ -3044,6 +3044,15 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'Reference to a virtual network. Please refer to link attribute for additional details') -->
 
 <!--
+    Internal virtual network associated with Logical Router is used as the external gateway for source NAT support
+    (aka external gateway in OpenStack Neutron API) or as the L3VN for routing in evpn (aka evpn type-5 prefix based routing).
+-->
+<xsd:element name="logical-router-routing-mode" type="LogicalRouterVirtualNetworkEnumType" default='ExternalGateway'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('logical-router-routing-mode', 'logical-router', 'optional', 'CRUD',
+              'Logical router is used for SNAT or Type 5 EVPN.') -->
+
+<!--
     Link a logical router to a virtual network used for external connectivity.
 -->
 <xsd:element name="virtual-network-logical-router"/>
