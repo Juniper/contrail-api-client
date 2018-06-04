@@ -3024,8 +3024,10 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="ExternalGateway"
             description='Virtual network is used as external gateway for this logical router. This link will cause a SNAT to be spawned between all networks connected to logical router and external network.'/>
-        <xsd:enumeration value="InternalVirtualNetwork"
-            description='Virtual-network is used for EVPN Layer3 packets routing. This network is used to route packets from all children EVPN Layer2 networks linked this logical-router'/>
+        <xsd:enumeration value="InterBMSRouting"
+            description='Virtual-network is used for Inter BareMetalServer (BMS) Layer3 packets routing. This network is used to route packets from all children BMS linked this logical-router via physical-routers'/>
+        <xsd:enumeration value="EVpnType5Routing"
+            description='Virtual-network is used for EVPN Type5 Layer3 packets routing. This network is used to route packets from all children EVPN Layer2 networks linked this logical-router'/>
     </xsd:restriction>
 </xsd:simpleType>
 
