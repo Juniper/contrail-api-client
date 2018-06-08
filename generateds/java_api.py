@@ -112,22 +112,16 @@ import net.juniper.contrail.api.ApiPropertyBase;
                 file.write(member.membername)
             file.write(', ')
             for member in ctype.getDataMembers()[param_end:]:
-                if member.isComplex:
-                    file.write('null')
-                elif member.jtypename is 'boolean':
-                    file.write(member.default or 'false')
-                elif member.jtypename is 'String':
-                    default = 'null'
-                    if member.default:
+                default = 'null'
+                if member.default:
+                    if member.jtypename is 'Boolean':
+                        default = member.default
+                    elif member.jtypename is 'String':
                         default = quoted(member.default)
-                    file.write(default)
-                elif member.jtypename in ['Integer', 'Long']:
-                    default = 'null'
-                    if member.default:
+                    elif member.jtypename in ['Integer', 'Long']:
                         default = str(member.default)
-                    file.write(default)
-                else:
-                    file.write('null')
+                file.write(default)
+
                 if member != ctype.getDataMembers()[param_count-1]:
                     file.write(', ')
                 else:
