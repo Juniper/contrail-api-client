@@ -14,6 +14,8 @@
                      description="Vendor name"/>
         <xsd:element name="device-family" type="xsd:string" required="optional"
                      description="Device family name"/>
+        <xsd:element name="job-completion-weightage" type="xsd:integer" default='100'
+                     description="Job percentage completion when this playbook is completed. This atttribute value should 100 if there is only one playbook defined in the job template. The job-completion-weigtages for all playbooks in the same job-template should add up to 100 exact."/>
     </xsd:all>
 </xsd:complexType>
 
@@ -51,10 +53,28 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:complexType name="SerialNumListType">
+    <xsd:all>
+        <xsd:element name="serial-num" type="xsd:string" maxOccurs="unbounded"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="AsnRangeType">
+     <xsd:all>
+         <xsd:element name="asn_min" type="xsd:integer"/>
+         <xsd:element name="asn_max" type="xsd:integer"/>
+     </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="AsnRangesType">
+     <xsd:element name="asn-ranges" type="AsnRangeType" maxOccurs="unbounded"/>
+</xsd:complexType>
+
 <xsd:simpleType name="NamespaceType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="IPV4-CIDR"/>
          <xsd:enumeration value="ASN"/>
+         <xsd:enumeration value="ASN_RANGE"/>
          <xsd:enumeration value="MAC_ADDR"/>
          <xsd:enumeration value="SERIAL_NUM"/>
      </xsd:restriction>
@@ -66,6 +86,8 @@
              description="Namespace as IPV4 CIDR addresses"/>
         <xsd:element name="asn" type="AutonomousSystemsType" required="optional"
              description="Namespace as Autonomous System Numbers"/>
+        <xsd:element name="asn-range" type="AsnRangesType" required="optional"
+             description="Namespace as ASN ranges"/>
         <xsd:element name="mac-addr" type="MacAddressesType" required="optional"
              description="Namespace as MAC addresses"/>
         <xsd:element name="serial-num" type="xsd:string" required="optional" maxOccurs="unbounded"
@@ -109,6 +131,42 @@
          <xsd:enumeration value='route-reflector'/>
      </xsd:restriction>
 </xsd:simpleType>
+
+<xsd:simpleType name="PortType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="fc"/>
+         <xsd:enumeration value="ge"/>
+         <xsd:enumeration value="xe"/>
+         <xsd:enumeration value="xle"/>
+         <xsd:enumeration value="et"/>
+         <xsd:enumeration value="fte"/>
+         <xsd:enumeration value="me"/>
+         <xsd:enumeration value="em"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="PortSpeedType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="1G"/>
+         <xsd:enumeration value="10G"/>
+         <xsd:enumeration value="40G"/>
+         <xsd:enumeration value="100G"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="PortInfoType">
+     <xsd:all>
+         <xsd:element name="name" type="xsd:string"/>
+         <xsd:element name="port-type" type="PortType"/>
+         <xsd:element name="port-speed" type="PortSpeedType"/>
+         <xsd:element name="channelized" type="xsd:boolean" default="false"/>
+         <xsd:element name="channelized-port-speed" type="PortSpeedType"/>
+     </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="InterfaceMapType">
+     <xsd:element name="port-info" type="PortInfoType" maxOccurs="unbounded"/>
+</xsd:complexType>
 
 <xsd:complexType name="PhysicalRolesType">
      <xsd:element name="physical-role" type="PhysicalRouterRole" maxOccurs="unbounded"/>
@@ -234,6 +292,10 @@
 
 <xsd:element name="card" type="ifmap:IdentityType"
     description="This resource contains the information about the interface card in a hardware platform."/>
+<xsd:element name="interfacd-map" type="InterfaceMapType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('interface-map', 'card', 'required', 'CRUD',
+              'Interface map of all the physical ports on a physical interface card.') -->
 
 <xsd:element name="hardware-card"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -263,10 +325,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Link('global-system-config-node-profile', 'global-system-config', 'node-profile', ['has'], 'optional', 'CRUD',
              'list of node profiles supported by the system.') -->
-<xsd:element name="fabric-node-profile"/>
+<xsd:element name="fabric-node-profile" type='SerialNumListType'/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('fabric-node-profile', 'fabric', 'node-profile', ['ref'], 'optional', 'CRUD',
-             'node profiles assignd to the fabric.') -->
+             'node profiles assignd to the fabric. The serial number list on the link is used to auto assign node-profile during ZTP so that port channelization could be bootstrapped based on the hardware spec in the node profile.') -->
 <xsd:element name="physical-router-node-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('physical-router-node-profile', 'physical-router', 'node-profile', ['ref'], 'optional', 'CRUD',
