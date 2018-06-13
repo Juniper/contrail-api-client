@@ -34,7 +34,6 @@ setup(
     url='http://www.opencontrail.org/documentation/api/r4.1/',
     version=open('version.info', 'r+').read().strip('\n').strip('\t'),
     classifiers=[
-        'Environment :: OpenContrail',
         'Intended Audience :: Information Technology',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
