@@ -1644,6 +1644,10 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('ipam-subnet-method', 'network-ipam', 'optional', 'CRD',
               'Subnet method configuration for ipam, user can configure user-defined, flat or auto.') -->
+<xsd:element name='ipam-subnetting' type="xsd:boolean"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('ipam-subnetting', 'network-ipam', 'optional', 'CRD',
+              'This flag indicates if ipam subnets are carved out from a big subnet, default behavior is False.') -->
 <xsd:element name="project-network-ipam"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('project-network-ipam',
