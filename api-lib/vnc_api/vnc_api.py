@@ -71,12 +71,22 @@ def _read_cfg(cfg_parser, section, option, default):
 class CurlLogger(object):
     def __init__(self, log_file="/var/log/contrail/vnc-api.log"):
         if os.path.dirname(log_file):
+            # absolute path to log file provided
             self.log_file = log_file
+            # make sure the log dir exists.
+            try:
+                os.makdirs(os.path.dirname(log_file))
+            except OSError:
+                pass
+
         else:
+            # log file name provided
             self.log_file = os.path.join("/var/log/contrail", log_file)
+
         if not os.path.isdir(os.path.dirname(log_file)):
+            # create logs in the tmp directory
             self.log_file = os.path.join("/var/tmp/contrail_vnc_lib",
-                    self.log_file.basename())
+                    os.path.basename(self.log_file))
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s',
                                       datefmt='%Y/%m/%d %H:%M:%S')
         self.curl_logger = logging.getLogger('log_curl')
