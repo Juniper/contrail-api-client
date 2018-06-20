@@ -38,6 +38,8 @@ from exceptions import (
     ResourceTypeUnknownError, RequestSizeError, AuthFailed)
 import ssl_adapter
 
+DEFAULT_LOG_DIR = "/var/tmp/contrail_vnc_lib"
+
 
 def check_homepage(func):
     @functools.wraps(func)
@@ -71,12 +73,23 @@ def _read_cfg(cfg_parser, section, option, default):
 class CurlLogger(object):
     def __init__(self, log_file="/var/log/contrail/vnc-api.log"):
         if os.path.dirname(log_file):
+            # absolute path to log file provided
             self.log_file = log_file
         else:
+            # log file name provided
             self.log_file = os.path.join("/var/log/contrail", log_file)
-        if not os.path.isdir(os.path.dirname(log_file)):
-            self.log_file = os.path.join("/var/tmp/contrail_vnc_lib",
-                    self.log_file.basename())
+
+        # make sure the log dir exists.
+        if not os.path.exists(os.path.dirname(self.log_file)):
+            try:
+                os.makedirs(os.path.dirname(self.log_file))
+            except OSError:
+                # create logs in the tmp directory
+                if not os.path.exists(DEFAULT_LOG_DIR):
+                    os.makedirs(DEFAULT_LOG_DIR)
+                self.log_file = os.path.join(DEFAULT_LOG_DIR,
+                        os.path.basename(self.log_file))
+
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s',
                                       datefmt='%Y/%m/%d %H:%M:%S')
         self.curl_logger = logging.getLogger('log_curl')
