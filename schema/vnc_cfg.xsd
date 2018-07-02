@@ -1466,6 +1466,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
          <!-- Enable or disable Mirroring for virtual-network -->
          <xsd:element name='mirror-destination' type="xsd:boolean" default="false" required='optional'
              description='Flag to mark the virtual network as mirror destination network'/>
+        <xsd:element name='max-flows' type='xsd:integer' required='optional' description='Maximum number of flows permitted on each VMI of the VN'/>
+        <xsd:element name='max-flow-rate' type='xsd:integer' required='optional' description='Maximum flow rate in flows per second to be permitted on each VMI of the VN' />
     </xsd:all>
 </xsd:complexType>
 
