@@ -397,6 +397,19 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
     </xsd:all>
 </xsd:complexType>
 
+<xsd:complexType name="VendorHardwareType">
+   <xsd:all>
+       <xsd:element name="vendor" type="xsd:string"/>
+       <xsd:element name="hardware-platform" type="xsd:string"/>
+   </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="VendorHardwaresType">
+   <xsd:all>
+       <xsd:element name="vendor-hardware" type="VendorHardwareType" maxOccurs="unbounded" />
+   </xsd:all>
+</xsd:complexType>
+
 <xsd:simpleType name="IpamMethodType">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="dhcp" required='optional'
@@ -1025,6 +1038,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('supported-device-families', 'global-system-config', 'optional', 'CRUD',
               'List of all supported physical router device family names. Used by UI to show pick list.') -->
+
+<xsd:element name="supported-vendor-hardwares" type="VendorHardwaresType"/>
+<!--#IFMAP-SEMANTICS-IDL
+    Property('supported-vendor-hardwares', 'global-system-config', 'optional', 'CRUD',
+             'List of all supported vendor hardware platforms by the system. Used by UI to show pick list.') -->
 
 <xsd:element name="global-system-config-bgp-router"/>
 <!--#IFMAP-SEMANTICS-IDL
