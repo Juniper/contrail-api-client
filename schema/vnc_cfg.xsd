@@ -2048,6 +2048,10 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('service-health-check-ip', 'instance-ip', 'system-only', 'CRUD',
               'This instance ip is used as service health check source ip',) -->
+<xsd:element name="instance-ip-subnet" type="SubnetType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('instance-ip-subnet', 'instance-ip', 'optional', 'CRUD',
+              'Ip prefix/length of the subnet where instance-ip belongs.') -->
 <xsd:element name="instance-ip-virtual-network"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('instance-ip-virtual-network',
