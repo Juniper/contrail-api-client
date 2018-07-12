@@ -41,10 +41,11 @@
 </xsd:complexType>
 
 <xsd:complexType name="ActionUpdateType">
-    <xsd:element name="as-path"     type="ActionAsPathType"/>
-    <xsd:element name="community"   type="ActionCommunityType"/>
-    <xsd:element name="local-pref"  type="xsd:integer"/>
-    <xsd:element name="med"         type="xsd:integer"/>
+    <xsd:element name="as-path"         type="ActionAsPathType"/>
+    <xsd:element name="community"       type="ActionCommunityType"/>
+    <xsd:element name="extcommunity"    type="ActionCommunityType"/>
+    <xsd:element name="local-pref"      type="xsd:integer"/>
+    <xsd:element name="med"             type="xsd:integer"/>
 </xsd:complexType>
 
 <xsd:complexType name='TermActionListType'>
@@ -85,6 +86,8 @@
     <xsd:element name="community" type="xsd:string"/> <!-- DEPRECATED -->
     <xsd:element name="community-list" type="xsd:string" maxOccurs="unbounded"/>
     <xsd:element name="community-match-all" type="xsd:boolean"/>
+    <xsd:element name="extcommunity-list" type="xsd:string" maxOccurs="unbounded"/>
+    <xsd:element name="extcommunity-match-all" type="xsd:boolean"/>
 </xsd:complexType>
 
 <xsd:complexType name='PolicyTermType'>
