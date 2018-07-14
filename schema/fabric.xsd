@@ -256,11 +256,11 @@
           Property('supported-fabric-annotations', 'global-system-config', 'optional', 'CRUD',
               'List of supported annotations that can be used to annotate a Contrail Fabric. These annoations are used as directives, or hints to assign resources defined in namespaces to the network devices. For example, `igp-protocol: ospf` attribute could be used by the underlay provisioning playbook to choose which IGP protocol to use for the IP fabric.') -->
 
-<xsd:element name="fabric-physical-router"/>
+<xsd:element name="physical-router-fabric"/>
 <!--#IFMAP-SEMANTICS-IDL
-          Link('fabric-physical-router',
-             'fabric', 'physical-router', ['ref'], 'optional', 'CRUD',
-             'List of physical-routers that belongs to a fabric.') -->
+          Link('physical-router-fabric',
+             'physical-router', 'fabric', ['ref'], 'optional', 'CRUD',
+             'Fabric that this physical-router belongs to.') -->
 
 <xsd:element name="fabric-credentials" type="DeviceCredentialList"/>
 <!--#IFMAP-SEMANTICS-IDL
