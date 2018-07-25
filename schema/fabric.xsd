@@ -201,6 +201,13 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:simpleType name="JobConcurrencyLevelType">
+    <xsd:restriction base='xsd:string'>
+        <xsd:enumeration value='fabric'/>
+        <xsd:enumeration value='device'/>
+    </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:element name="job-template" type="ifmap:IdentityType"/>
 
 <xsd:element name="global-system-config-job-template"/>
@@ -213,6 +220,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-multi-device-job', 'job-template', 'required', 'CRUD',
               'if set to true, the "/execute-job" action url allows device list as additional parameter to run the job template on multiple device in one job') -->
+<xsd:element name="job-template-concurrency-level" type="JobConcurrencyLevelType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('job-template-concurrency-level', 'job-template', 'required', 'CRUD',
+              'This attribute controls the number concurrent job execution against the same fabric. When this attribute set to "fabric", there could only one job execution per fabric When this attribute set to "device", there could be only one playbook execution running against the same device at the time. ') -->
 <xsd:element name="job-template-playbooks" type="PlaybookInfoListType"/>
 <!--#IFMAP-SEMANTICS-IDL
           ListProperty('job-template-playbooks', 'job-template', 'required', 'CRUD',
@@ -238,6 +249,11 @@
               'JSON schema of the job output that describes the output from the job and could be used by UI to render the output automatically. This property stores the JSON schema content as string.') -->
 
 <xsd:element name="fabric" type="ifmap:IdentityType"/>
+
+<xsd:element name="fabric-ztp" type="xsd:boolean"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('fabric-ztp', 'global-system-config', 'optional', 'CRUD',
+              'This attribute to indicate if the fabric is zero-touch provisioned or not. If this attribute is set to "True", user should not be allowed to remove any existing namespaces from the fabric as they may be used to provision the devices.') -->
 
 <xsd:element name="fabric-virtual-network" type="FabricNetworkTag"/>
 <!--#IFMAP-SEMANTICS-IDL
