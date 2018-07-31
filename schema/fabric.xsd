@@ -124,6 +124,7 @@
      <xsd:restriction base='xsd:string'>
          <xsd:enumeration value='centrally-routed-bridging'/>
          <xsd:enumeration value='edge-routed-bridging'/>
+         <xsd:enumeration value='gateway'/>
          <xsd:enumeration value='route-reflector'/>
      </xsd:restriction>
 </xsd:simpleType>
