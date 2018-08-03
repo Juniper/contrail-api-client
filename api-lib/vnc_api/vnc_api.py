@@ -1055,7 +1055,7 @@ class VncApi(object):
                 retry_count -= 1
                 continue
 
-            if status in [200, 202]:
+            if status in [200, 201, 202]:
                 return content
 
             # Exception Response, see if it can be resolved
