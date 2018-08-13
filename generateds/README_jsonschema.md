@@ -4,18 +4,18 @@ In this document, we describe how to convert JSON Schema to XML and vise versa.
 
 ## Convert XMLSchema to JSON Schema
 
-```shell 
+```shell
  python generateDS.py -f -o $DESTINATION_DIR -g contrail-json-schema $PATH_TO_XMLSCHEMA 
 ```
 
 We will have types.json and $RESOURCE_NAME_schema.json In $DESTINATION_DIR.
 types.json contains sub types.
 
-## Convert JSON Schema to XMLSchema. 
+## Convert JSON Schema to XMLSchema.
 
-```shell 
+```shell
  python json_schema_convert.py $PATH_TO_JSONSCHEMA_DIR \
-    json_schema_template/xmlschema.tmpl > $PATH_TO_XMLSCHEMA 
+    json_schema_template/xmlschema.tmpl > $PATH_TO_XMLSCHEMA
 ```
 
 json_schema_convert.py accepts jinja2 template, so you can also generate codes using
@@ -23,7 +23,7 @@ jinja2 template.
 
 # Contrail JSON schema
 
-In order to generate code and database model, we extend JSON Schema using 
+In order to generate code and database model, we extend JSON Schema using
 following additional properties.
 
 - id resource ID
@@ -37,3 +37,7 @@ following additional properties.
 
 # Limitation
 Comments, Annotaion informations and description for enum element in the original schemas lost in JSONSchema output.
+
+# YAML format
+
+You can transform output json to yaml format using https://github.com/drbild/json2yaml
