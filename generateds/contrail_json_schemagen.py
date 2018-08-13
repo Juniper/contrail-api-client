@@ -67,8 +67,11 @@ class ContrailJsonSchemaGenerator(object):
 
             if prop.isMap():
                 subJson["collectionType"] = "map"
+                subJson["mapKey"] = prop.getMapKeyName()
+                subJson["wrapper"] = prop.isMapUsingWrapper()
             elif prop.isList():
                 subJson["collectionType"] = "list"
+                subJson["wrapper"] = prop.isListUsingWrapper()
 
             default = prop.getDefault()
             if default:
@@ -114,7 +117,7 @@ class ContrailJsonSchemaGenerator(object):
 
             reference = self._convertHyphensToUnderscores(link_to.getName())
             subJson = {
-                "operation": operation,
+                "operations": operation,
                 "presence": presence,
                 "description": description}
 
@@ -143,7 +146,7 @@ class ContrailJsonSchemaGenerator(object):
 
                 link_type = link_info[0]._xelement.type
                 subJson = {
-                    "operation": operation,
+                    "operations": operation,
                     "presence": presence,
                     "description": description
                 }
@@ -203,7 +206,7 @@ class ContrailJsonSchemaGenerator(object):
             else:
                 subJson = {
                     "type": "array",
-                    "item": self._getSubJS(dataMember.xsd_object.type, dataMember)
+                    "items": self._getSubJS(dataMember.xsd_object.type, dataMember)
                 }
             simple_type = dataMember.xsd_object.simpleType
             if simple_type:
@@ -219,6 +222,10 @@ class ContrailJsonSchemaGenerator(object):
 
     def generateRestrictions(self, simple_type, subJson):
         restrictions = None
+        # TODO(nati) fix why invalid data given here.
+        if simple_type == 1:
+            return
+
         if(self._parser.SimpleTypeDict.get(simple_type)):
             restriction_object = self._parser.SimpleTypeDict[simple_type]
             restrictions = restriction_object.values
