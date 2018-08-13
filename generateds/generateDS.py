@@ -1141,6 +1141,18 @@ if __name__ == '__main__':
     ##     root.show(sys.stdout, 0)
     ##     print '-' * 60
         #debug_show_elements(root)
+        parser.setContentHandler(dh)
+        if self.xschemaFileName == '-':
+            infile = sys.stdin
+        else:
+            infile = open(self.xschemaFileName, 'r')
+        if self.processIncludes:
+            import process_includes
+            outfile = StringIO.StringIO()
+            process_includes.process_include_files(infile, outfile,
+                inpath=self.xschemaFileName)
+            outfile.seek(0)
+            infile = outfile
         infile.seek(0)
         self._Generator.generate(root, infile, self.outFilename)
 
