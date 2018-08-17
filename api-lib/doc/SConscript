@@ -33,12 +33,14 @@ if any(os.access(os.path.join(path, 'sphinx-apidoc'), os.X_OK)
         Dir('.'), Glob('%s/api-lib/vnc_api/gen/contrail_openapi.rst' % env['TOP']))
     openapi_rule = env.Install(
         Dir('.'), Glob('%s/api-lib/vnc_api/gen/contrail_openapi.json' % env['TOP']))
+    version_rule = env.Install(
+        Dir('.'), Glob('#src/contrail-api-client/base/version.info'))
 
     html_gen_rule = env.Command('contrail-config', ['Makefile', 'conf.py'],
                                 'make -C %s html' % Dir('.').path)
     env.Depends(
         html_gen_rule,
-        [apidoc_rule, gendoc_rule, userdoc_rule, schema_rule, openapi_rule],
+        [apidoc_rule, gendoc_rule, userdoc_rule, schema_rule, openapi_rule, version_rule],
     )
 
     doc_sources_rules.append(env.Install("../vnc_api", Dir('.')))
