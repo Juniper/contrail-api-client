@@ -8,10 +8,11 @@ import sys
 import platform
 
 subdirs = [
-          'api-lib',
-          'schema'
-           ]
+    'schema'
+]
 
+if platform.system() != 'Windows':
+    subdirs += ['api-lib']
 
 include = ['#/controller/src', '#/build/include', '#src/contrail-common', '#controller/lib']
 
