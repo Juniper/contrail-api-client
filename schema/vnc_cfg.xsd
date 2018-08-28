@@ -1917,8 +1917,12 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Address ignored while creating flows, from the perspective of packets egressing the VM. For packets originated by VM, source and destination indicate the corresponding IPs in the packet. For packets coming from remote source, source indicates destination IP of the packet is ignored and destination indicates source IP of the packet is ignored.'/>
         <xsd:element name="source-prefix" type="SubnetType" required='optional'
             description='For packets originated from VM source-prefix is applied to source IP of the packet. For packets coming to VM, source-prefix is applied to destination IP of the packet' />
+        <xsd:element name="source-aggregate-prefix-length" type="xsd:integer" required='optional' 
+            description='Fat flow prefix mask length for IP where source-prefix is applied'/>
         <xsd:element name="destination-prefix" type="SubnetType" required='optional'
             description='For packets originated from VM destination-prefix is applied to destination IP of the packet. For packets coming to VM, destination-prefix is applied to source IP of the packet' />
+        <xsd:element name="destination-aggregate-prefix-length" type="xsd:integer" required='optional' 
+            description='Fat flow prefix mask length for IP where destination-prefix is applied'/>
     </xsd:all>
 </xsd:complexType>
 
