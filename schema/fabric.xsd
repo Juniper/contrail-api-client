@@ -224,6 +224,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-synchronous-job', 'job-template', 'required', 'CRUD',
               'if set to true, the "/execute-job" action simply executes the playbook directly and wait until the playbook finishes. So the playbook in the synchronous job should not take long to execute. There will no job log or job uve being created for synchronous job. This is an optional field. If not set, the default value is "false".') -->
+<xsd:element name="job-template-internal-job" type="xsd:boolean"/>
+<!--#IFMAP-SEMANTICS-IDL
+               Property('job-template-internal-job', 'job-template', 'required', 'CRUD',
+              'if set to true, the "/execute-job" action will not validate the input for fabric name or device list as DM triggered jobs have all the information in the req payload. This is an optional field. If not set, the default value is "false".') -->
 <xsd:element name="job-template-concurrency-level" type="JobConcurrencyLevelType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-concurrency-level', 'job-template', 'required', 'CRUD',
