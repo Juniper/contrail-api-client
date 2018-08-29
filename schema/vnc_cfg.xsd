@@ -3086,6 +3086,9 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!-- Userdefined Counter Config -->
 <xsd:include schemaLocation='usr_def_cntr.xsd'/>
 
+<!-- stats control  -->
+<xsd:include schemaLocation='stats_control.xsd'/>
+
 <!-- Firewall policy -->
 <xsd:include schemaLocation='firewall_policy.xsd'/>
 
