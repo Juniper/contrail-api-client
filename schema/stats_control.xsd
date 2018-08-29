@@ -1,0 +1,25 @@
+<!--
+ Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
+     -->
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<xsd:complexType name="StatsControlInfo">
+    <xsd:all>
+        <xsd:element name="name" type="xsd:string" required="true"
+                                        description="Name of the stat"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="StatsControlList">
+    <xsd:element name="statslist" type="StatsControlInfo"
+                                                    maxOccurs="unbounded"/>
+</xsd:complexType>
+
+<xsd:element name="stats-control" type="StatsControlList"
+    description_1='User will create some stats control info,'
+    description_2='identified by its name'/>
+<!--#IFMAP-SEMANTICS-IDL
+    MapProperty('stats-control', 'global-system-config', 'name',
+           'optional', 'CRUD', 'stats control name') -->
+</xsd:schema>
