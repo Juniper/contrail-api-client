@@ -2819,6 +2819,15 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'logical-router', 'route-table', ['ref'], 'optional', 'CRUD',
           'Reference to the route table attached to this logical router. By attaching route table, system will create static routes with the route target only of route targets linked to this logical router') -->
 
+<xsd:simpleType name="LogicalRouterGatewayRoles">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="DC-Gateway"
+            description='Logical router is used for connecting to DC-Gateway physical router.'/>
+        <xsd:enumeration value="CRB-Gateway"
+            description='Logical router is used for connecting to CRB-Gateway physical router.'/>
+    </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="LogicalRouterVirtualNetworkEnumType">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="ExternalGateway"
@@ -2841,6 +2850,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Link('logical-router-virtual-network',
           'logical-router', 'virtual-network', ['ref'], 'optional', 'CRUD',
           'Reference to a virtual network. Please refer to link attribute for additional details') -->
+
+<xsd:element name="logical-router-gateway-role" type="LogicalRouterGatewayRoles"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('logical-router-gateway-role', 'logical-router', 'required', 'CRUD',
+              'this logical router is used to connect to DC-gateway or CRB-gateway.') -->
 
 <!--
     Link a logical router to a virtual network used for external connectivity.
