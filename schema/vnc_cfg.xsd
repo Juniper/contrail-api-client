@@ -2838,6 +2838,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'logical-router', 'virtual-network', ['ref'], 'optional', 'CRUD',
           'Reference to a virtual network. Please refer to link attribute for additional details') -->
 
+<xsd:element name="logical-router-gateway-external" type="xsd:boolean"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('logical-router-gateway-external', 'logical-router', 'required', 'CRUD',
+              'this logical router is used for external connectivity or not.') -->
+
 <!--
     Link a logical router to a virtual network used for external connectivity.
 -->
