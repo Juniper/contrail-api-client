@@ -120,14 +120,6 @@
      </xsd:restriction>
 </xsd:simpleType>
 
-<xsd:simpleType name="RoutingBridgingRole">
-     <xsd:restriction base='xsd:string'>
-         <xsd:enumeration value='CRB-Gateway'/>
-         <xsd:enumeration value='CRB-Access'/>
-         <xsd:enumeration value='DC-Gateway'/>
-     </xsd:restriction>
-</xsd:simpleType>
-
 <xsd:simpleType name="InterfaceType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="fc"/>
@@ -164,12 +156,9 @@
      <xsd:element name="port-info" type="PortInfoType" maxOccurs="unbounded"/>
 </xsd:complexType>
 
-<xsd:complexType name="PhysicalRolesType">
-     <xsd:element name="physical-role" type="PhysicalRouterRole" maxOccurs="unbounded"/>
-</xsd:complexType>
-
-<xsd:complexType name="RoutingBridgingRolesType">
-    <xsd:element name="rb-role" type="RoutingBridgingRole" maxOccurs="unbounded"/>
+<xsd:complexType name="NodeProfileRoleType">
+     <xsd:element name="physical-role" type='xsd:string' />
+     <xsd:element name="rb-roles" type='xsd:string' maxOccurs="unbounded"/>
 </xsd:complexType>
 
 <xsd:complexType name="UserCredentials">
@@ -329,14 +318,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-device-family', 'node-profile', 'required', 'CRUD',
               'Device family name that this node profile can be used to match.') -->
-<xsd:element name="node-profile-physical-roles" type="PhysicalRolesType"/>
+<xsd:element name="node-profile-roles" type="NodeProfileRoleType" maxOccurs="unbounded"/>
 <!--#IFMAP-SEMANTICS-IDL
-          Property('node-profile-physical-roles', 'node-profile', 'required', 'CRUD',
-              'List of capable physical roles supported by the devices that matches one of the hardware list defined in this node profile.') -->
-<xsd:element name="node-profile-routing-bridging-roles" type="RoutingBridgingRolesType"/>
-<!--#IFMAP-SEMANTICS-IDL
-          Property('node-profile-routing-bridging-roles', 'node-profile', 'required', 'CRUD',
-              'List of capable routing/bridging roles supported by the devices that matches one of the hardware list defined in this node profile.') -->
+          Property('node-profile-roles', 'node-profile', 'required', 'CRUD',
+              'List of capable physical and routing-bridging role combinations supported by the devices that matches one of the hardware list defined in this node profile.') -->
 <xsd:element name="global-system-config-node-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('global-system-config-node-profile', 'global-system-config', 'node-profile', ['has'], 'optional', 'CRUD',
@@ -550,7 +535,7 @@
           Property('physical-router-role', 'physical-router', 'optional', 'CRUD',
               'Physical router role (e.g spine or leaf), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
 
-<xsd:element name="routing-bridging-roles" type="RoutingBridgingRolesType"/>
+<xsd:element name="routing-bridging-roles" type="xsd:string" maxOccurs="unbounded"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('routing-bridging-roles', 'physical-router', 'optional', 'CRUD',
               'Routing-bridging role (e.g. CRB, ERB, etc.), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
