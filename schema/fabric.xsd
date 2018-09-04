@@ -164,6 +164,11 @@
      <xsd:element name="port-info" type="PortInfoType" maxOccurs="unbounded"/>
 </xsd:complexType>
 
+<xsd:complexType name="NodeProfileRoleType">
+     <xsd:element name="physical-role" type='xsd:string' />
+     <xsd:element name="rb-roles" type='xsd:string' maxOccurs="unbounded"/>
+</xsd:complexType>
+
 <xsd:complexType name="PhysicalRolesType">
      <xsd:element name="physical-role" type="PhysicalRouterRole" maxOccurs="unbounded"/>
 </xsd:complexType>
@@ -329,6 +334,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-device-family', 'node-profile', 'required', 'CRUD',
               'Device family name that this node profile can be used to match.') -->
+<xsd:element name="node-profile-roles" type="NodeProfileRoleType" maxOccurs="unbounded"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-profile-roles', 'node-profile', 'required', 'CRUD',
+              'List of capable physical and routing-bridging role combinations supported by the devices that matches one of the hardware list defined in this node profile.') -->
 <xsd:element name="node-profile-physical-roles" type="PhysicalRolesType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-physical-roles', 'node-profile', 'required', 'CRUD',
