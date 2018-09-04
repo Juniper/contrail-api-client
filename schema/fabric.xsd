@@ -156,9 +156,17 @@
      <xsd:element name="port-info" type="PortInfoType" maxOccurs="unbounded"/>
 </xsd:complexType>
 
+<xsd:complexType name="RoutingBridgingRolesType">
+    <xsd:element name="rb-roles" type="xsd:string" maxOccurs="unbounded"/>
+</xsd:complexType>
+
+<xsd:complexType name="NodeProfileRolesType">
+    <xsd:element name="role-mappings" type="NodeProfileRoleType" maxOccurs="unbounded"/>
+</xsd:complexType>
+
 <xsd:complexType name="NodeProfileRoleType">
-     <xsd:element name="physical-role" type='xsd:string' />
-     <xsd:element name="rb-roles" type='xsd:string' maxOccurs="unbounded"/>
+     <xsd:element name="physical-role" type="xsd:string" />
+     <xsd:element name="rb-roles" type="xsd:string" maxOccurs="unbounded"/>
 </xsd:complexType>
 
 <xsd:complexType name="UserCredentials">
@@ -318,7 +326,7 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-device-family', 'node-profile', 'required', 'CRUD',
               'Device family name that this node profile can be used to match.') -->
-<xsd:element name="node-profile-roles" type="NodeProfileRoleType" maxOccurs="unbounded"/>
+<xsd:element name="node-profile-roles" type="NodeProfileRolesType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-roles', 'node-profile', 'required', 'CRUD',
               'List of capable physical and routing-bridging role combinations supported by the devices that matches one of the hardware list defined in this node profile.') -->
@@ -535,7 +543,7 @@
           Property('physical-router-role', 'physical-router', 'optional', 'CRUD',
               'Physical router role (e.g spine or leaf), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
 
-<xsd:element name="routing-bridging-roles" type="xsd:string" maxOccurs="unbounded"/>
+<xsd:element name="routing-bridging-roles" type="RoutingBridgingRolesType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('routing-bridging-roles', 'physical-router', 'optional', 'CRUD',
               'Routing-bridging role (e.g. CRB, ERB, etc.), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
