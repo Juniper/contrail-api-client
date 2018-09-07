@@ -65,6 +65,10 @@
     <!--#IFMAP-SEMANTICS-IDL
          Property('tag-value', 'tag', 'required', 'CR',
                  'Tag value string representation') -->
+    <xsd:element name="tag-predefined" type="xsd:boolean" default="false"/>
+    <!--#IFMAP-SEMANTICS-IDL
+         Property('tag-predefined', 'tag', 'optional', 'CR',
+                 'Tag delete boolean representation') -->
     <xsd:element name="tag-id" type="U32BitHexInt"/>
     <!--#IFMAP-SEMANTICS-IDL
         Property('tag-id', 'tag', 'optional', 'R',
