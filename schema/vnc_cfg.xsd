@@ -2899,6 +2899,30 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('database-node-ip-address', 'database-node', 'required', 'CRUD',
               'Ip address of the database node, set while provisioning.') -->
 
+<xsd:element name="analytics-alarm-node" type="ifmap:IdentityType"/>
+<xsd:element name="global-system-config-analytics-alarm-node"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('global-system-config-analytics-alarm-node',
+             'global-system-config', 'analytics-alarm-node', ['has'], 'admin-only', 'CRUD',
+             'Analytics node is object representing a logical node in system which serves operational API and analytics collector.') -->
+
+<xsd:element name="analytics-alarm-node-ip-address" type="IpAddressType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('analytics-alarm-node-ip-address', 'analytics-alarm-node', 'admin-only', 'CRUD',
+              'Ip address of the analytics alarm node, set while provisioning.') -->
+
+<xsd:element name="analytics-snmp-node" type="ifmap:IdentityType"/>
+<xsd:element name="global-system-config-analytics-snmp-node"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('global-system-config-analytics-snmp-node',
+             'global-system-config', 'analytics-snmp-node', ['has'], 'admin-only', 'CRUD',
+             'Analytics node is object representing a logical node in system which serves operational API and analytics collector.') -->
+
+<xsd:element name="analytics-snmp-node-ip-address" type="IpAddressType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('analytics-snmp-node-ip-address', 'analytics-snmp-node', 'admin-only', 'CRUD',
+              'Ip address of the analytics snmp node, set while provisioning.') -->
+
 <xsd:complexType name="KeyValuePair">
     <xsd:all>
         <xsd:element name="key" type="xsd:string"/>
