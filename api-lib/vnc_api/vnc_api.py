@@ -1442,8 +1442,17 @@ class VncApi(object):
                 do_post_for_list = True
 
         if fields:
+            if detail:
+                # when details is true, VNC API returns at least all properties
+                # and refs fields, don't need to specify them
+                fields = set(fields) & obj_class.backref_fields
+            else:
+                fields = (set(fields) & obj_class.prop_fields &
+                          obj_class.ref_fields & obj_class.backref_fields)
             comma_sep_fields = ','.join(f for f in fields)
             query_params['fields'] = comma_sep_fields
+        else:
+            fields = set()
 
         query_params['detail'] = detail
 
@@ -1494,6 +1503,17 @@ class VncApi(object):
             obj_dict = resource_dict['%s' % (obj_type)]
             resource_obj = obj_class.from_dict(**obj_dict)
             resource_obj.clear_pending_updates()
+            # if requested ref or backref field are not in the result, that
+            # means resource does not have ref/backref of that type. Set it to
+            # an empty list to prevent VNC client lib to call again VNC API
+            # when user uses the get ref/backref method on that type in the
+            # 'resource_client' file
+            empty_fields = fields - obj_class.prop_fields
+            if detail:
+                empty_fields |= obj_class.ref_fields
+            empty_fields -= set(obj_dict.keys())
+            for empty_field in empty_fields:
+                setattr(resource_obj, empty_field, None)
             resource_obj.set_server_conn(self)
             resource_objs.append(resource_obj)
 
