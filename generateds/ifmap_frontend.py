@@ -1164,7 +1164,8 @@ class IFMapApiGenerator(object):
                 write(gen_file, "    def get_%s_back_refs(self):" %(from_name))
                 write(gen_file, '        """Return list of all %ss using this %s"""' % (from_ident.getName(), ident.getName()))
                 write(gen_file, "        back_refs = super(%s, self).get_%s_back_refs()" %(class_name, from_name))
-                write(gen_file, "        if back_refs:")
+                write(gen_file, "        # Empty list means not back_ref to that resource type, don't nead to fetch the VNC API"
+                write(gen_file, "        if back_refs is not None:")
                 write(gen_file, "            return back_refs")
                 write(gen_file, "        # if object not created/read from lib can't service")
                 write(gen_file, "        svr_conn = self._server_conn")
