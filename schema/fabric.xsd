@@ -245,7 +245,7 @@
 
 <xsd:element name="fabric-ztp" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
-          Property('fabric-ztp', 'global-system-config', 'optional', 'CRUD',
+          Property('fabric-ztp', 'fabric', 'optional', 'CRUD',
               'This attribute to indicate if the fabric is zero-touch provisioned or not. If this attribute is set to "True", user should not be allowed to remove any existing namespaces from the fabric as they may be used to provision the devices.') -->
 
 <xsd:element name="fabric-virtual-network" type="FabricNetworkTag"/>
