@@ -1477,8 +1477,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
          <!-- Enable or disable Mirroring for virtual-network -->
          <xsd:element name='mirror-destination' type="xsd:boolean" default="false" required='optional'
              description='Flag to mark the virtual network as mirror destination network'/>
-        <xsd:element name='max-flows' type='xsd:integer' required='optional' description='Maximum number of flows permitted on each VMI of the VN'/>
-        <xsd:element name='max-flow-rate' type='xsd:integer' required='optional' description='Maximum flow rate in flows per second to be permitted on each VMI of the VN' />
+        <xsd:element name='max-flows' type='xsd:integer' default='0' required='optional' description='Maximum number of flows permitted on each VMI of the VN'/>
     </xsd:all>
 </xsd:complexType>
 
@@ -1853,6 +1852,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='BGP route local preference for routes representing this interface, higher value is higher preference'/>
         <xsd:element name="sub-interface-vlan-tag" type="xsd:integer" required='optional'
              description='802.1Q VLAN tag to be used if this interface is sub-interface for some other interface.'/>
+        <xsd:element name="max-flows" type="xsd:integer" default='0' required='optional'
+             description='Maximum number of flows permitted on VMI'/>
     </xsd:all>
 </xsd:complexType>
 
