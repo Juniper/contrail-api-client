@@ -1006,6 +1006,16 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('plugin-tuning', 'global-system-config', 'optional', 'CRUD',
               'Various Orchestration system plugin(interface) parameters, like Openstack Neutron plugin.') -->
 
+<xsd:element name="data-center-inter-connect-loopback-namespace" type="SubnetListType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('data-center-inter-connect-loopback-namespace', 'global-system-config', 'optional', 'CRUD',
+              'Used for assigning loopback addresses on interconnect physical devices.') -->
+
+<xsd:element name="data-center-inter-connect-asn-namespace" type="AsnRangeType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('data-center-inter-connect-asn-namespace', 'global-system-config', 'optional', 'CRUD',
+              'Used for assigning asn values on interconnect physical devices.') -->
+
 <xsd:element name="ibgp-auto-mesh" type="xsd:boolean" default='true'/>
 <!-- Automatically create an iBGP mesh if set to True -->
 <!--#IFMAP-SEMANTICS-IDL

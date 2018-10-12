@@ -252,6 +252,30 @@
           Property('job-template-output-schema', 'job-template', 'optional', 'CRUD',
               'JSON schema of the job output that describes the output from the job and could be used by UI to render the output automatically. This property stores the JSON schema content as string.') -->
 
+<xsd:element name="data-center-interconnect" type="ifmap:IdentityType"/>
+
+<xsd:element name="data-center-interconnect-logical-router"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('data-center-interconnect-logical-router',
+             'data-center-interconnect', 'logical-router', ['ref'], 'optional', 'CRUD',
+             'List of LRs one from each fabric participating in the DCI, each LR belongs to different fabric') -->
+
+<xsd:element name="data-center-interconnect-bgp-hold-time" type="BgpHoldTime"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('data-center-interconnect-bgp-hold-time', 'data-center-interconnect', 'optional', 'CRUD',
+              'BGP hold time in seconds [0-65535], Max time to detect liveliness to peer. Value 0 will result in default value of 90 seconds.') -->
+
+<xsd:element name="data-center-interconnect-bgp-address-families" type="AddressFamilies"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('data-center-interconnect-bgp-address-families', 'data-center-interconnect', 'optional', 'CRUD',
+              'BGP address families supported by BGP router.') -->
+
+<xsd:element name="global-system-config-data-center-interconnect"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-fabric',
+             'global-system-config', 'data-center-interconnect', ['has'], 'optional', 'CRUD',
+             'List of DCI Objects in the system. Each DCI represents an interconnect of Multiple Fabrics.') -->
+
 <xsd:element name="fabric" type="ifmap:IdentityType"/>
 
 <xsd:element name="fabric-ztp" type="xsd:boolean"/>
