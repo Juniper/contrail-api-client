@@ -1006,6 +1006,16 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('plugin-tuning', 'global-system-config', 'optional', 'CRUD',
               'Various Orchestration system plugin(interface) parameters, like Openstack Neutron plugin.') -->
 
+<xsd:element name="data-center-inter-connect-loopback-namespace" type="SubnetListType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('data-center-inter-connect-loopback-namespace', 'global-system-config', 'optional', 'CRUD',
+              'Used for assigning loopback addresses on interconnect physical devices.') -->
+
+<xsd:element name="data-center-inter-connect-asn-namespace" type="AsnRangeType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('data-center-inter-connect-asn-namespace', 'global-system-config', 'optional', 'CRUD',
+              'Used for assigning asn values on interconnect physical devices.') -->
+
 <xsd:element name="ibgp-auto-mesh" type="xsd:boolean" default='true'/>
 <!-- Automatically create an iBGP mesh if set to True -->
 <!--#IFMAP-SEMANTICS-IDL
@@ -2867,6 +2877,18 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
     Link('logical-router-physical-router',
          'logical-router', 'physical-router', ['ref'], 'optional', 'CRUD',
          'Reference to physical router, when this link is present device manager configures logical router associated route targets/interfaces on the Physical Router.') -->
+
+<xsd:element name="logical-router-fabric"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('logical-router-fabric',
+             'logical-router', 'fabric', ['ref'], 'optional', 'CRUD',
+             'Only for administrative restrictions (e.g. now allowing LR to be extended to all PR of all fabrics') -->
+
+<xsd:element name="virtual-network-fabric"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('virtual-network-fabric',
+             'virtual-network', 'fabric', ['ref'], 'optional', 'CRUD',
+             'Only for administrative restrictions (e.g. now allowing VN to be extended to all PR of all fabrics') -->
 
 <xsd:element name="config-node" type="ifmap:IdentityType"/>
 <xsd:element name="global-system-config-config-node"/>
