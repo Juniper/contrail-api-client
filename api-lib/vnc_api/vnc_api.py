@@ -779,7 +779,7 @@ class VncApi(object):
     # end _object_update
 
     @check_homepage
-    def _objects_list(self, res_type, parent_id=None, parent_fq_name=None,
+    def _objects_list_object(self, res_type, parent_id=None, parent_fq_name=None,
                       obj_uuids=None, back_ref_id=None, fields=None,
                       detail=False, count=False, filters=None, shared=False,
                       fq_names=None):
@@ -1195,6 +1195,17 @@ class VncApi(object):
     def prop_map_get(self, obj_uuid, obj_field, position=None):
         return self._prop_collection_get(obj_uuid, obj_field, position)
     # end prop_list_get
+
+    @check_homepage
+    def job_status_http_get(self, execution_id):
+        if execution_id is None:
+            raise ValueError("Execution id must be specified")
+
+        uri = self._action_uri['job-status']
+        params = {'execution_id' : execution_id}
+
+        content = self._request_server(OP_GET, uri, data=params)
+        return content
 
     @check_homepage
     def execute_job(self, job_template_fq_name=None, job_template_id=None,
