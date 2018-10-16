@@ -1197,6 +1197,17 @@ class VncApi(object):
     # end prop_list_get
 
     @check_homepage
+    def job_status(self, execution_id):
+        if execution_id is None:
+            raise ValueError("Execution id must be specified")
+
+        uri = self._action_uri['job-status']
+        params = {'execution_id' : execution_id}
+
+        content = self._request_server(OP_GET, uri, data=params)
+        return content
+
+    @check_homepage
     def execute_job(self, job_template_fq_name=None, job_template_id=None,
                     job_input=None, device_list=None):
         if job_template_fq_name is None and job_template_id is None:
