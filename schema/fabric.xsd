@@ -378,11 +378,6 @@
          Link('physical-router-device-image', 'physical-router', 'device-image', ['ref'], 'optional', 'CRUD',
          'Intended device image for this PRouter. Each PRouter can have one and only one device image assigned. If this image is successfully installed on the PRouter, the PRouterUVE.os_version should match the os-version property of the image') -->
 
-<xsd:element name="physical-router-link-aggregation-group"/>
-<!--#IFMAP-SEMANTICS-IDL
-         Link('physical-router-link-aggregation-group', 'physical-router', 'link-aggregation-group', ['has'], 'optional', 'CRUD',
-         'List of link aggregation groups on this PRouter.') -->
-
 <xsd:element name="physical-interface" type="ifmap:IdentityType"/>
 <xsd:element name="ethernet-segment-identifier" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -482,14 +477,26 @@
               'sha1 checksum of the image file that was uploaded to the image server.') -->
 
 <xsd:element name="link-aggregation-group" type="ifmap:IdentityType"/>
+
+<xsd:element name="fabric-link-aggregation-group"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Link('fabric-link-aggregation-group', 'fabric', 'link-aggregation-group', ['has'], 'optional', 'CRUD',
+         'List of link aggregation groups in this fabric.') -->
+
 <xsd:element name="link-aggregation-group-lacp-enabled" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('link-aggregation-group-lacp-enabled', 'link-aggregation-group', 'required', 'CRUD',
               'Flag to turn on or off Link Aggregation Control Protocol (LACP) on this link aggregation group.') -->
+
 <xsd:element name="link-aggregation-group-physical-interface"/>
 <!--#IFMAP-SEMANTICS-IDL
          Link('link-aggregation-group-physical-interface', 'link-aggregation-group', 'physical-interface', ['ref'], 'optional', 'CRUD',
-         'All the interfaces that belongs to the LAG. There should be exact one ref edge that points to the lag interface and two or more ref-edges points to the regular interfaces.') -->
+         'All the physical interfaces that belong to this link aggregation group. The physical interface could belong to the same or different physical router') -->
+
+<xsd:element name="link-aggregation-group-virtual-machine-interface"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Link('link-aggregation-group-virtual-machine-interface', 'link-aggregation-group', 'virtual-machine-interface', ['ref'], 'optional', 'CRUD',
+         'list of virtual machine interfaces connected to this link aggregation group') -->
 
 <xsd:element name="logical-interface-type" type="LogicalInterfaceType"/>
 <!--#IFMAP-SEMANTICS-IDL
