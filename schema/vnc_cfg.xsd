@@ -2572,6 +2572,12 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!-- #IFMAP-SEMANTICS-IDL
      Property('service-template-properties', 'service-template', 'required', 'CRUD',
               'Service template configuration parameters.')-->
+
+<xsd:element name="service-config-managed" type='xsd:boolean' default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('service-config-managed', 'service-template', 'optional', 'CRUD',
+              'Enable whether service config for PNFs needs to be managed by Contrail') -->
+
 <xsd:element name='service-template' type='ifmap:IdentityType'/>
 <xsd:element name='domain-service-template'/>
 <!-- #IFMAP-SEMANTICS-IDL
@@ -2620,6 +2626,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'bgp:route-aggregate', 'service-instance', ['ref'], 'optional', 'CRUD',
           'Reference to route-aggregate policy attached to (service instance, interface).') -->
 
+<xsd:element name="service-instance-bgp-enabled" type='xsd:boolean' default='true'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('service-instance-bgp-enabled', 'service-instance', 'optional', 'CRUD',
+              'Enable BGP routing for this service instance') -->
+
 <xsd:element name='port-tuple' type='ifmap:IdentityType'/>
 
 <xsd:element name='service-instance-port-tuple'/>
@@ -2637,6 +2648,16 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           ['Ordered set of references to the interfaces in this port tuple.',
            'Order is same as specified in the service interface.',
            'example (left, right, management, other1).']) -->
+
+<xsd:element name="port-tuple-logical-router"/>
+<!-- #IFMAP-SEMANTICS-IDL
+     Link('port-tuple-logical-router', 'port-tuple', 'logical-router', ['ref'], 'optional', 'CRUD',
+          'list of tenant logical routers to be attached to the service left or right attachment point') -->
+
+<xsd:element name="port-tuple-physical-interface"/>
+<!-- #IFMAP-SEMANTICS-IDL
+     Link('port-tuple-physical-interface', 'port-tuple', 'physical-interface', ['ref'], 'optional', 'CRUD',
+          'list of physical interfaces from the spine devices that connects to PNF for the left or right service attachment point') -->
 
 <xsd:element name="virtual-DNS"        type="ifmap:IdentityType"/>
 <xsd:element name="domain-virtual-DNS"/>
