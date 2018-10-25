@@ -2616,6 +2616,17 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
            'Order is same as specified in the service interface.',
            'example (left, right, management, other1).']) -->
 
+<xsd:element name="port-tuple-logical-router"/>
+<!-- #IFMAP-SEMANTICS-IDL
+     Link('port-tuple-logical-router', 'logical-router',
+          'port-tuple', ['ref'], 'optional', 'CRUD',
+          'list of tenant logical routers to be attached to the service left or right attachment point') -->
+
+<xsd:element name="port-tuple-physical-interface"/>
+<!-- #IFMAP-SEMANTICS-IDL
+     Link('port-tuple-logical-router', 'port-tuple', 'physical-interface', ['ref'], 'optional', 'CRUD',
+          'list of physical interfaces from the spine devices that connects to PNF for the left or right service attachment point') -->
+
 <xsd:element name="virtual-DNS"        type="ifmap:IdentityType"/>
 <xsd:element name="domain-virtual-DNS"/>
 <!--#IFMAP-SEMANTICS-IDL

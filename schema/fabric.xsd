@@ -117,6 +117,7 @@
          <xsd:enumeration value='e2-provider'/>
          <xsd:enumeration value='e2-internet'/>
          <xsd:enumeration value='e2-vrr'/>
+         <xsd:enumeration value='pnf'/>
      </xsd:restriction>
 </xsd:simpleType>
 
