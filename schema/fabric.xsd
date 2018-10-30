@@ -205,6 +205,14 @@
     </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="JobTemplateType">
+    <xsd:restriction base='xsd:string'>
+        <xsd:enumeration value='workflow'/>
+        <xsd:enumeration value='device_operation'/>
+        <xsd:enumeration value='config'/>
+    </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:element name="job-template" type="ifmap:IdentityType"/>
 
 <xsd:element name="global-system-config-job-template"/>
@@ -221,6 +229,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-synchronous-job', 'job-template', 'required', 'CRUD',
               'if set to true, the "/execute-job" action simply executes the playbook directly and wait until the playbook finishes. So the playbook in the synchronous job should not take long to execute. There will no job log or job uve being created for synchronous job. This is an optional field. If not set, the default value is "false".') -->
+<xsd:element name="job-template-type" type="JobTemplateType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('job-template-type', 'job-template', 'required', 'CRUD',
+              'This attribute is to identify the template type. This property is mainly needed to list all generic device operations in the UI. There are at present 4 types. Workflow based (e.g. fabric onboarding, existing fabric onboarding), device operation based (standalone like e.g. device discovery, device import, discover role), config based (e.g. role_assignment, fabric_config) and device command based (for generic device operations)') -->
 <xsd:element name="job-template-concurrency-level" type="JobConcurrencyLevelType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-concurrency-level', 'job-template', 'required', 'CRUD',
