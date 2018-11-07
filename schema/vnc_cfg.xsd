@@ -1053,6 +1053,19 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              'global-system-config', 'bgp-router', ['ref'], 'required', 'R',
              'List of references to all bgp routers in systems.') -->
 
+<xsd:element name="control-node-zone" type="ifmap:IdentityType"/>
+<xsd:element name="bgp-router-control-node-zone"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('bgp-router-control-node-zone',
+          'bgp-router', 'control-node-zone', ['ref'], 'optional', 'CRUD',
+          'This bgp-router belongs to the referenced control-node-zone.') -->
+
+<xsd:element name="global-system-config-control-node-zone"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('global-system-config-control-node-zone',
+             'global-system-config', 'control-node-zone', ['has'], 'optional', 'CRUD',
+             'List of references to all control-node-zones in systems.') -->
+
 <xsd:complexType name="BGPaaServiceParametersType">
     <xsd:element name="port-start" type="L4PortType" default="50000"/>
     <xsd:annotation>
