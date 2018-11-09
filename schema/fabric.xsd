@@ -269,7 +269,7 @@
 
 <xsd:element name="global-system-config-data-center-interconnect"/>
 <!--#IFMAP-SEMANTICS-IDL
-          Link('global-system-config-fabric',
+          Link('global-system-config-data-center-interconnect',
              'global-system-config', 'data-center-interconnect', ['has'], 'optional', 'CRUD',
              'List of DCI Objects in the system. Each DCI represents an interconnect of Multiple Fabrics.') -->
 
