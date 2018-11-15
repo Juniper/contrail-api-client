@@ -34,16 +34,26 @@
     <xsd:element name='community' type='CommunityAttribute' maxOccurs='unbounded'/>
 </xsd:complexType>
 
+<xsd:complexType name='ExtCommunityListType'>
+    <xsd:element name='community' type="xsd:string" maxOccurs='unbounded'/>
+</xsd:complexType>
+
 <xsd:complexType name="ActionCommunityType">
     <xsd:element name='add'    type='CommunityListType'/>
     <xsd:element name='remove' type='CommunityListType'/>
     <xsd:element name='set'    type='CommunityListType'/>
 </xsd:complexType>
 
+<xsd:complexType name="ActionExtCommunityType">
+    <xsd:element name='add'    type='ExtCommunityListType'/>
+    <xsd:element name='remove' type='ExtCommunityListType'/>
+    <xsd:element name='set'    type='ExtCommunityListType'/>
+</xsd:complexType>
+
 <xsd:complexType name="ActionUpdateType">
     <xsd:element name="as-path"         type="ActionAsPathType"/>
     <xsd:element name="community"       type="ActionCommunityType"/>
-    <xsd:element name="extcommunity"    type="ActionCommunityType"/>
+    <xsd:element name="extcommunity"    type="ActionExtCommunityType"/>
     <xsd:element name="local-pref"      type="xsd:integer"/>
     <xsd:element name="med"             type="xsd:integer"/>
 </xsd:complexType>
