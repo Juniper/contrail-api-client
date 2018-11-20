@@ -1817,6 +1817,13 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('virtual-machine-interface-allowed-address-pairs',
              'virtual-machine-interface', 'optional', 'CRUD',
              'List of (IP address, MAC) other than instance ip on this interface.') -->
+
+<xsd:element name="port-link-aggregation-group-id"
+                                                type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('port-link-aggregation-group-id',
+             'virtual-machine-interface', 'optional', 'CRUD',
+             'id of a LAG that this VMI belongs. It's intend to use for backend use.') -->
 <xsd:complexType name="VrfAssignRuleType">
     <xsd:all>
         <xsd:element name="match-condition" type="MatchConditionType"/>
