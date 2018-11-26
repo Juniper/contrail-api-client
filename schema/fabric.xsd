@@ -16,6 +16,8 @@
                      description="Device family name"/>
         <xsd:element name="job-completion-weightage" type="xsd:integer" default='100'
                      description="Job percentage completion when this playbook is completed. This atttribute value should 100 if there is only one playbook defined in the job template. The job-completion-weigtages for all playbooks in the same job-template should add up to 100 exact."/>
+        <xsd:element name="retry" type="xsd:boolean" default="false"
+                     description="If set to true, the playbook gets retried if the playbook output contains the output parameter 'retry-devices'"/>
     </xsd:all>
 </xsd:complexType>
 
