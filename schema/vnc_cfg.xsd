@@ -1053,6 +1053,29 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              'global-system-config', 'bgp-router', ['ref'], 'required', 'R',
              'List of references to all bgp routers in systems.') -->
 
+<xsd:simpleType name="BgpaasControlNodeZoneType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="primary"/>
+        <xsd:enumeration value="secondary"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="BgpaasControlNodeZoneAttributes">
+    <xsd:all>
+        <xsd:element name='bgpaas-control-node-zone-type'
+            type='BgpaasControlNodeZoneType'
+            required='optional' operations='CRUD'
+            description="Specifies BgpaasControlNodeZone type.
+            primary for x.x.x.1 ip and secondary for x.x.x.2 ip"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:element name="bgpaas-control-node-zone" type="BgpaasControlNodeZoneAttributes"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('bgpaas-control-node-zone',
+          'bgp-as-a-service', 'control-node-zone', ['ref'], 'optional', 'CRUD',
+          'Reference to control-node-zone for bgp-peer selection') -->
+
 <xsd:element name="control-node-zone" type="ifmap:IdentityType"/>
 <xsd:element name="bgp-router-control-node-zone"/>
 <!--#IFMAP-SEMANTICS-IDL
