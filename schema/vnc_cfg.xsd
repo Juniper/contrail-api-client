@@ -1053,6 +1053,31 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              'global-system-config', 'bgp-router', ['ref'], 'required', 'R',
              'List of references to all bgp routers in systems.') -->
 
+<xsd:simpleType name="BGPaaSControlNodeZoneType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="primary"/>
+        <xsd:enumeration value="secondary"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="BGPaaSControlNodeZoneAttributes">
+    <xsd:all>
+        <xsd:element name='bgpaas-control-node-zone-type'
+            type='BGPaaSControlNodeZoneType'
+            required='optional' operations='CRUD'
+            description="Specifies BGPaaSControlNodeZoneType. If bgpaas uses
+            x.x.x.1 ip for peering, BGPaaSControlNodeZoneType should be set to
+            primary. If it is x.x.x.2 ip for peering, BGPaaSControlNodeZoneType
+            should be secondary"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:element name="bgpaas-control-node-zone" type="BGPaaSControlNodeZoneAttributes"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('bgpaas-control-node-zone',
+          'bgp-as-a-service', 'control-node-zone', ['ref'], 'optional', 'CRUD',
+          'Reference to control-node-zone for bgp-peer selection') -->
+
 <xsd:element name="control-node-zone" type="ifmap:IdentityType"/>
 <xsd:element name="bgp-router-control-node-zone"/>
 <!--#IFMAP-SEMANTICS-IDL
