@@ -265,6 +265,14 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-input-ui-schema', 'job-template', 'optional', 'CRUD',
               'UI JSON schema of the job input that could be used by UI to render the input form with certain nice-to-have features like ordering of the input fields, placeholders etc. This property stores the UI JSON schema content as string.') -->
+<xsd:element name="job-template-output-ui-schema" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('job-template-output-ui-schema', 'job-template', 'optional', 'CRUD',
+              'UI JSON schema of the job output that could be used by UI to render the input form with certain nice-to-have features like ordering of the output fields etc. This property stores the UI JSON schema content as string.') -->
+<xsd:element name="description" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('description', 'job-template', 'optional', 'CRUD',
+              'A detailed description of what the job template functionality is') -->
 
 <xsd:element name="data-center-interconnect" type="ifmap:IdentityType"/>
 
