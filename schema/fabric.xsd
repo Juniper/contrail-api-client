@@ -621,4 +621,30 @@
           Property('physical-router-snmp-credentials', 'physical-router', 'optional', 'CRUD',
               'SNMP credentials for the physical router used by SNMP collector.') -->
 
+<xsd:simpleType name="NodeType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="private"/>
+        <xsd:enumeration value="baremetal"/>
+        <xsd:enumeration value="esxi"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name="node" type="ifmap:IdentityType"
+             description="This resource represents the end systems in the network, such as servers"/>
+<xsd:element name="node-type" type="NodeType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-type', 'node', 'optional', 'CRUD', 'Type of the node, such as bms, esxi, etc.') -->
+
+<xsd:element name="port" type="ifmap:IdentityType"
+             description="This resource represents the physical port of an end system, such as server"/>
+
+<xsd:element name="node-port"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('node-port', 'node', 'port', ['has'], 'optional', 'CRUD',
+             'This link represents all physical ports that belongs to a node') -->
+
+<xsd:element name="physical-interface-port"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-interface-port', 'physical-interface', 'port', ['ref'], 'optional', 'CRUD',
+             'This link represents physical connection from access port of a switch to the server') -->
 </xsd:schema>
