@@ -619,6 +619,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='timestamp when subnet object gets updated'/>
         <xsd:element name="subscriber-tag" type="xsd:string" required='optional'
           description='This represents subscribers assigned ip addresses from this subnet for fabric peer network'/>
+        <xsd:element name="vlan-tag" type="xsd:integer" required='optional'
+                     description='vlan this subnet belongs to'/>
     </xsd:all>
 </xsd:complexType>
 

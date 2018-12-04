@@ -150,6 +150,8 @@
          <xsd:element name="port-speed" type="PortSpeedType"/>
          <xsd:element name="channelized" type="xsd:boolean" default="false"/>
          <xsd:element name="channelized-port-speed" type="PortSpeedType"/>
+         <xsd:element name="port-group" type="xsd:string"/>
+         <xsd:element name="labels" type="xsd:string" maxOccurs="unbounded"/>
      </xsd:all>
 </xsd:complexType>
 
@@ -362,7 +364,8 @@
 
 <xsd:element name="card" type="ifmap:IdentityType"
     description="This resource contains the information about the interface card in a hardware platform."/>
-<xsd:element name="interfacd-map" type="InterfaceMapType"/>
+
+<xsd:element name="interface-map" type="InterfaceMapType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('interface-map', 'card', 'required', 'CRUD',
               'Interface map of all the physical ports on a physical interface card.') -->
@@ -642,4 +645,43 @@
           Property('physical-router-snmp-credentials', 'physical-router', 'optional', 'CRUD',
               'SNMP credentials for the physical router used by SNMP collector.') -->
 
+<xsd:simpleType name="NodeType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="private"/>
+        <xsd:enumeration value="baremetal"/>
+        <xsd:enumeration value="esxi"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name="node" type="ifmap:IdentityType"
+             description="This resource represents the end systems in the network, such as servers"/>
+
+<xsd:element name="global-system-config-node"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-node',
+               'global-system-config', 'node', ['has'], 'optional', 'CRUD', 'List of server nodes in the system.') -->
+<xsd:element name="node-type" type="NodeType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-type', 'node', 'required', 'CRUD', 'Type of the node, such as bms, esxi, etc.') -->
+
+<xsd:element name="node-hostname" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-hostname', 'node', 'optional', 'CRUD', 'hostname of the node') -->
+
+<xsd:element name="port" type="ifmap:IdentityType"
+             description="This resource represents the physical port of an end system, such as server"/>
+
+<xsd:element name="port-mac" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('port-mac', 'port', 'optional', 'CRUD', 'MAC address of the port') -->
+
+<xsd:element name="node-port"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('node-port', 'node', 'port', ['has'], 'optional', 'CRUD',
+             'This link represents all physical ports that belongs to a node') -->
+
+<xsd:element name="physical-interface-port"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-interface-port', 'physical-interface', 'port', ['ref'], 'optional', 'CRUD',
+             'This link represents physical connection from access port of a switch to the server port') -->
 </xsd:schema>
