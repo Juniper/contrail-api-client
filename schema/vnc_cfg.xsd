@@ -778,7 +778,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='List of plugin specific properties (property, value)'/>
     </xsd:all>
 </xsd:complexType>
-  
+
 <xsd:element name="id-perms" type="IdPermsType"/>
 <!--#IFMAP-SEMANTICS-IDL Property('id-perms', 'all', 'system-only', 'R',
                                   'System maintained identity, time  and permissions data.') -->
@@ -831,22 +831,28 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Maximum number of security groups'/>
         <xsd:element name="security-group-rule" type="xsd:integer" required='optional'
              description='Maximum number of security group rules'/>
-	<xsd:element name="subnet" type="xsd:integer" required='optional'
+        <xsd:element name="subnet" type="xsd:integer" required='optional'
              description='Maximum number of subnets'/>
-	<xsd:element name="global-vrouter-config" type="xsd:integer" required='optional'
+        <xsd:element name="global-vrouter-config" type="xsd:integer" required='optional'
              description='Maximum number of global vrouter configs'/>
-	<xsd:element name="loadbalancer-pool" type="xsd:integer" required='optional'
+        <xsd:element name="loadbalancer-pool" type="xsd:integer" required='optional'
              description='Maximum number of loadbalancer pools'/>
-	<xsd:element name="loadbalancer-member" type="xsd:integer" required='optional'
+        <xsd:element name="loadbalancer-member" type="xsd:integer" required='optional'
              description='Maximum number of loadbalancer member'/>
-	<xsd:element name="loadbalancer-healthmonitor" type="xsd:integer" required='optional'
+        <xsd:element name="loadbalancer-healthmonitor" type="xsd:integer" required='optional'
              description='Maximum number of loadbalancer health monitors'/>
-	<xsd:element name="virtual-ip" type="xsd:integer" required='optional'
+        <xsd:element name="virtual-ip" type="xsd:integer" required='optional'
              description='Maximum number of virtual ips'/>
         <xsd:element name="security-logging-object" type="xsd:integer" required='optional'
              description='Maximum number of security logging objects'/>
         <xsd:element name="route-table" type="xsd:integer" required='optional'
              description='Maximum number of route tables'/>
+        <xsd:element name="application-policy-set" type="xsd:integer" required='optional'
+             description='Maximum number of application policy set'/>
+        <xsd:element name="firewall-policy" type="xsd:integer" required='optional'
+             description='Maximum number of firewall policy'/>
+        <xsd:element name="firewall-rule" type="xsd:integer" required='optional'
+             description='Maximum number of firewall rule'/>
     </xsd:all>
 </xsd:complexType>
 
@@ -1936,8 +1942,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Allowed address pairs, list of (IP address, MAC) for this interface'/>
     </xsd:all>
 </xsd:complexType>
-  
-  
+
+
 
 <!-- Ecmp nexthop load balance criteria -->
 <!--#IFMAP-SEMANTICS-IDL
@@ -1974,11 +1980,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Address ignored while creating flows, from the perspective of packets egressing the VM. For packets originated by VM, source and destination indicate the corresponding IPs in the packet. For packets coming from remote source, source indicates destination IP of the packet is ignored and destination indicates source IP of the packet is ignored.'/>
         <xsd:element name="source-prefix" type="SubnetType" required='optional'
             description='For packets originated from VM source-prefix is applied to source IP of the packet. For packets coming to VM, source-prefix is applied to destination IP of the packet' />
-        <xsd:element name="source-aggregate-prefix-length" type="xsd:integer" required='optional' 
+        <xsd:element name="source-aggregate-prefix-length" type="xsd:integer" required='optional'
             description='Fat flow prefix mask length for IP where source-prefix is applied'/>
         <xsd:element name="destination-prefix" type="SubnetType" required='optional'
             description='For packets originated from VM destination-prefix is applied to destination IP of the packet. For packets coming to VM, destination-prefix is applied to source IP of the packet' />
-        <xsd:element name="destination-aggregate-prefix-length" type="xsd:integer" required='optional' 
+        <xsd:element name="destination-aggregate-prefix-length" type="xsd:integer" required='optional'
             description='Fat flow prefix mask length for IP where destination-prefix is applied'/>
     </xsd:all>
 </xsd:complexType>
@@ -2286,7 +2292,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='This virtual router agent represents TOR services node. It is responsible for DHCP, DNS and multicast for host sitting behind the TOR'/>
     </xsd:restriction>
 </xsd:simpleType>
-  
+
 
 <xsd:element name="virtual-router-type" type="VirtualRouterType"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -2577,7 +2583,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='UUID of a virtual-router on which this service instance need to spawn. Used to spawn services on CPE device when Nova is not present'/>
     </xsd:sequence>
 </xsd:complexType>
-  
+
 <xsd:element name='service-instance' type='ifmap:IdentityType'/>
 <xsd:element name='service-instance-properties' type='ServiceInstanceType'/>
 <!-- #IFMAP-SEMANTICS-IDL
