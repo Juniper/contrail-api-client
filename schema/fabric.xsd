@@ -284,6 +284,22 @@
           Property('data-center-interconnect-bgp-address-families', 'data-center-interconnect', 'optional', 'CRUD',
               'BGP address families supported by BGP router.') -->
 
+<xsd:element name="data-center-interconnect-virtual-network"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('data-center-interconnect-virtual-network',
+             'data-center-interconnect', 'virtual-network', ['ref'], 'optional', 'CRUD',
+             'reference to auto created internal virtual network, used for connecting different data centers') -->
+
+<xsd:element name="data-center-interconnect-configured-route-target-list" type="RouteTargetList"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('data-center-interconnect-configured-route-target-list', 'data-center-interconnect', 'optional', 'CRUD',
+              'List of route targets that represent this logical router, all virtual networks connected to this DCI will have this as their route target list.') -->
+
+<xsd:element name="data-center-interconnect-vxlan-network-identifier" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('data-center-interconnect-vxlan-network-identifier', 'data-center-interconnect', 'optional', 'CRUD',
+              'The VNI that needs to be associated with the DCI VN.') -->
+
 <xsd:element name="global-system-config-data-center-interconnect"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('global-system-config-data-center-interconnect',
