@@ -572,6 +572,11 @@
           Property('physical-router-device-family', 'physical-router', 'required', 'CRUD',
               'Device family that this physical router is part of. It is used by the device manager to choose the device family specific Ansible playbooks for device management') -->
 
+<xsd:element name="physical-router-os-version" type="xsd:string"/>
+    <!--#IFMAP-SEMANTICS-IDL
+              Property('physical-router-os-version', 'physical-router', 'optional', 'CRUD',
+                  'os version for this physical router. It is updated when device is imported or device image is successfully upgraded') -->
+
 <xsd:element name="physical-router-management-ip" type="smi:IpAddress"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-management-ip', 'physical-router', 'required', 'CRUD',
