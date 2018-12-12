@@ -1197,17 +1197,6 @@ class VncApi(object):
     # end prop_list_get
 
     @check_homepage
-    def job_status(self, execution_id):
-        if execution_id is None:
-            raise ValueError("Execution id must be specified")
-
-        uri = self._action_uri['job-status']
-        params = {'execution_id' : execution_id}
-
-        content = self._request_server(OP_GET, uri, data=params)
-        return content
-
-    @check_homepage
     def execute_job(self, job_template_fq_name=None, job_template_id=None,
                     job_input=None, device_list=None):
         if job_template_fq_name is None and job_template_id is None:
@@ -1584,6 +1573,49 @@ class VncApi(object):
             if 'X-USER-TOKEN' in self._headers:
                 del self._headers['X-USER-TOKEN']
         return rv
+
+    @check_homepage
+    def amqp_publish(self, exchange=None, exchange_type='direct',
+                     routing_key=None, headers=None, payload=''):
+        if exchange is None:
+            raise ValueError("Exchange must be specified")
+
+        body = {
+            'exchange': exchange,
+            'exchange_type': exchange_type,
+            'routing_key': routing_key,
+            'payload': payload
+        }
+        if headers:
+            body['headers'] = headers
+
+        uri = self._action_uri['amqp-publish']
+        json_body = json.dumps(body)
+        self._request_server(OP_POST, uri, data=json_body)
+    # end amqp_publish
+
+    @check_homepage
+    def amqp_request(self, exchange=None, exchange_type='direct',
+                     routing_key=None, response_key=None,
+                     headers=None, payload=''):
+        if exchange is None or response_key is None:
+            raise ValueError("Exchange and response key must be specified")
+
+        body = {
+            'exchange': exchange,
+            'exchange_type': exchange_type,
+            'routing_key': routing_key,
+            'response_key': response_key,
+            'payload': payload
+        }
+        if headers:
+            body['headers'] = headers
+
+        uri = self._action_uri['amqp-request']
+        json_body = json.dumps(body)
+        content = self._request_server(OP_POST, uri, data=json_body)
+        return json.loads(content)
+    # end amqp_request
 
     def is_cloud_admin_role(self):
         rv = self.obj_perms(self.get_auth_token()) or {}
