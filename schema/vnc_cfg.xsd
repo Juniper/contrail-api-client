@@ -2976,6 +2976,18 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('analytics-node-ip-address', 'analytics-node', 'admin-only', 'CRUD',
               'Ip address of the analytics node, set while provisioning.') -->
 
+<xsd:element name="devicemgr-node" type="ifmap:IdentityType"/>
+<xsd:element name="global-system-config-devicemgr-node"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('global-system-config-devicemgr-node',
+             'global-system-config', 'devicemgr-node', ['has'], 'admin-only', 'CRUD',
+             'devicemgr node is object representing a logical node in system for configuring physical devices.') -->
+
+<xsd:element name="devicemgr-node-ip-address" type="IpAddressType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('devicemgr-node-ip-address', 'devicemgr-node', 'admin-only', 'CRUD',
+              'Ip address of the devicemgr node, set while provisioning.') -->
+
 <xsd:element name="database-node" type="ifmap:IdentityType"/>
 <xsd:element name="global-system-config-database-node"/>
 <!--#IFMAP-SEMANTICS-IDL
