@@ -3581,6 +3581,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'Reference to multicast policy. Each multicast policy has a list of
            (S,G) Addresses.') -->
 
+<xsd:element name="project-multicast-policy"/>
+<!--#IFMAP-SEMANTICS-IDL
+    Link('project-multicast-policy', 'project', 'multicast-policy', ['has'], 'optional', 'CRUD',
+         'List of references of child multicast policy objects. automatically maintained by system.') -->
+
 <xsd:element name="igmp-enable" type="xsd:boolean" default="false" description="Enable IGMP."/>
 <xsd:annotation>
     <xsd:documentation>
