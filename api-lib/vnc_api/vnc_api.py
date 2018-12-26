@@ -335,7 +335,8 @@ class VncApi(object):
                  wait_for_connect=False, api_server_use_ssl=False,
                  domain_name=None, exclude_hrefs=None, auth_token_url=None,
                  apicertfile=None, apikeyfile=None, apicafile=None,
-                 kscertfile=None, kskeyfile=None, kscafile=None,):
+                 kscertfile=None, kskeyfile=None, kscafile=None,
+                 service_token=None,):
         # TODO allow for username/password to be present in creds file
 
         self._obj_serializer = self._obj_serializer_diff
@@ -541,10 +542,16 @@ class VncApi(object):
         self._auth_token_input = False
         self._auth_token = None
 
+        self._service_token = None
+
         if auth_token:
             self._auth_token = auth_token
             self._auth_token_input = True
             self._headers['X-AUTH-TOKEN'] = self._auth_token
+
+        if service_token:
+            self._service_token = service_token
+            self._headers['X-SERVICE-TOKEN'] = self._service_token
 
         # user information for quantum
         if self._user_info:
@@ -1415,6 +1422,11 @@ class VncApi(object):
         return self._auth_token
 
     # end get_auth_token
+
+    def get_service_token(self):
+        return self._service_token
+
+    # end get_service_token
 
     @check_homepage
     def resource_list(self, obj_type, parent_id=None, parent_fq_name=None,
