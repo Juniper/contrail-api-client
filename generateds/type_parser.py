@@ -78,6 +78,12 @@ bool %s::JsonParse(const contrail_rapidjson::Value &parent) {
                       'if (!ParseInteger(value_node[i], &var)) return false;\n')
                     file.write(indent1 + '%s.push_back(var);\n' %
                                member.membername)
+                elif member.sequenceType == 'uint64_t':
+                    file.write(indent1 + 'unsigned long var;\n')
+                    file.write(indent1 +
+                      'if (!ParseUnsignedLong(value_node[i], &var)) return false;\n')
+                    file.write(indent1 + '%s.push_back(var);\n' %
+                               member.membername)
                 else:
                     file.write(indent + '// TODO: sequence of ' +
                                member.sequenceType)
@@ -152,6 +158,13 @@ bool %s::XmlParse(const xml_node &parent) {
                     item = """
             int var;
             if (!ParseInteger(node, &var)) return false;
+            %s.push_back(var);
+""" % member.membername
+                    file.write(item)
+                elif member.sequenceType == 'uint64_t':
+                    item = """
+            unsigned long var;
+            if (!ParseUnsignedLong(node, &var)) return false;
             %s.push_back(var);
 """ % member.membername
                     file.write(item)
@@ -247,12 +260,14 @@ void %s::Encode(xml_node *node_p) const {
        'membername': member.membername,
         'elementname': member.elementname }
                 file.write(item)
-            elif member.isSequence:
+            elif member.isSequence and member.sequenceType == 'uint64_t':
                 item = """
     for (%(type)s::const_iterator iter = %(membername)s.begin();
          iter != %(membername)s.end(); ++iter) {
         node_c = node_p->append_child("%(elementname)s");
-        node_c.text().set(*iter);
+        ostringstream oss;
+        oss << *iter;
+        node_c.text().set(oss.str().c_str());
     }
 """ % {'type': cpptype,
        'membername': member.membername,

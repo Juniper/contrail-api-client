@@ -680,7 +680,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!-- domain limits type end -->
 
 <xsd:simpleType name="AutonomousSystemType">
-     <xsd:restriction base="xsd:integer">
+     <xsd:restriction base="xsd:unsignedLong">
          <xsd:minInclusive value="1"/>
          <xsd:maxInclusive value="4294967294"/>
      </xsd:restriction>
