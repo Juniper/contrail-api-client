@@ -362,7 +362,7 @@
 
 <xsd:element name="card" type="ifmap:IdentityType"
     description="This resource contains the information about the interface card in a hardware platform."/>
-<xsd:element name="interfacd-map" type="InterfaceMapType"/>
+<xsd:element name="interface-map" type="InterfaceMapType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('interface-map', 'card', 'required', 'CRUD',
               'Interface map of all the physical ports on a physical interface card.') -->
