@@ -281,11 +281,6 @@
      Property('data-center-interconnect-configured-route-target-list', 'data-center-interconnect', 'optional', 'CRUD',
               'List of route targets that represent this logical router, all virtual networks connected to this DCI will have this as their route target list.') -->
 
-<xsd:element name="data-center-interconnect-vxlan-network-identifier" type="xsd:string"/>
-<!--#IFMAP-SEMANTICS-IDL
-     Property('data-center-interconnect-vxlan-network-identifier', 'data-center-interconnect', 'optional', 'CRUD',
-              'The VNI that needs to be associated with the DCI VN.') -->
-
 <xsd:element name="global-system-config-data-center-interconnect"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('global-system-config-fabric',
