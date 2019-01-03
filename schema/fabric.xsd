@@ -44,6 +44,7 @@
          <xsd:enumeration value="management"/>
          <xsd:enumeration value="loopback"/>
          <xsd:enumeration value="ip-fabric"/>
+         <xsd:enumeration value="pnf-servicechain"/>
      </xsd:restriction>
 </xsd:simpleType>
 
