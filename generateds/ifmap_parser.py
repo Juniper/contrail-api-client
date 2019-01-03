@@ -487,7 +487,7 @@ using namespace pugi;
                 # cross-ref'd id from another file
                 continue
             cdecl = """
-IFMapObject* %(class)sAgentParse(xml_node &node, DB *db, std::string *id_name) {
+IFMapObject* %(class)sAgentParse(const xml_node &node, DB *db, std::string *id_name) {
     
     IFMapAgentTable *table = static_cast<IFMapAgentTable *>
                                             (IFMapTable::FindTable(db, "%(nodename)s"));
@@ -511,7 +511,7 @@ IFMapObject* %(class)sAgentParse(xml_node &node, DB *db, std::string *id_name) {
             if not type(ident) is IFMapLinkAttr:
                 continue
             cdecl = """
-IFMapObject* %(class)sAgentParse(xml_node &node, DB *db, std::string *id_name) {
+IFMapObject* %(class)sAgentParse(const xml_node &node, DB *db, std::string *id_name) {
     
     IFMapAgentTable *table = static_cast<IFMapAgentTable *>
                                             (IFMapTable::FindTable(db, "%(nodename)s"));
