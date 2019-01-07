@@ -150,6 +150,8 @@
          <xsd:element name="port-speed" type="PortSpeedType"/>
          <xsd:element name="channelized" type="xsd:boolean" default="false"/>
          <xsd:element name="channelized-port-speed" type="PortSpeedType"/>
+         <xsd:element name="port-group" type="xsd:string"/>
+         <xsd:element name="labels" type="xsd:string" maxOccurs="unbounded"/>
      </xsd:all>
 </xsd:complexType>
 
@@ -362,7 +364,8 @@
 
 <xsd:element name="card" type="ifmap:IdentityType"
     description="This resource contains the information about the interface card in a hardware platform."/>
-<xsd:element name="interfacd-map" type="InterfaceMapType"/>
+
+<xsd:element name="interface-map" type="InterfaceMapType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('interface-map', 'card', 'required', 'CRUD',
               'Interface map of all the physical ports on a physical interface card.') -->
@@ -577,6 +580,16 @@
               Property('physical-router-os-version', 'physical-router', 'optional', 'CRUD',
                   'os version for this physical router. It is updated when device is imported or device image is successfully upgraded') -->
 
+<xsd:element name="physical-router-chassis-id" type="xsd:string"/>
+    <!--#IFMAP-SEMANTICS-IDL
+              Property('physical-router-chassis-id', 'physical-router', 'optional', 'CRUD',
+                  'Device chassis identifier which is used in LLDP protocol to identify the peer device. This attribute can be either discovered via the fabric on-boarding workflow or manually specified by the user') -->
+
+<xsd:element name="physical-router-hostname" type="xsd:string"/>
+    <!--#IFMAP-SEMANTICS-IDL
+              Property('physical-router-hostname', 'physical-router', 'optional', 'CRUD',
+                  'Device host name that can be either discovered during via fabric on-boarding workflow or manually set by the user') -->
+
 <xsd:element name="physical-router-management-ip" type="smi:IpAddress"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-management-ip', 'physical-router', 'required', 'CRUD',
@@ -642,4 +655,66 @@
           Property('physical-router-snmp-credentials', 'physical-router', 'optional', 'CRUD',
               'SNMP credentials for the physical router used by SNMP collector.') -->
 
+<xsd:simpleType name="NodeType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="private"/>
+        <xsd:enumeration value="baremetal"/>
+        <xsd:enumeration value="esxi"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="LocalLinkConnection">
+    <xsd:all>
+        <xsd:element name="switch-id" type="xsd:string"/>
+        <xsd:element name="port-id" type="xsd:string"/>
+        <xsd:element name="switch-info" type="xsd:string"/>
+        <xsd:element name="port-index" type="xsd:string"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="BaremetalPortInfo">
+    <xsd:all>
+        <xsd:element name="address" type="xsd:string"/>
+        <xsd:element name="node-uuid" type="xsd:string"/>
+        <xsd:element name="pxe-enabled" type="xsd:boolean"/>
+        <xsd:element name="local-link-connection" type="LocalLinkConnection"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:element name="node" type="ifmap:IdentityType"
+             description="This resource represents the end systems in the network, such as servers"/>
+
+<xsd:element name="global-system-config-node"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-node',
+               'global-system-config', 'node', ['has'], 'optional', 'CRUD', 'List of server nodes in the system.') -->
+<xsd:element name="node-type" type="NodeType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-type', 'node', 'required', 'CRUD', 'Type of the node, such as bms, esxi, etc.') -->
+
+<xsd:element name="node-hostname" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-hostname', 'node', 'optional', 'CRUD', 'hostname of the node') -->
+
+<xsd:element name="port" type="ifmap:IdentityType"
+             description="This resource represents the physical port of an end system, such as server"/>
+
+<xsd:element name="bms-port-info" type="BaremetalPortInfo"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('bms-port-info', 'port', 'optional', 'CRUD', 'BMS port information') -->
+
+<xsd:element name="node-port"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('node-port', 'node', 'port', ['has'], 'optional', 'CRUD',
+             'This link represents all physical ports that belongs to a node') -->
+
+<xsd:element name="node-node-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('node-node-profile', 'node', 'node-profile', ['ref'], 'optional', 'CRUD',
+             'This link represents the node profile assigned to a node') -->
+
+<xsd:element name="physical-interface-port"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-interface-port', 'physical-interface', 'port', ['ref'], 'optional', 'CRUD',
+             'This link represents physical connection from access port of a switch to the server port') -->
 </xsd:schema>
