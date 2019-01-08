@@ -1288,6 +1288,31 @@ class VncApi(object):
     # end fq_name_to_id
 
     @check_homepage
+    def allocate_int(self, pool_name):
+        json_body = json.dumps({'pool': pool_name})
+        uri = self._action_uri['int-pool']
+        try:
+            content = self._request_server(OP_POST, uri, data=json_body)
+        except HttpError as he:
+            if he.status_code == 404:
+                return None
+            raise he
+
+        return json.loads(content)['value']
+    # end allocate_index
+
+    @check_homepage
+    def deallocate_int(self, pool_name, index):
+        json_body = json.dumps({'pool': pool_name, 'value': index})
+        uri = self._action_uri['int-pool']
+        try:
+            self._request_server(OP_DELETE, uri, data=json_body)
+        except HttpError as he:
+            if he.status_code != 404:
+                raise he
+    # end allocate_index
+
+    @check_homepage
     def id_to_fq_name(self, id):
         json_body = json.dumps({'uuid': id})
         uri = self._action_uri['id-to-name']
