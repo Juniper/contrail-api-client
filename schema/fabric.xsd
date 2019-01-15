@@ -25,6 +25,29 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:simpleType name="ChassisType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="private"/>
+         <xsd:enumeration value="public"/>
+         <xsd:enumeration value="fpc"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="ChassisInfoType">
+    <xsd:all>
+        <xsd:element name="device-chassis-id" type="xsd:string" required="true"
+                     description="One of chassis mac-ids of the device."/>
+        <xsd:element name="chassis-id-type" type="ChassisType" required="optional"
+                     description="type of the chassis address if known"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="ChassisInfoListType">
+    <xsd:all>
+        <xsd:element name="device-chassis-id-info" type="ChassisInfoType" maxOccurs="unbounded"/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:complexType name="DeviceCredential">
     <xsd:all>
         <xsd:element name="credential" type="UserCredentials" required="true"/>
@@ -576,6 +599,11 @@
     <!--#IFMAP-SEMANTICS-IDL
               Property('physical-router-os-version', 'physical-router', 'optional', 'CRUD',
                   'os version for this physical router. It is updated when device is imported or device image is successfully upgraded') -->
+
+<xsd:element name="physical-router-chassis-ids" type="ChassisInfoListType"/>
+    <!--#IFMAP-SEMANTICS-IDL
+              Property('physical-router-chassis-ids', 'physical-router', 'optional', 'CRUD',
+                  'Device chassis identifier which is used in LLDP protocol to identify the peer device. This attribute can be either discovered via the fabric on-boarding workflow or manually specified by the user') -->
 
 <xsd:element name="physical-router-management-ip" type="smi:IpAddress"/>
 <!--#IFMAP-SEMANTICS-IDL
