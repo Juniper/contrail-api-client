@@ -383,6 +383,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-device-family', 'node-profile', 'required', 'CRUD',
               'Device family name that this node profile can be used to match.') -->
+<xsd:element name="node-profile-hitless-upgrade" type="xsd:boolean"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-profile-hitless-upgrade', 'node-profile', 'required', 'CRUD',
+              'if set to false, do not perform hitless image upgrade on devices using this node profile') -->
 <xsd:element name="node-profile-roles" type="NodeProfileRolesType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-roles', 'node-profile', 'required', 'CRUD',
