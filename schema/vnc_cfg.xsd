@@ -2682,15 +2682,15 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 
 <xsd:element name="port-tuple-logical-router"/>
 <!-- #IFMAP-SEMANTICS-IDL
-     Link('port-tuple-logical-router', 'logical-router', 'port-tuple', ['ref'], 'optional', 'CRUD',
+     Link('port-tuple-logical-router', 'port-tuple', 'logical-router', ['ref'], 'optional', 'CRUD',
           'list of tenant logical routers to be attached to the service left or right attachment point') -->
 
-<xsd:element name="port-tuple-physical-interface"/>
+<xsd:element name="port-tuple-virtual-network"/>
 <!-- #IFMAP-SEMANTICS-IDL
-     Link('port-tuple-physical-interface', 'port-tuple', 'physical-interface', ['ref'], 'optional', 'CRUD',
-          'list of physical interfaces from the spine devices that connects to PNF for the left or right service attachment point') -->
+     Link('port-tuple-virtual-network', 'port-tuple', 'virtual-network', ['ref'], 'optional', 'CRUD',
+          'Internal virtual networks for PNF left or right service attachment points are used to internally to allocate route targets for the left and right service VRFs on the spine device') -->
 
-<xsd:element name="virtual-DNS"        type="ifmap:IdentityType"/>
+<xsd:element name="virtual-DNS" type="ifmap:IdentityType"/>
 <xsd:element name="domain-virtual-DNS"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('domain-virtual-DNS', 'domain', 'virtual-DNS',  ['has'], 'optional', 'CRUD',
