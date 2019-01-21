@@ -1296,14 +1296,21 @@ class VncApi(object):
         uri = self._action_uri['int-pool']
         content = self._request_server(OP_POST, uri, data=json_body)
         return json.loads(content)['value']
-    # end allocate_index
+    # end allocate_int
+
+    @check_homepage
+    def set_int(self, pool_name, value):
+        json_body = json.dumps({'pool': pool_name, 'value': value})
+        uri = self._action_uri['int-pool']
+        self._request_server(OP_POST, uri, data=json_body)
+    # end set_int
 
     @check_homepage
     def deallocate_int(self, pool_name, index):
         json_body = json.dumps({'pool': pool_name, 'value': index})
         uri = self._action_uri['int-pool']
         self._request_server(OP_DELETE, uri, data=json_body)
-    # end allocate_index
+    # end deallocate_int
 
     @check_homepage
     def id_to_fq_name(self, id):
