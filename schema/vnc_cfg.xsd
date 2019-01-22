@@ -847,7 +847,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Maximum number of security logging objects'/>
         <xsd:element name="route-table" type="xsd:integer" required='optional'
              description='Maximum number of route tables'/>
-        <xsd:element name="application-policy-set" type="xsd:integer" required='optional'
+        <xsd:element name="firewall-group" type="xsd:integer" required='optional'
              description='Maximum number of application policy set'/>
         <xsd:element name="firewall-policy" type="xsd:integer" required='optional'
              description='Maximum number of firewall policy'/>
