@@ -2581,6 +2581,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='When scale-out is greater than one, decides if active-active or active-backup, used in version 1 (V1) only'/>
         <xsd:element name='virtual-router-id' type='xsd:string' required='optional'
              description='UUID of a virtual-router on which this service instance need to spawn. Used to spawn services on CPE device when Nova is not present'/>
+        <xsd:element name='service-virtualization-type' type='ServiceVirtualizationType' required='optional'
+             description='Service virtualization type decides how individual service instances are instantiated'/>
     </xsd:sequence>
 </xsd:complexType>
 
@@ -3092,6 +3094,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
               '     Driver to load for provisioning the appliance ',
               '     Service appliance properties - HA mode.']) -->
 
+<xsd:element name='service-appliance-set-virtualization-type' type='ServiceVirtualizationType'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('service-appliance-set-virtualization-type', 'service-appliance-set', 'optional', 'CRUD',
+              'Service virtualization type decides how individual service instances are instantiated') -->
+
 <!-- any Opaque property for the service appliance set -->
 <xsd:element name="service-appliance-set-properties" type="KeyValuePairs"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -3130,6 +3137,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('service-appliance-ip-address', 'service-appliance', 'required', 'CRUD',
               'Management Ip address of the service-appliance.') -->
+
+<xsd:element name='service-appliance-virtualization-type' type='ServiceVirtualizationType'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('service-appliance-virtualization-type', 'service-appliance', 'optional', 'CRUD',
+              'Service virtualization type decides how individual service instances are instantiated') -->
 
 <xsd:element name="service-appliance-set-service-appliance"/>
 <!--#IFMAP-SEMANTICS-IDL
