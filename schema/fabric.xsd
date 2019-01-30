@@ -578,6 +578,11 @@
           Property('virtual-port-group-trunk-port-id', 'virtual-port-group', 'required', 'CR',
               'id of the port that enables multi valn trunking.') -->
 
+<xsd:element name="virtual-port-group-user-created" type="xsd:boolean" default='true'/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('virtual-port-group-user-created', 'virtual-port-group', 'optional', 'CRUD',
+              'Flag to be set to True when its externally created and False when created internally. Default is set to True') -->
+
 <xsd:element name="virtual-port-group-physical-interface"/>
 <!--#IFMAP-SEMANTICS-IDL
          Link('virtual-port-group-physical-interface', 'virtual-port-group', 'physical-interface', ['ref'], 'optional', 'CRUD',
