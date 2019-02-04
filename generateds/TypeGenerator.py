@@ -1760,7 +1760,10 @@ class PyGenerator(object):
         wrt('        obj_dict = json.loads(obj_json)\n')
         wrt('        if name_:\n')
         wrt('            return {name_: obj_dict}\n')
-        wrt('        return obj_dict\n')
+        wrt('        return obj_dict\n') 
+        wrt("    def to_dict(self, name_='%s'):\n" % (name, ))
+        wrt('        # wrapper for exportDict to be consistent with resources from resource_client.py\n')
+        wrt('        return self.exportDict(name_)\n')
 
     def generateBuild(self, wrt, element):
         base = element.getBase()
