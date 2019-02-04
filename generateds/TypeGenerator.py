@@ -1753,8 +1753,7 @@ class PyGenerator(object):
 
     def generateExportDict(self, wrt, element):
         name = element.getName()
-        base = element.getBase()
-        wrt("    def exportDict(self, name_='%s'):\n" % (name, ))
+        wrt("    def exportDict(self, name_='%s'):\n" % name)
         wrt('        # do obj->json->dict to handle nested complextype in object\n')
         wrt('        obj_json = json.dumps(self, default=lambda o: dict((k, v) for k, v in o.__dict__.iteritems()))\n')
         wrt('        obj_dict = json.loads(obj_json)\n')
