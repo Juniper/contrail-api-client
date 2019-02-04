@@ -6,6 +6,12 @@ import os
 import re
 import json
 
+try:
+    import pyaml
+    pyaml_found = True
+except ImportError:
+    pyaml_found = False
+
 
 class ContrailJsonSchemaGenerator(object):
     def __init__(self, parser, type_map, identifiers, metadata):
@@ -67,8 +73,11 @@ class ContrailJsonSchemaGenerator(object):
 
             if prop.isMap():
                 subJson["collectionType"] = "map"
+                subJson["mapKey"] = prop.getMapKeyName()
+                subJson["wrapper"] = prop.isMapUsingWrapper()
             elif prop.isList():
                 subJson["collectionType"] = "list"
+                subJson["wrapper"] = prop.isListUsingWrapper()
 
             default = prop.getDefault()
             if default:
@@ -114,7 +123,7 @@ class ContrailJsonSchemaGenerator(object):
 
             reference = self._convertHyphensToUnderscores(link_to.getName())
             subJson = {
-                "operation": operation,
+                "operations": operation,
                 "presence": presence,
                 "description": description}
 
@@ -141,13 +150,14 @@ class ContrailJsonSchemaGenerator(object):
                 except:
                     description = ""
 
-                link_type = link_info[0]._xelement.type
                 subJson = {
-                    "operation": operation,
+                    "operations": operation,
                     "presence": presence,
                     "description": description
                 }
                 link_type = parent[1]._xelement.type
+                if ident.isDerived(parent[0]):
+                    subJson["derived"] = True
                 if self._json_type_map.get(link_type):
                     subJson["$ref"] = "types.json#definitions/" + link_type
                 parents[parent[0].getJsonName()] = subJson
@@ -163,7 +173,7 @@ class ContrailJsonSchemaGenerator(object):
                       "schema": {"type": "object",
                                  "required": required,
                                  "properties": propertiesJSON}}
-        file.write(json.dumps(jsonSchema, indent=4))
+        file.write(pyaml.dumps(jsonSchema, indent=2, safe=True))
 
     def _getSubJS(self, type, dataMember):
         ret = {}
@@ -203,7 +213,7 @@ class ContrailJsonSchemaGenerator(object):
             else:
                 subJson = {
                     "type": "array",
-                    "item": self._getSubJS(dataMember.xsd_object.type, dataMember)
+                    "items": self._getSubJS(dataMember.xsd_object.type, dataMember)
                 }
             simple_type = dataMember.xsd_object.simpleType
             if simple_type:
@@ -219,6 +229,10 @@ class ContrailJsonSchemaGenerator(object):
 
     def generateRestrictions(self, simple_type, subJson):
         restrictions = None
+        # TODO(nati) fix why invalid data given here.
+        if simple_type == 1:
+            return
+
         if(self._parser.SimpleTypeDict.get(simple_type)):
             restriction_object = self._parser.SimpleTypeDict[simple_type]
             restrictions = restriction_object.values
@@ -243,6 +257,10 @@ class ContrailJsonSchemaGenerator(object):
             "$ref": "types.json#/definitions/" + simple_type}
 
     def Generate(self, dirname):
+        if pyaml_found == False:
+            print "please install pyaml"
+            sys.exit(1)
+
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         elif not os.path.isdir(dirname):
@@ -263,24 +281,20 @@ class ContrailJsonSchemaGenerator(object):
 
         for ident in self._identifier_map.values():
             self._objectsList.append(ident._name)
-            filename = os.path.join(dirname, ident._name + "-schema.json")
+            filename = os.path.join(dirname, ident._name + "-schema.yml")
             self._GenerateJavascriptSchema(ident, base, filename)
 
         # Generate the file containing the list of all identfiers/objects
-        objFileName = os.path.join(dirname, "objectList.json")
-        objFile = self._parser.makeFile(objFileName)
-        objJson = {"objects": self._objectsList}
-        objFile.write(json.dumps(objJson, indent=4))
 
         # Generate the base schema
-        objFileName = os.path.join(dirname, "base.json")
+        objFileName = os.path.join(dirname, "base.yml")
         objFile = self._parser.makeFile(objFileName)
-        objFile.write(json.dumps(base, indent=4))
+        objFile.write(pyaml.dumps(base, indent=2, safe=True))
 
-        typeFileName = os.path.join(dirname, "types.json")
+        typeFileName = os.path.join(dirname, "types.yml")
         typeFile = self._parser.makeFile(typeFileName)
         typeJson = {"definitions": self._json_type_map}
-        typeFile.write(json.dumps(typeJson, indent=4))
+        typeFile.write(pyaml.dumps(typeJson, indent=2, safe=True))
 
         print "Done!"
         print "Schemas generated under directory: " + dirname
