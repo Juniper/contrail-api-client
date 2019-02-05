@@ -61,6 +61,8 @@ def get_object_class(res_type):
 def _read_cfg(cfg_parser, section, option, default):
     try:
         val = cfg_parser.get(section, option)
+        if isinstance(val, bool):
+            val = (str(val).lower() == 'true')
     except (AttributeError,
             ConfigParser.NoOptionError,
             ConfigParser.NoSectionError):
