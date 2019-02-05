@@ -365,10 +365,9 @@ class VncApi(object):
 
         self._api_connect_protocol = VncApi._DEFAULT_API_SERVER_CONNECT
         # API server SSL Support
-        use_ssl = (api_server_use_ssl or
-                       _read_cfg(cfg_parser, 'global', 'use_ssl', False))
-        if isinstance(api_server_use_ssl, basestring):
-            use_ssl = (api_server_use_ssl.lower() == 'true')
+        if api_server_use_ssl is None:
+            api_server_use_ssl = _read_cfg(cfg_parser, 'global', 'use_ssl', False))
+        use_ssl = (str(api_server_use_ssl).lower() == 'true')
         if use_ssl:
             self._api_connect_protocol = VncApi._DEFAULT_API_SERVER_SSL_CONNECT
 
