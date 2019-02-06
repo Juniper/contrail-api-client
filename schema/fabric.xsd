@@ -151,6 +151,8 @@
          <xsd:element name="port-speed" type="PortSpeedType"/>
          <xsd:element name="channelized" type="xsd:boolean" default="false"/>
          <xsd:element name="channelized-port-speed" type="PortSpeedType"/>
+         <xsd:element name="port-group" type="xsd:string"/>
+         <xsd:element name="labels" type="xsd:string" maxOccurs="unbounded"/>
      </xsd:all>
 </xsd:complexType>
 
@@ -366,7 +368,8 @@
 
 <xsd:element name="card" type="ifmap:IdentityType"
     description="This resource contains the information about the interface card in a hardware platform."/>
-<xsd:element name="interfacd-map" type="InterfaceMapType"/>
+
+<xsd:element name="interface-map" type="InterfaceMapType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('interface-map', 'card', 'required', 'CRUD',
               'Interface map of all the physical ports on a physical interface card.') -->
@@ -605,6 +608,16 @@
               Property('physical-router-os-version', 'physical-router', 'optional', 'CRUD',
                   'os version for this physical router. It is updated when device is imported or device image is successfully upgraded') -->
 
+<xsd:element name="physical-router-chassis-id" type="xsd:string"/>
+    <!--#IFMAP-SEMANTICS-IDL
+              Property('physical-router-chassis-id', 'physical-router', 'optional', 'CRUD',
+                  'Device chassis identifier which is used in LLDP protocol to identify the peer device. This attribute can be either discovered via the fabric on-boarding workflow or manually specified by the user') -->
+
+<xsd:element name="physical-router-hostname" type="xsd:string"/>
+    <!--#IFMAP-SEMANTICS-IDL
+              Property('physical-router-hostname', 'physical-router', 'optional', 'CRUD',
+                  'Device host name that can be either discovered during via fabric on-boarding workflow or manually set by the user') -->
+
 <xsd:element name="physical-router-management-ip" type="smi:IpAddress"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-management-ip', 'physical-router', 'required', 'CRUD',
@@ -670,4 +683,263 @@
           Property('physical-router-snmp-credentials', 'physical-router', 'optional', 'CRUD',
               'SNMP credentials for the physical router used by SNMP collector.') -->
 
+<xsd:complexType name="BaremetalProperties">
+    <xsd:all>
+        <xsd:element name="memory-mb" type="xsd:integer"
+                     description="RAM of the Baremetal server (in MB)" />
+        <xsd:element name="cpu-arch" type="xsd:string"
+                     description="Architecture of the baremetal server" />
+        <xsd:element name="local-gb" type="xsd:integer"
+                     description="Disk size of root device (in GB)" />
+        <xsd:element name="cpus" type="xsd:integer"
+                     description="Number of CPU cores on the baremetal" />
+        <xsd:element name="capabilities" type="xsd:string"
+                     description="Boot option" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="PortGroupProperties">
+    <xsd:all>
+        <xsd:element name="miimon" type="xsd:integer"
+                     description="Specifies the MII link monitoring frequency in milliseconds." />
+        <xsd:element name="xmit-hash-policy" type="xsd:string"
+                     description="Transmit hash policy to use for slave selection in balance-xor, 802.3ad, and tlb modes." />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="BaremetalPortInfo">
+    <xsd:all>
+        <xsd:element name="pxe-enabled" type="xsd:boolean"
+                     description="Indicates whether PXE is enabled or disabled on the Port." />
+        <xsd:element name="local-link-connection" type="LocalLinkConnection"
+                     description="The Port binding profile" />
+        <xsd:element name="node-uuid" type="xsd:string"
+                     description="UUID of the parent node where this port is connected" />
+        <xsd:element name="address" type="xsd:string"
+                     description="Mac Address of the NIC in Node" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="CloudInstanceInfo">
+    <xsd:all>
+        <xsd:element name="os-version" type="xsd:string"
+                     description="specific version of operating system" />
+        <xsd:element name="operating-system" type="xsd:string"
+                     description="Name of operating system, ex - centos7 or ubuntu16" />
+        <xsd:element name="roles" type=""
+                     description="Roles of the cloud instance" maxOccurs="unbounded"/>
+        <xsd:element name="availability-zone" type="xsd:string"
+                     description="Availability zone to which the instance belongs to" />
+        <xsd:element name="instance-type" type="xsd:string"
+                     description="size of instance" />
+        <xsd:element name="machine-id" type="xsd:string"
+                     description="image (ami) id of instance" />
+        <xsd:element name="volume-size" type="xsd:integer"
+                     description="Size of the volume for the cloud instance" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="LocalLinkConnection">
+    <xsd:all>
+        <xsd:element name="switch-info" type="xsd:string"
+                     description="UUID of the Physical-Port with contrail database" />
+        <xsd:element name="port-index" type="xsd:string"
+                     description="Port-Id provided by LLDP, This usually maps to SnmpIndex" />
+        <xsd:element name="port-id" type="xsd:string"
+                     description="Port ID of switch where Baremetal is connected" />
+        <xsd:element name="switch-id" type="xsd:string"
+                     description="Switch hostname" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="ESXIHostInfo">
+    <xsd:all>
+        <xsd:element name="username" type="xsd:string"
+                     description="username" />
+        <xsd:element name="datacenter" type="xsd:string"
+                     description="datacenter in vCenter" />
+        <xsd:element name="esxi-name" type="xsd:string"
+                     description="ESXI host name(ip)" />
+        <xsd:element name="cluster" type="xsd:string"
+                     description="cluster in vCenter" />
+        <xsd:element name="mac" type="xsd:string"
+                     description="mac address for contrailvm" />
+        <xsd:element name="datastore" type="xsd:string"
+                     description="datastore in vCenter" />
+        <xsd:element name="password" type="xsd:string"
+                     description="ESXI host password" />
+        <xsd:element name="vcenter-server" type="xsd:string"
+                     description="vCenter server" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="DriverInfo">
+    <xsd:all>
+        <xsd:element name="ipmi-address" type="xsd:string"
+                     description="IPMI address of the server to manage boot device and power management" />
+        <xsd:element name="deploy-ramdisk" type="xsd:string"
+                     description="UUID of the deploy initrd/ramdisk" />
+        <xsd:element name="ipmi-password" type="xsd:string"
+                     description="Password to access IPMI" />
+        <xsd:element name="ipmi-port" type="xsd:string"
+                     description="Remote IPMI RMCP port" />
+        <xsd:element name="ipmi-username" type="xsd:string"
+                     description="Username to access IPMI" />
+        <xsd:element name="deploy-kernel" type="xsd:string"
+                     description="UUID of the deploy kernel" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="SriovInfo">
+    <xsd:all>
+        <xsd:element name="sriov-physical-interface" type="xsd:string"
+                     description="SRIOV Physical Interface" />
+        <xsd:element name="sriov-vf" type="xsd:integer"
+                     description="SRIOV Virtual Function" />
+        <xsd:element name="sriov-physical-net" type="xsd:string"
+                     description="SRIOV Physical Network" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="BaremetalPortGroupInfo">
+    <xsd:all>
+        <xsd:element name="standalone-ports-supported" type="xsd:boolean"
+                     description="Indicates whether ports that are members of this portgroup can be used as stand-alone ports." />
+        <xsd:element name="node-uuid" type="xsd:string"
+                     description="UUID of the parent node where this port is connected" />
+        <xsd:element name="properties" type="PortGroupProperties"
+                     description="Key/value properties related to the port group's configuration." />
+        <xsd:element name="address" type="xsd:string"
+                     description="Mac Address of the NIC in Node" />
+        <xsd:element name="mode" type="xsd:string"
+                     description="Mode of the port group" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="DpdkInfo">
+    <xsd:all>
+        <xsd:element name="cpu-core-mask" type="xsd:string"
+                     description="CPU Core Mask" />
+        <xsd:element name="dpdk-uio-driver" type="xsd:string"
+                     description="UIO Driver" />
+        <xsd:element name="huge-pages" type="xsd:integer"
+                     description="Hugepages Size" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="BaremetalServerInfo">
+    <xsd:all>
+        <xsd:element name="network-interface" type="xsd:string"
+                     description="Networking interface" />
+        <xsd:element name="driver" type="xsd:string"
+                     description="IPMI driver" />
+        <xsd:element name="properties" type="BaremetalProperties"
+                     description="Details of baremetal hardware for scheduler" />
+        <xsd:element name="driver-info" type="DriverInfo"
+                     description="Details of the driver for power management" />
+        <xsd:element name="name" type="xsd:string"
+                     description="Name of the Baremetal server" />
+    </xsd:all>
+</xsd:complexType>
+
+
+<xsd:element name="end-system" type="ifmap:IdentityType"/>
+
+<xsd:element name="end-system-type" type="EndSystemType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-type', 'end-system', 'optional', 'CRUD',
+              'Type of machine resource') -->
+
+<xsd:simpleType name="EndSystemType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="private"/>
+        <xsd:enumeration value="baremetal"/>
+        <xsd:enumeration value="esxi"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name="end-system-esxi-info" type="ESXIHostInfo"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-esxi-info', 'end-system', 'optional', 'CRUD',
+              'Details of the ESXI host') -->
+<xsd:element name="end-system-ip-address" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-ip-address', 'end-system', 'optional', 'CRUD',
+              'IP Address of the Management interface') -->
+<xsd:element name="end-system-hostname" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-hostname', 'end-system', 'optional', 'CRUD',
+              'Fully qualified host name') -->
+<xsd:element name="end-system-bms-info" type="BaremetalServerInfo"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-bms-info', 'end-system', 'optional', 'CRUD',
+              'Details of the baremetal server') -->
+<xsd:element name="end-system-mac-address" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-mac-address', 'end-system', 'optional', 'CRUD',
+              'Provisioning Interface MAC Address') -->
+<xsd:element name="end-system-disk-partition" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-disk-partition', 'end-system', 'optional', 'CRUD',
+              'Comma seperated disk partition to use.') -->
+<xsd:element name="end-system-interface-name" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-interface-name', 'end-system', 'optional', 'CRUD',
+              'Name of the Management interface') -->
+<xsd:element name="end-system-cloud-info" type="CloudInstanceInfo"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('end-system-cloud-info', 'end-system', 'optional', 'CRUD',
+              'Information related to cloud') -->
+
+<xsd:element name="end-system-node-profile"  />
+<!--#IFMAP-SEMANTICS-IDL
+     Link('end-system-node-profile', 'end-system', 'node-profile', ['ref'], 'optional', 'CRUD',
+          'Reference to matching node-profile object for this end_system') -->
+
+<xsd:element name="global-system-config-end-system"  />
+<!--#IFMAP-SEMANTICS-IDL
+     Link('global-system-config-end-system', 'global-system-config', 'end-system', ['has'], 'optional', 'CRUD',
+          'Parent of this end_system resource.') -->
+
+<xsd:element name="port" type="ifmap:IdentityType"/>
+
+<xsd:element name="port-port-group-uuid" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('port-port-group-uuid', 'port', 'optional', 'CRUD',
+              'UUID of the port group in which this port belongs') -->
+<xsd:element name="port-bms-port-info" type="BaremetalPortInfo"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('port-bms-port-info', 'port', 'optional', 'CRUD',
+              'Details of the baremetal server port') -->
+<xsd:element name="port-label" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('port-label', 'port', 'optional', 'CRUD',
+              'Label of the interface representing the use of the interface.') -->
+
+<xsd:element name="end-system-port"  />
+<!--#IFMAP-SEMANTICS-IDL
+     Link('end-system-port', 'end-system', 'port', ['has'], 'optional', 'CRUD',
+          'Parent of this port.') -->
+
+<xsd:element name="port-group" type="ifmap:IdentityType"/>
+
+<xsd:element name="port-group-bms-port-group-info" type="BaremetalPortGroupInfo"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('port-group-bms-port-group-info', 'port-group', 'optional', 'CRUD',
+              'Details of the baremetal server port group') -->
+
+<xsd:element name="port-group-port"  />
+<!--#IFMAP-SEMANTICS-IDL
+     Link('port-group-port', 'port-group', 'port', ['ref'], 'optional', 'CRUD',
+          'Reference to port object which are part of this port group.') -->
+
+<xsd:element name="end-system-port-group"  />
+<!--#IFMAP-SEMANTICS-IDL
+     Link('end-system-port-group', 'end-system', 'port-group', ['has'], 'optional', 'CRUD',
+          'Parent of this port group.') -->
+
+<xsd:element name="physical-interface-port"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('physical-interface-port', 'physical-interface', 'port', ['ref'], 'optional', 'CRUD',
+          'This link represents physical connection from access port of a switch to the server port') -->
 </xsd:schema>
