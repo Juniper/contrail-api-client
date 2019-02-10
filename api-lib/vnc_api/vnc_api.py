@@ -396,7 +396,7 @@ class VncApi(object):
                      _read_cfg(cfg_parser, 'global', 'cafile', ''))
 
         self._use_api_certs = False
-        if apicafile and api_server_use_ssl:
+        if apicafile and use_ssl:
             certs = [apicafile]
             if apikeyfile and apicertfile:
                 certs = [apicertfile, apikeyfile, apicafile]
