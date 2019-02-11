@@ -20,7 +20,7 @@ libpath = ['#/build/lib']
 
 libs = ['boost_system', 'boost_thread', 'log4cplus']
 if sys.platform.startswith('win'):
-    libs.append('windowsstubs')
+    libs.append('contrail-windows')
 else:
     libs.append('pthread')
 
