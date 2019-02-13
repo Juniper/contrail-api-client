@@ -10,12 +10,14 @@
     <xsd:all>
         <xsd:element name="playbook-uri" type="xsd:string" required="true"
                      description="uri to the playbook location on the file server"/>
+        <xsd:element name="multi-device-playbook" type="xsd:boolean" default='false'
+                     description="if set to true, the execute-job action url uses the job-template parameter 'device-list' to execute the playbook in parallel"/>
         <xsd:element name="vendor" type="xsd:string" required="optional"
                      description="Vendor name"/>
         <xsd:element name="device-family" type="xsd:string" required="optional"
                      description="Device family name"/>
         <xsd:element name="job-completion-weightage" type="xsd:integer" default='100'
-                     description="Job percentage completion when this playbook is completed. This atttribute value should 100 if there is only one playbook defined in the job template. The job-completion-weigtages for all playbooks in the same job-template should add up to 100 exact."/>
+                     description="Job percentage completion when this playbook is completed. This attribute value should 100 if there is only one playbook defined in the job template. The job-completion-weigtages for all playbooks in the same job-template should add up to 100 exact."/>
     </xsd:all>
 </xsd:complexType>
 
@@ -225,10 +227,6 @@
              'global-system-config', 'job-template', ['has'], 'optional', 'CRUD',
              'List of job templates supported by the system.') -->
 
-<xsd:element name="job-template-multi-device-job" type="xsd:boolean"/>
-<!--#IFMAP-SEMANTICS-IDL
-          Property('job-template-multi-device-job', 'job-template', 'required', 'CRUD',
-              'if set to true, the "/execute-job" action url allows device list as additional parameter to run the job template on multiple device in one job') -->
 <xsd:element name="job-template-synchronous-job" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-synchronous-job', 'job-template', 'required', 'CRUD',
