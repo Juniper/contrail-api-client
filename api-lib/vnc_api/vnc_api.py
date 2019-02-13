@@ -332,7 +332,7 @@ class VncApi(object):
                  api_server_url=None, conf_file=None, user_info=None,
                  auth_token=None, auth_host=None, auth_port=None,
                  auth_protocol=None, auth_url=None, auth_type=None,
-                 wait_for_connect=False, api_server_use_ssl=False,
+                 wait_for_connect=False, api_server_use_ssl=None,
                  domain_name=None, exclude_hrefs=None, auth_token_url=None,
                  apicertfile=None, apikeyfile=None, apicafile=None,
                  kscertfile=None, kskeyfile=None, kscafile=None,):
