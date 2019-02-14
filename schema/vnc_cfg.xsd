@@ -621,7 +621,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='This represents subscribers assigned ip addresses from this subnet for fabric peer network'/>
         <xsd:element name="vlan-tag" type="xsd:integer" required='optional'
              description='vlan this subnet belongs to'/>
-        <xsd:element name="dhcp-relay-server" type="xsd:boolean" required='optional'
+        <xsd:element name="dhcp-relay-server" type="IpAddressType" required='optional' maxOccurs="unbounded"
              description='DHCP relay server IP'/>
     </xsd:all>
 </xsd:complexType>
@@ -1568,6 +1568,18 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
          ListProperty('port-translation-pools', 'global-vrouter-config', 'optional', 'CRUD',
                       'List of Ports to be reserved for providing underlay connectivity via Port translation.') -->
+
+<xsd:simpleType name="VirtualNetworkCategory">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value='infra'/>
+        <xsd:enumeration value='tenant'/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name="virtual-network-type" type="VirtualNetworkCategory" default="tenant"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('virtual-network-type', 'virtual-network', 'optional', 'CRUD',
+              'This attribute is to differentiate the infrastructure networks from the tenant networks. Infra-networks could be in-band network for management and control traffic') -->
 
 <xsd:element name="virtual-network-properties" type="VirtualNetworkType"/>
 <!--#IFMAP-SEMANTICS-IDL
