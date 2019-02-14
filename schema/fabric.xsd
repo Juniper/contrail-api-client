@@ -379,9 +379,19 @@
           Link('hardware-card', 'hardware', 'card', ['ref'], 'optional', 'CRUD',
              'List of installed interface cards in a specific hardware platform.') -->
 
+<xsd:simpleType name="NodeProfileType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="physical-router"/>
+        <xsd:enumeration value="end-system"/>
+    </xsd:restriction>
+</xsd:simpleType>
 <xsd:element name="node-profile" type="ifmap:IdentityType"
     description="Node profile contains the meta-data to profile/categorize the devices so that a list of supported capabilities/roles by the device are known to the system. For example, we can define a node profile to specify list of capabilities/roles supported by a set of QFX10K devices with certain hardware/software installed. It also contains the default config parameter values for each supported roles/capability. These are the config parameters that are not modeled in the VNC data model. They could be vendor specific config parameters that we allow user to tweak via API or some kind of auto generated UI from job template input schema. The UML diagram for node-profile can be found at https://github.com/jnpr-tjiang/cfm-data-model/blob/master/5.0.1-data-model/images/node_profile.png"/>
 
+<xsd:element name="node-profile-type" type="NodeProfileType" default="physical-router"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-profile-type', 'node-profile', 'optional', 'CRUD',
+              'Node profile type to differentiate the node profile network devices from server node profiles.') -->
 <xsd:element name="node-profile-vendor" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-vendor', 'node-profile', 'required', 'CRUD',
@@ -652,6 +662,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-vnc-managed', 'physical-router', 'optional', 'CRUD',
               'This physical router is enabled to be configured by device manager.') -->
+
+<xsd:element name="physical-router-underlay-managed" type="xsd:boolean" default="false"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-underlay-managed', 'physical-router', 'optional', 'CRUD',
+              'Set to true if underlay is configured by device manager. The greenfield ZTP workflow sets this attribute to true. The brownfield on-boarding sets this attribute to false.') -->
 
 <xsd:element name="physical-router-role" type="PhysicalRouterRole"/>
 <!--#IFMAP-SEMANTICS-IDL
