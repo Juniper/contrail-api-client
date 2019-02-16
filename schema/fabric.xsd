@@ -41,6 +41,12 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:simpleType name="DataCenterInterconnectModes">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="l3"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="FabricNetworkType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="management"/>
@@ -287,6 +293,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('data-center-interconnect-bgp-hold-time', 'data-center-interconnect', 'optional', 'CRUD',
               'BGP hold time in seconds [0-65535], Max time to detect liveliness to peer. Value 0 will result in default value of 90 seconds.') -->
+
+<xsd:element name="data-center-interconnect-mode" type="DataCenterInterconnectModes"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('data-center-interconnect-mode', 'data-center-interconnect', 'optional', 'CRUD',
+              'Data center interconnect mode one of L2 stretch or L3') -->
 
 <xsd:element name="data-center-interconnect-bgp-address-families" type="AddressFamilies"/>
 <!--#IFMAP-SEMANTICS-IDL
