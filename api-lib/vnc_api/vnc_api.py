@@ -1447,8 +1447,9 @@ class VncApi(object):
                       back_ref_id=None, obj_uuids=None, fields=None,
                       detail=False, count=False, filters=None, shared=False,
                       token=None, fq_names=None):
+        empty_result = [] if detail else {'%ss' % (obj_type): []}
         if obj_uuids == [] or back_ref_id == []:
-            return []
+            return empty_result
         self._headers['X-USER-TOKEN'] = token
         if not obj_type:
             raise ResourceTypeUnknownError(obj_type)
@@ -1548,7 +1549,7 @@ class VncApi(object):
                     OP_GET, obj_class.create_uri, data=query_params)
             except NoIdError:
                 # dont allow NoIdError propagate to user
-                return []
+                return empty_result
 
         if not detail:
             return response
