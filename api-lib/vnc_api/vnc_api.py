@@ -23,6 +23,9 @@ import re
 import os
 from urlparse import urlparse
 
+from Crypto.Cipher import AES
+import base64
+
 from gen.vnc_api_client_gen import all_resource_type_tuples
 from gen.resource_xsd import *
 from gen.resource_client import *
@@ -1197,6 +1200,27 @@ class VncApi(object):
     # end prop_list_get
 
     @check_homepage
+    def get_device_credentials(self, obj_fq_name=None, obj_uuid=None, admin_password=None):
+        if obj_fq_name is None and obj_uuid is None:
+            raise ValueError("Either obj_fq_name or obj_uuid must be "
+                             "specified")
+
+        uri = self._action_uri['get-device-credentials']
+        params = {'obj_fq_name': obj_fq_name,
+                  'obj_uuid': obj_uuid}
+
+        content = self._request_server(OP_GET, uri, data=params)
+
+        key = admin_password.rjust(16)
+        cipher = AES.new(key, AES.MODE_ECB)
+
+        for idx in range(len(content)):
+            password = cipher.decrypt(base64.b64decode(content[idx].get('password')))
+            content[idx]['password'] = password.strip()
+
+        return content
+
+    @check_homepage
     def execute_job(self, job_template_fq_name=None, job_template_id=None,
                     job_input=None, device_list=None):
         if job_template_fq_name is None and job_template_id is None:
@@ -1536,6 +1560,7 @@ class VncApi(object):
             uri = self._action_uri.get('list-bulk-collection')
             if not uri:
                 raise
+
 
             # use same keys as in GET with additional 'type'
             query_params['type'] = obj_type
