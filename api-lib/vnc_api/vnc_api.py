@@ -639,7 +639,8 @@ class VncApi(object):
 
     @check_homepage
     def _object_read(self, res_type, fq_name=None, fq_name_str=None,
-                     id=None, ifmap_id=None, fields=None):
+                     id=None, ifmap_id=None, fields=None,
+                     exclude_back_refs=True, exclude_children=True):
         obj_cls = obj_type_to_vnc_class(res_type, __name__)
 
         (args_ok, result) = self._read_args_to_id(
@@ -661,8 +662,11 @@ class VncApi(object):
             )
             query_params = {'fields': ','.join(f for f in fields)}
         else:
-            query_params = {'exclude_back_refs': True,
-                            'exclude_children': True}
+            query_params = dict()
+            if exclude_back_refs is True:
+                query_params['exclude_back_refs'] = True
+            if exclude_children is True:
+                query_params['exclude_children'] = True
 
         if self._exclude_hrefs is not None:
             query_params['exclude_hrefs'] = True
