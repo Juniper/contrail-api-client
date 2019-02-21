@@ -883,14 +883,14 @@
 </xsd:complexType>
 
 
-<xsd:element name="end-system" type="ifmap:IdentityType"/>
+<xsd:element name="node" type="ifmap:IdentityType"/>
 
-<xsd:element name="end-system-type" type="EndSystemType"/>
+<xsd:element name="type" type="NodeType"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-type', 'end-system', 'optional', 'CRUD',
+     Property('type', 'node', 'optional', 'CRUD',
               'Type of machine resource') -->
 
-<xsd:simpleType name="EndSystemType">
+<xsd:simpleType name="NodeType">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="private"/>
         <xsd:enumeration value="baremetal"/>
@@ -898,74 +898,74 @@
     </xsd:restriction>
 </xsd:simpleType>
 
-<xsd:element name="end-system-esxi-info" type="ESXIHostInfo"/>
+<xsd:element name="esxi-info" type="ESXIHostInfo"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-esxi-info', 'end-system', 'optional', 'CRUD',
+     Property('esxi-info', 'node', 'optional', 'CRUD',
               'Details of the ESXI host') -->
-<xsd:element name="end-system-ip-address" type="xsd:string"/>
+<xsd:element name="ip-address" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-ip-address', 'end-system', 'optional', 'CRUD',
+     Property('ip-address', 'node', 'optional', 'CRUD',
               'IP Address of the Management interface') -->
-<xsd:element name="end-system-hostname" type="xsd:string"/>
+<xsd:element name="hostname" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-hostname', 'end-system', 'optional', 'CRUD',
+     Property('hostname', 'node', 'optional', 'CRUD',
               'Fully qualified host name') -->
-<xsd:element name="end-system-bms-info" type="BaremetalServerInfo"/>
+<xsd:element name="bms-info" type="BaremetalServerInfo"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-bms-info', 'end-system', 'optional', 'CRUD',
+     Property('bms-info', 'node', 'optional', 'CRUD',
               'Details of the baremetal server') -->
-<xsd:element name="end-system-mac-address" type="xsd:string"/>
+<xsd:element name="mac-address" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-mac-address', 'end-system', 'optional', 'CRUD',
+     Property('mac-address', 'node', 'optional', 'CRUD',
               'Provisioning Interface MAC Address') -->
-<xsd:element name="end-system-disk-partition" type="xsd:string"/>
+<xsd:element name="disk-partition" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-disk-partition', 'end-system', 'optional', 'CRUD',
+     Property('disk-partition', 'node', 'optional', 'CRUD',
               'Comma seperated disk partition to use.') -->
-<xsd:element name="end-system-interface-name" type="xsd:string"/>
+<xsd:element name="interface-name" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-interface-name', 'end-system', 'optional', 'CRUD',
+     Property('interface-name', 'node', 'optional', 'CRUD',
               'Name of the Management interface') -->
-<xsd:element name="end-system-cloud-info" type="CloudInstanceInfo"/>
+<xsd:element name="cloud-info" type="CloudInstanceInfo"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('end-system-cloud-info', 'end-system', 'optional', 'CRUD',
+     Property('cloud-info', 'node', 'optional', 'CRUD',
               'Information related to cloud') -->
 
-<xsd:element name="end-system-node-profile"  />
+<xsd:element name="node-node-profile"  />
 <!--#IFMAP-SEMANTICS-IDL
-     Link('end-system-node-profile', 'end-system', 'node-profile', ['ref'], 'optional', 'CRUD',
-          'Reference to matching node-profile object for this end_system') -->
+     Link('node-node-profile', 'node', 'node-profile', ['ref'], 'optional', 'CRUD',
+          'Reference to matching node-profile object for this node') -->
 
-<xsd:element name="global-system-config-end-system"  />
+<xsd:element name="global-system-config-node"  />
 <!--#IFMAP-SEMANTICS-IDL
-     Link('global-system-config-end-system', 'global-system-config', 'end-system', ['has'], 'optional', 'CRUD',
-          'Parent of this end_system resource.') -->
+     Link('global-system-config-node', 'global-system-config', 'node', ['has'], 'optional', 'CRUD',
+          'Parent of this node resource.') -->
 
 <xsd:element name="port" type="ifmap:IdentityType"/>
 
-<xsd:element name="port-port-group-uuid" type="xsd:string"/>
+<xsd:element name="port-group-uuid" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('port-port-group-uuid', 'port', 'optional', 'CRUD',
+     Property('port-group-uuid', 'port', 'optional', 'CRUD',
               'UUID of the port group in which this port belongs') -->
-<xsd:element name="port-bms-port-info" type="BaremetalPortInfo"/>
+<xsd:element name="bms-port-info" type="BaremetalPortInfo"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('port-bms-port-info', 'port', 'optional', 'CRUD',
+     Property('bms-port-info', 'port', 'optional', 'CRUD',
               'Details of the baremetal server port') -->
-<xsd:element name="port-label" type="xsd:string"/>
+<xsd:element name="label" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('port-label', 'port', 'optional', 'CRUD',
+     Property('label', 'port', 'optional', 'CRUD',
               'Label of the interface representing the use of the interface.') -->
 
-<xsd:element name="end-system-port"  />
+<xsd:element name="node-port"  />
 <!--#IFMAP-SEMANTICS-IDL
-     Link('end-system-port', 'end-system', 'port', ['has'], 'optional', 'CRUD',
+     Link('node-port', 'node', 'port', ['has'], 'optional', 'CRUD',
           'Parent of this port.') -->
 
 <xsd:element name="port-group" type="ifmap:IdentityType"/>
 
-<xsd:element name="port-group-bms-port-group-info" type="BaremetalPortGroupInfo"/>
+<xsd:element name="bms-port-group-info" type="BaremetalPortGroupInfo"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Property('port-group-bms-port-group-info', 'port-group', 'optional', 'CRUD',
+     Property('bms-port-group-info', 'port-group', 'optional', 'CRUD',
               'Details of the baremetal server port group') -->
 
 <xsd:element name="port-group-port"  />
@@ -973,9 +973,9 @@
      Link('port-group-port', 'port-group', 'port', ['ref'], 'optional', 'CRUD',
           'Reference to port object which are part of this port group.') -->
 
-<xsd:element name="end-system-port-group"  />
+<xsd:element name="node-port-group"  />
 <!--#IFMAP-SEMANTICS-IDL
-     Link('end-system-port-group', 'end-system', 'port-group', ['has'], 'optional', 'CRUD',
+     Link('node-port-group', 'node', 'port-group', ['has'], 'optional', 'CRUD',
           'Parent of this port group.') -->
 
 <xsd:element name="physical-interface-port"/>
