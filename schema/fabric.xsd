@@ -27,6 +27,12 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:complexType name="VpgInterfaceParametersType">
+    <xsd:all>
+        <xsd:element name="ae-num" type="xsd:integer"/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:complexType name="DeviceCredential">
     <xsd:all>
         <xsd:element name="credential" type="UserCredentials" required="true"/>
@@ -600,7 +606,7 @@
           Property('virtual-port-group-user-created', 'virtual-port-group', 'optional', 'CRUD',
               'Flag to be set to True when its externally created and False when created internally. Default is set to True') -->
 
-<xsd:element name="virtual-port-group-physical-interface"/>
+<xsd:element name="virtual-port-group-physical-interface" type="VpgInterfaceParametersType"/>
 <!--#IFMAP-SEMANTICS-IDL
          Link('virtual-port-group-physical-interface', 'virtual-port-group', 'physical-interface', ['ref'], 'optional', 'CRUD',
          'All the physical interfaces that belong to this link aggregation group. The physical interface could belong to the same or different physical router') -->
