@@ -653,6 +653,11 @@
           Property('physical-router-management-ip', 'physical-router', 'required', 'CRUD',
               'Management ip for this physical router. It is used by the device manager to perform netconf and by SNMP collector if enabled.') -->
 
+<xsd:element name="physical-router-management-mac" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-management-mac', 'physical-router', 'optional', 'CRUD',
+              'Management mac for this physical router.') -->
+
 <xsd:element name="physical-router-dataplane-ip" type="smi:IpAddress"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-dataplane-ip', 'physical-router', 'optional', 'CRUD',
