@@ -1292,10 +1292,10 @@ class VncApi(object):
 
     @check_homepage
     def get_int_owner(self, pool_name, index):
-        json_body = json.dumps({'pool': pool_name, 'value': index})
+        query_params = {'pool': pool_name, 'value': index}
         uri = self._action_uri['int-pool']
-        content = self._request_server(OP_GET, uri, data=json_body)
-        return json.loads(content)['owner']
+        content = self._request_server(OP_GET, uri, data=query_params)
+        return content['owner']
     # end get_int_owner
 
     @check_homepage
