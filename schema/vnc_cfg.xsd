@@ -2959,6 +2959,18 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'virtual-network', 'logical-router', ['ref'], 'optional', 'CRUD',
           'Reference to a logical-router used for external connectivity') -->
 
+<xsd:simpleType name="LogicalRouterType">
+    <xsd:restriction base='xsd:string'>
+        <xsd:enumeration value="snat-routing"/>
+        <xsd:enumeration value="vxlan-routing"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name="logical-router-type" type="LogicalRouterType" default='snat-routing'/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('logical-router-type', 'logical-router', 'optional', 'CRUD',
+              'Type of logical-router, used to signify the purpose of the logical-router.') -->
+
 <xsd:element name="logical-router-service-instance"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('logical-router-service-instance',
