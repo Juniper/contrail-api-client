@@ -5,6 +5,7 @@
 
 import re
 import sys
+import os
 
 Import('BuildEnv')
 env = BuildEnv.Clone()
@@ -50,6 +51,12 @@ def CCMapTest(env, testname):
 
 test_list = []
 map_env = env.Clone()
+
+etcd_incl = os.environ.get('CONTRAIL_ETCD_INCL');
+
+if etcd_incl:
+    map_env.Prepend(LIBS = ['etcdql', 'protobuf', 'grpc++', 'grpc', 'z'])
+
 map_env.Prepend(LIBS = ['ifmap_agent', 'ifmap_common', 'ifmapio', 'config_client_mgr'])
 test_list.append(CCMapTest(map_env, 'ifmap_link_attr'))
 test_list.append(CCMapTest(map_env, 'ifmap_deep_property'))
@@ -63,6 +70,10 @@ test_list.append(CCMapTest(map_env, 'ifmap_identity_property'))
 
 vnc_cfg_env = env.Clone()
 vnc_cfg_env.Append(LIBPATH = env['TOP'] + '/schema')
+
+if etcd_incl:
+    vnc_cfg_env.Prepend(LIBS = ['etcdql', 'protobuf', 'grpc++', 'grpc', 'z'])
+
 vnc_cfg_env.Prepend(LIBS = ['ifmap_vnc', 'ifmap_common', 'ifmapio', 'config_client_mgr'])
 
 env.Alias('src/schema:id_perms_test',
