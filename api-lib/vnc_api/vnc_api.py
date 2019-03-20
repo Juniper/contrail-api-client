@@ -335,7 +335,8 @@ class VncApi(object):
                  wait_for_connect=False, api_server_use_ssl=None,
                  domain_name=None, exclude_hrefs=None, auth_token_url=None,
                  apicertfile=None, apikeyfile=None, apicafile=None,
-                 kscertfile=None, kskeyfile=None, kscafile=None,):
+                 kscertfile=None, kskeyfile=None, kscafile=None,
+                 apiinsecure=None, ksinsecure=None):
         # TODO allow for username/password to be present in creds file
 
         self._obj_serializer = self._obj_serializer_diff
@@ -382,7 +383,8 @@ class VncApi(object):
 
         # contrail-api SSL support
         try:
-            self._apiinsecure = cfg_parser.getboolean('global', 'insecure')
+            self._apiinsecure = apiinsecure or \
+                cfg_parser.getboolean('global', 'insecure')
         except (AttributeError,
                 ValueError,
                 ConfigParser.NoOptionError,
@@ -447,7 +449,8 @@ class VncApi(object):
 
             # keystone SSL support
             try:
-                self._ksinsecure = cfg_parser.getboolean('auth', 'insecure')
+                self._ksinsecure = ksinsecure or \
+                    cfg_parser.getboolean('auth', 'insecure')
             except (AttributeError,
                     ValueError,
                     ConfigParser.NoOptionError,
