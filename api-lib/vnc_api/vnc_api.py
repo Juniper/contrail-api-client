@@ -335,7 +335,8 @@ class VncApi(object):
                  wait_for_connect=False, api_server_use_ssl=None,
                  domain_name=None, exclude_hrefs=None, auth_token_url=None,
                  apicertfile=None, apikeyfile=None, apicafile=None,
-                 kscertfile=None, kskeyfile=None, kscafile=None,):
+                 kscertfile=None, kskeyfile=None, kscafile=None,
+                 apiinsecure=None, ksinsecure=None):
         # TODO allow for username/password to be present in creds file
 
         self._obj_serializer = self._obj_serializer_diff
@@ -381,13 +382,16 @@ class VncApi(object):
         self._web_host = self._web_hosts[0]
 
         # contrail-api SSL support
-        try:
-            self._apiinsecure = cfg_parser.getboolean('global', 'insecure')
-        except (AttributeError,
-                ValueError,
-                ConfigParser.NoOptionError,
-                ConfigParser.NoSectionError):
-            self._apiinsecure = False
+        if apiinsecure is not None:
+            self._apiinsecure = apiinsecure
+        else:
+            try:
+                self._apiinsecure = cfg_parser.getboolean('global', 'insecure')
+            except (AttributeError,
+                    ValueError,
+                    ConfigParser.NoOptionError,
+                    ConfigParser.NoSectionError):
+                self._apiinsecure = False
         apicertfile = (apicertfile or
                        _read_cfg(cfg_parser, 'global', 'certfile', ''))
         apikeyfile = (apikeyfile or
@@ -446,13 +450,16 @@ class VncApi(object):
                 _read_cfg(cfg_parser, 'auth', 'AUTHN_TOKEN_URL', None)
 
             # keystone SSL support
-            try:
-                self._ksinsecure = cfg_parser.getboolean('auth', 'insecure')
-            except (AttributeError,
-                    ValueError,
-                    ConfigParser.NoOptionError,
-                    ConfigParser.NoSectionError):
-                self._ksinsecure = False
+            if ksinsecure is not None:
+                self._ksinsecure = ksinsecure
+            else:
+                try:
+                    self._ksinsecure = cfg_parser.getboolean('auth', 'insecure')
+                except (AttributeError,
+                        ValueError,
+                        ConfigParser.NoOptionError,
+                        ConfigParser.NoSectionError):
+                    self._ksinsecure = False
             kscertfile = (kscertfile or
                           _read_cfg(cfg_parser, 'auth', 'certfile', ''))
             kskeyfile = (kskeyfile or
