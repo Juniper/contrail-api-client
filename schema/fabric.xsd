@@ -574,6 +574,24 @@
           Property('device-image-sha1', 'device-image', 'optional', 'CRUD',
               'sha1 checksum of the image file that was uploaded to the image server.') -->
 
+<xsd:element name="device-config" type="ifmap:IdentityType"/>
+
+<xsd:element name="global-system-config-device-config"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-device-config',
+             'global-system-config', 'device-config', ['has'], 'optional', 'CRUD',
+             'list of device configs that get uploaded to the system.') -->
+
+<xsd:element name="device-config-serial-number" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('device-config-serial-number', 'device-config', 'required', 'CRUD',
+              'Serial Number of the device to be ztped. It is used by device manager during dhcp process to push the base config on to this device') -->
+
+<xsd:element name="device-config-file-uri" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('device-config-file-uri', 'device-config', 'optional', 'CRUD',
+              'file uri for the device config uploaded to swift.') -->
+
 <xsd:element name="link-aggregation-group" type="ifmap:IdentityType"/>
 <xsd:element name="link-aggregation-group-lacp-enabled" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
