@@ -586,7 +586,7 @@
 <xsd:element name="device-config-serial-number" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('device-config-serial-number', 'device-config', 'required', 'CRUD',
-              'Serial Number of the device to be ztp'ed. It is used by device manager during dhcp process to push the base config on to this device') -->
+              'Serial Number of the device to be ztped. It is used by device manager during dhcp process to push the base config on to this device') -->
 
 <xsd:element name="device-config-file-uri" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
