@@ -883,8 +883,8 @@ class VncApi(object):
                         headers=self._DEFAULT_AUTHN_HEADERS,
                     )
             except Exception as e:
-                errmsg = 'Unable to connect to keystone for authentication. '
-                errmsg += 'Exception %s' % (e)
+                errmsg = ('Unable to connect to keystone (%s) for authentication. '
+                    'Exception %s' % (url, e))
                 raise RuntimeError(errmsg)
 
             if (response.status_code == 200) or (response.status_code == 201):
