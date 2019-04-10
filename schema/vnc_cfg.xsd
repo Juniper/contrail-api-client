@@ -1933,6 +1933,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='802.1Q VLAN tag to be used if this interface is sub-interface for some other interface.'/>
         <xsd:element name='max-flows' type='MaxFlowsType' default='0' required='optional'
              description='Maximum number of flows permitted on VMI'/>
+        <xsd:element name="sub-interface-tagged" type="xsd:boolean" required='optional'
+             description='This optional flag is needed because some TOR switches (such as QFX-5110) requires VLAN id to be configured on access port even for untagged traffic.'/>
     </xsd:all>
 </xsd:complexType>
 
