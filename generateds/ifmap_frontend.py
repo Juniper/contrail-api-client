@@ -603,6 +603,8 @@ class IFMapApiGenerator(object):
             write(gen_file, "        self._serialize_field_to_json(serialized, field_names, 'fq_name')")
             write(gen_file, "        if hasattr(self, 'parent_type'):")
             write(gen_file, "            self._serialize_field_to_json(serialized, field_names, 'parent_type')")
+            write(gen_file, "        if hasattr(self, 'parent_uuid'):")
+            write(gen_file, "            self._serialize_field_to_json(serialized, field_names, 'parent_uuid')")
             write(gen_file, "")
 
             write(gen_file, "        # serialize property fields")
