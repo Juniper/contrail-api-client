@@ -2950,15 +2950,6 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('logical-router-gateway-external', 'logical-router', 'required', 'CRUD',
               'this logical router is used for external connectivity or not.') -->
 
-<!--
-    Link a logical router to a virtual network used for external connectivity.
--->
-<xsd:element name="virtual-network-logical-router"/>
-<!--#IFMAP-SEMANTICS-IDL
-     Link('virtual-network-logical-router',
-          'virtual-network', 'logical-router', ['ref'], 'optional', 'CRUD',
-          'Reference to a logical-router used for external connectivity') -->
-
 <xsd:simpleType name="LogicalRouterType">
     <xsd:restriction base='xsd:string'>
         <xsd:enumeration value="snat-routing"/>
