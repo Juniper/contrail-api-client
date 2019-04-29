@@ -423,6 +423,12 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-roles', 'node-profile', 'required', 'CRUD',
               'List of capable physical and routing-bridging role combinations supported by the devices that matches one of the hardware list defined in this node profile.') -->
+<xsd:element name="node-profile-job-template"/>
+<!--#IFMAP-SEMANTICS-IDL
+               Link('node-profile-job-template', 'node-profile', 'job-template', ['ref'], 'optional', 'CRUD',
+             'This reference associates the node profile to a job-template that contains a playbook that generates device
+              specific role config and deploys it to the device. The role-config.config attribtue value must be in JSON
+              format and conform to the input_schema defined in the job-template.') -->
 <xsd:element name="global-system-config-node-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('global-system-config-node-profile', 'global-system-config', 'node-profile', ['has'], 'optional', 'CRUD',
@@ -448,12 +454,6 @@
 <!--#IFMAP-SEMANTICS-IDL
                Link('node-profile-role-config', 'node-profile', 'role-config', ['has'], 'optional', 'CRUD',
              'list of role configs for those physical or routing/bridging roles defined in the node-profile.') -->
-<xsd:element name="role-config-job-template"/>
-<!--#IFMAP-SEMANTICS-IDL
-               Link('role-config-job-template', 'role-config', 'job-template', ['ref'], 'optional', 'CRUD',
-             'This reference associates the role config to a job-template that contains a playbook that generates device
-              specific role config and deploys it to the device. The role-config.config attribtue value must be in JSON
-              format and conform to the input_schema defined in the job-template.') -->
 <xsd:element name="role-config-config" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('role-config-config', 'role-config', 'required', 'CRUD',
