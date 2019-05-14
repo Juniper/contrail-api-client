@@ -628,6 +628,14 @@
                ' L2 - only L2 service is provided, MAC learning is supported.',
                ' L3 - only L3 service is supported and MAC learning is not supported.']) -->
 
+<xsd:simpleType name="ManagedStateType">
+     <xsd:restriction base='xsd:string'>
+         <xsd:enumeration value='rma'/>
+         <xsd:enumeration value='activating'/>
+         <xsd:enumeration value='active'/>
+     </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:element name="physical-router-device-family" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-device-family', 'physical-router', 'required', 'CRUD',
@@ -722,6 +730,16 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-snmp-credentials', 'physical-router', 'optional', 'CRUD',
               'SNMP credentials for the physical router used by SNMP collector.') -->
+
+<xsd:element name="physical-router-managed-state" type='ManagedStateType' default="active"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-managed-state', 'physical-router', 'optional', 'CRUD',
+              'Managed state for the physical router. Used to RMA devices') -->
+
+<xsd:element name="physical-router-underlay-config" type='xsd:string'/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-underlay-config', 'physical-router', 'optional', 'CRUD',
+              'Brownfield device underlay configuration stored during underlay onboarding. Only valid if physical-router-underlay-managed is false') -->
 
 <xsd:complexType name="BaremetalProperties">
     <xsd:all>
