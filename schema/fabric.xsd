@@ -435,11 +435,14 @@
 <!--#IFMAP-SEMANTICS-IDL
           Link('physical-router-node-profile', 'physical-router', 'node-profile', ['ref'], 'optional', 'CRUD',
              'Node profile assigned to the physical router during device discovery/onboarding.') -->
-
 <xsd:element name="node-profile-hardware"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('node-profile-hardware', 'node-profile', 'hardware', ['ref'], 'optional', 'CRUD',
              'Hardware info defined in a node profile that are used to categorize the devices') -->
+<xsd:element name="node-profile-role-definition"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('node-profile-role-definition', 'node-profile', 'role-definition', ['ref'], 'optional', 'CRUD',
+             'list of role definitions supported for this node profile') -->
 
 <xsd:element name="role-config" type="ifmap:IdentityType"
     description="This resource exposes to users additional parameters to configure a specify physical or routing/switching roles. These are the config parameters that are mot modeled in VNC data model and we don't want to hard code in the fabric ansible playbooks. These could be vendor specific parameters or could be extended by the field or customer who might want to tweak the playbooks. The schema for the role config are defined in the job-template.input_schema. This schema could be used by the UI to generically render the form for user to edit the config."/>
@@ -475,6 +478,16 @@
 <!--#IFMAP-SEMANTICS-IDL
          Link('physical-router-link-aggregation-group', 'physical-router', 'link-aggregation-group', ['has'], 'optional', 'CRUD',
          'List of link aggregation groups on this PRouter.') -->
+
+<xsd:element name="physical-router-physical-role"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-physical-role', 'physical-router', 'physical-role', ['ref'], 'optional', 'CRUD',
+             'Physical role assigned to this physical router') -->
+
+<xsd:element name="physical-router-overlay-role"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-overlay-role', 'physical-router', 'overlay-role', ['ref'], 'optional', 'CRUD',
+             'Overlay roles assigned to this physical router') -->
 
 <xsd:element name="physical-interface" type="ifmap:IdentityType"/>
 <xsd:element name="ethernet-segment-identifier" type="xsd:string"/>
@@ -982,4 +995,69 @@
 <!--#IFMAP-SEMANTICS-IDL
      Link('physical-interface-port', 'physical-interface', 'port', ['ref'], 'optional', 'CRUD',
           'This link represents physical connection from access port of a switch to the server port') -->
+<xsd:element name="feature" type="ifmap:IdentityType"
+    description="A granual networking feature supported by Fabric Manager"/>
+
+<xsd:element name="global-system-config-feature"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-feature', 'global-system-config', 'feature', ['has'], 'optional', 'CRUD',
+             'list of features supported by the system.') -->
+
+<xsd:element name="feature-feature"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('feature-feature', 'feature', 'feature', ['ref'], 'optional', 'CRUD',
+             'list of features this feature is dependent on.') -->
+
+<xsd:element name="physical-role" type="ifmap:IdentityType"
+    description="Defines a physical role"/>
+
+<xsd:element name="global-system-config-physical-role"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-physical-role', 'global-system-config', 'physical-role', ['has'], 'optional', 'CRUD',
+             'list of physical roles supported by the system.') -->
+
+<xsd:element name="overlay-role" type="ifmap:IdentityType"
+    description="Defines an overlay role"/>
+
+<xsd:element name="global-system-config-overlay-role"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-overlay-role', 'global-system-config', 'overlay-role', ['has'], 'optional', 'CRUD',
+             'list of overlay roles supported by the system.') -->
+
+<xsd:element name="role-definition" type="ifmap:IdentityType"
+    description="Defines a role combination which comprises of a physical role and overlay role and the features associated with it."/>
+
+<xsd:element name="global-system-config-role-definition"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-role-definition', 'global-system-config', 'role-definition', ['has'], 'optional', 'CRUD',
+             'list of role definitions supported by the system.') -->
+<xsd:element name="role-definition-feature"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('role-definition-feature', 'role-definition', 'feature', ['ref'], 'optional', 'CRUD',
+             'list of features for this role definition.') -->
+<xsd:element name="role-definition-physical-role"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('role-definition-physical-role', 'role-definition', 'physical-role', ['ref'], 'optional', 'CRUD',
+             'physical role for this role definition.') -->
+<xsd:element name="role-definition-overlay-role"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('role-definition-overlay-role', 'role-definition', 'overlay-role', ['ref'], 'optional', 'CRUD',
+             'overlay role for this role definition.') -->
+
+<xsd:element name="feature-config" type="ifmap:IdentityType"
+    description="Vendor specific and/or feature specific configuration parameters editable by the user"/>
+
+<xsd:element name="feature-config-additional-params" type="KeyValuePairs"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('feature-config-additional-params', 'feature-config', 'optional', 'CRUD',
+              'Additional configuration parameters for the feature.') -->
+<xsd:element name="feature-config-vendor-config" type="KeyValuePairs"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('feature-config-vendor-config', 'feature-config', 'optional', 'CRUD',
+              'Vendor specific configuration/parameters for the feature.') -->
+<xsd:element name="role-definition-feature-config"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('role-definition-feature-config', 'role-definition', 'feature-config', ['has'], 'optional', 'CRUD',
+             'list of feature configs for this role definition.') -->
+
 </xsd:schema>
