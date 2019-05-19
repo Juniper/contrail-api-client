@@ -688,7 +688,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <xsd:simpleType name="AutonomousSystemType">
      <xsd:restriction base="xsd:integer">
          <xsd:minInclusive value="1"/>
-         <xsd:maxInclusive value="4294967294"/>
+         <xsd:maxInclusive value="4294967295"/>
      </xsd:restriction>
 </xsd:simpleType>
 
@@ -1003,6 +1003,10 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('autonomous-system', 'global-system-config', 'required', 'CRUD',
               '16 bit BGP Autonomous System number for the cluster.') -->
+<xsd:element name="enable-4byte-as" type="xsd:boolean" default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('enable-4byte-as', 'global-system-config', 'optional', 'CRUD',
+              'Knob to enable 4 byte Autonomous System number support.') -->
 <xsd:element name="config-version" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('config-version', 'global-system-config', 'system-only', 'R',
