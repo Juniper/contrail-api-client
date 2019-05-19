@@ -1001,6 +1001,10 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('autonomous-system', 'global-system-config', 'required', 'CRUD',
               '16 bit BGP Autonomous System number for the cluster.') -->
+<xsd:element name="disable-4byte-as" type="xsd:boolean" default='true'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('disable-4byte-as', 'global-system-config', 'optional', 'CRUD',
+              'Is 4 byte Autonomous System number enabled for the cluster.') -->
 <xsd:element name="config-version" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('config-version', 'global-system-config', 'system-only', 'R',
