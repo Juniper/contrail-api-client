@@ -381,6 +381,11 @@
 <xsd:element name="hardware" type="ifmap:IdentityType"
     description="This resource contains the information about the device hardware info. This resource name must follow the convention: '[vendor name]-[hardware platform name]', for example, 'juniper-mx80'."/>
 
+<xsd:element name="hardware-device-image"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('hardware-device-image', 'hardware', 'device-image', ['ref'], 'optional', 'CRUD',
+             'Image info defined in a hardware that are used for device OS upgrade') -->
+
 <xsd:element name="card" type="ifmap:IdentityType"
     description="This resource contains the information about the interface card in a hardware platform."/>
 
