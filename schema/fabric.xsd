@@ -694,6 +694,11 @@
           Property('physical-router-loopback-ip', 'physical-router', 'optional', 'CRUD',
               'This is ip address of loopback interface of physical router. Used by the device manager to configure physical router loopback interface.') -->
 
+<xsd:element name="physical-router-replicator-loopback-ip" type="smi:IpAddress"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-replicator-loopback-ip', 'physical-router', 'optional', 'CRUD',
+              'This is the loopback ip address for assisted replication. Used by the device manager to configure physical router replicator ip.') -->
+
 <xsd:element name="physical-router-vendor-name" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-vendor-name', 'physical-router', 'required', 'CRUD',
