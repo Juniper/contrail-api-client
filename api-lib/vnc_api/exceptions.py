@@ -82,6 +82,20 @@ class RefsExistError(VncError):
 # end class RefsExistError
 
 
+class PreconditionFailed(VncError):
+    """HTTP 412 - Precondition Failed.
+
+    The server does not meet one of the preconditions that the requester put on
+    the request.
+    """
+    def __init__(self, content="Precondition Failed"):
+        self.status_code = 412
+        self.content = content
+
+    def __str__(self):
+        return self.content
+
+
 class HttpError(VncError):
 
     def __init__(self, status_code, content):

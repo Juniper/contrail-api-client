@@ -608,6 +608,8 @@ class VncApi(object):
             obj.parent_type = obj_dict['parent_type']
         if 'parent_uuid' in obj_dict:
             obj.parent_uuid = obj_dict['parent_uuid']
+        if 'id_perms' in obj_dict and 'last_modified' in obj_dict['id_perms']:
+            obj.if_match = obj_dict['id_perms']['last_modified']
 
         obj.set_server_conn(self)
 
@@ -690,6 +692,7 @@ class VncApi(object):
         obj = obj_cls.from_dict(**obj_dict)
         obj.clear_pending_updates()
         obj.set_server_conn(self)
+        obj.if_match = obj.get_id_perms().get_last_modified()
 
         return obj
     # end _object_read
@@ -731,6 +734,10 @@ class VncApi(object):
         if not obj.uuid:
             obj.uuid = self.fq_name_to_id(res_type, obj.get_fq_name())
 
+        # set pre-condition headers
+        if obj.if_match:
+            self._headers['If-Match'] = obj.if_match
+
         # Generate PUT on object only if some attr was modified
         content = None
         if obj.get_pending_updates():
@@ -739,8 +746,7 @@ class VncApi(object):
             if obj_json_param:
                 json_body = '{"%s":%s}' % (res_type, obj_json_param)
                 uri = obj_cls.resource_uri_base[res_type] + '/' + obj.uuid
-                content = self._request_server(
-                    OP_PUT, uri, data=json_body)
+                content = self._request_server(OP_PUT, uri, data=json_body)
 
         # Generate POST on /prop-collection-update if needed/pending
         prop_coll_body = {'uuid': obj.uuid,
@@ -785,6 +791,7 @@ class VncApi(object):
                     res_type, obj.uuid, ref_name, ref[0], list(ref[1]),
                     'ADD', ref[2])
         obj.clear_pending_updates()
+        self._headers.pop('If-Match', None)
 
         return content
     # end _object_update
@@ -813,7 +820,10 @@ class VncApi(object):
         id = result
         uri = obj_cls.resource_uri_base[res_type] + '/' + id
 
+        if obj.if_match:
+            self._headers['If-Match'] = obj.if_match
         self._request_server(OP_DELETE, uri)
+        self._headers.pop('If-Match', None)
     # end _object_delete
 
     def _object_get_default_id(self, res_type):
@@ -1100,6 +1110,8 @@ class VncApi(object):
                 raise OverQuota(content)
             elif status == 409:
                 raise RefsExistError(content)
+            elif status == 412:
+                PreconditionFailed()
             elif status == 413:
                 raise RequestSizeError(content)
             elif status == 504:
@@ -1585,6 +1597,8 @@ class VncApi(object):
             resource_obj = obj_class.from_dict(**obj_dict)
             resource_obj.clear_pending_updates()
             resource_obj.set_server_conn(self)
+            resource_obj.if_match = resource_obj.get_id_perms().\
+                get_last_modified()
             resource_objs.append(resource_obj)
 
         if 'X-USER-TOKEN' in self._headers:
