@@ -381,10 +381,6 @@
 <xsd:element name="hardware" type="ifmap:IdentityType"
     description="This resource contains the information about the device hardware info. This resource name must follow the convention: '[vendor name]-[hardware platform name]', for example, 'juniper-mx80'."/>
 
-<xsd:element name="hardware-device-image"/>
-<!--#IFMAP-SEMANTICS-IDL
-          Link('hardware-device-image', 'hardware', 'device-image', ['ref'], 'optional', 'CRUD',
-             'Image info defined in a hardware that are used for device OS upgrade') -->
 
 <xsd:element name="card" type="ifmap:IdentityType"
     description="This resource contains the information about the interface card in a hardware platform."/>
@@ -591,6 +587,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('device-image-sha1', 'device-image', 'optional', 'CRUD',
               'sha1 checksum of the image file that was uploaded to the image server.') -->
+
+<xsd:element name="device-image-hardware"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('device-image-hardware', 'device-image', 'hardware', ['ref'], 'optional', 'CRUD',
+             'linking the hardware that is associated to image') -->
 
 <xsd:element name="link-aggregation-group" type="ifmap:IdentityType"/>
 <xsd:element name="link-aggregation-group-lacp-enabled" type="xsd:boolean"/>
