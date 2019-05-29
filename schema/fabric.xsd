@@ -789,6 +789,15 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:complexType name="ESXIProperties">
+    <xsd:all>
+        <xsd:element name="dvs_name" type="xsd:string"
+                     description="Name of the Distributed Virtual Switch(DVS) assigned to Port." />
+        <xsd:element name="dvs_id" type="xsd:string"
+                     description="MOid of the Distributed Virtual Switch(DVS) assigned to Port." />
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:complexType name="BaremetalPortInfo">
     <xsd:all>
         <xsd:element name="pxe-enabled" type="xsd:boolean"
@@ -989,10 +998,15 @@
 <!--#IFMAP-SEMANTICS-IDL
      Property('port-group-uuid', 'port', 'optional', 'CRUD',
               'UUID of the port group in which this port belongs') -->
+
 <xsd:element name="bms-port-info" type="BaremetalPortInfo"/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('bms-port-info', 'port', 'optional', 'CRUD',
               'Details of the baremetal server port') -->
+<xsd:element name="esxi-port-info" type="ESXIProperties"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('esxi-port-info', 'port', 'optional', 'CRUD',
+              'Information related to Port-ESXi/vCenter') -->
 <xsd:element name="label" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('label', 'port', 'optional', 'CRUD',
