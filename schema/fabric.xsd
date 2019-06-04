@@ -53,6 +53,18 @@
      </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="StormControlActionType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="interface-shutdown"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="StormControlActionListType">
+    <xsd:all>
+        <xsd:element name="storm-control-action" type="StormControlActionType" maxOccurs="unbounded"/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:simpleType name="FabricNetworkType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="management"/>
@@ -1104,4 +1116,57 @@
           Link('role-definition-feature-config', 'role-definition', 'feature-config', ['has'], 'optional', 'CRUD',
              'list of feature configs for this role definition.') -->
 
+<xsd:element name="storm-control-profile" type="ifmap:IdentityType"
+    description="Storm control profile definition"/>
+
+<xsd:element name="project-storm-control-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('project-storm-control-profile',
+          'project', 'storm-control-profile', ['has'], 'optional', 'CRUD',
+          'list of storm control profiles supported.') -->
+<xsd:element name="storm-control-bandwidth" type="xsd:integer"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('storm-control-bandwidth', 'storm-control-profile', 'required', 'CRUD',
+             'Configure storm control bandwidth level as percentage.') -->
+<xsd:element name="no-broadcast" type="xsd:boolean" default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('no-broadcast', 'storm-control-profile', 'optional', 'CRUD',
+             'if set to true, disable broadcast traffic storm control.') -->
+<xsd:element name="no-multicast" type="xsd:boolean" default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('no-multicast', 'storm-control-profile', 'optional', 'CRUD',
+             'if set to true, disable multicast traffic storm control.') -->
+<xsd:element name="no-unknown-unicast" type="xsd:boolean" default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('no-unknown-unicast', 'storm-control-profile', 'optional', 'CRUD',
+             'if set to true, disable unknown unicast traffic storm control.') -->
+<xsd:element name="no-registered-multicast" type="xsd:boolean" default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('no-registered-multicast', 'storm-control-profile', 'optional', 'CRUD',
+             'if set to true, disable registered multicast traffic storm control.') -->
+<xsd:element name="no-unregistered-multicast" type="xsd:boolean" default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('no-unregistered-multicast', 'storm-control-profile', 'optional', 'CRUD',
+             'if set to true, disable unregistered multicast traffic storm control.') -->
+<xsd:element name="storm-control-actions" type="StormControlActionListType"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('storm-control-actions', 'storm-control-profile', 'optional', 'CRUD',
+             'Default action (Discard) is implicit. In addition, other list of actions can be specified here.') -->
+
+<xsd:element name="port-profile" type="ifmap:IdentityType"
+    description="Encapsulates port configurations like storm control, QoS etc"/>
+
+<xsd:element name="project-port-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('project-port-profile',
+          'project', 'port-profile', ['has'], 'optional', 'CRUD',
+          'Encapsulates port configurations like storm control etc') -->
+<xsd:element name="port-profile-storm-control-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('port-profile-storm-control-profile', 'port-profile', 'storm-control-profile', ['ref'], 'optional', 'CRUD',
+          'Storm control profile that this port profile uses.') -->
+<xsd:element name="virtual-machine-interface-port-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('virtual-machine-interface-port-profile', 'virtual-machine-interface', 'port-profile', ['ref'], 'optional', 'CRUD',
+          'Port profiles attached to this virtual machine interface') -->
 </xsd:schema>
