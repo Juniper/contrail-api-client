@@ -53,6 +53,12 @@
      </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="StormControlActionType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="shutdown"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="FabricNetworkType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="management"/>
@@ -103,6 +109,15 @@
              description="Namespace as ASN ranges"/>
         <xsd:element name="serial-nums" type="xsd:string" required="optional" maxOccurs="unbounded"
              description="Namespace as MAC addresses"/>
+    </xsd:choice>
+</xsd:complexType>
+
+<xsd:complexType name="StormControlBandwidth">
+    <xsd:choice>
+        <xsd:element name="bandwidth-level" type="xsd:integer" required="optional"
+             description="Bandwidth expressed in kbps"/>
+        <xsd:element name="bandwidth-percentage" type="xsd:float" required="optional"
+             description="Bandwidth expressed as a percentage"/>
     </xsd:choice>
 </xsd:complexType>
 
@@ -274,7 +289,7 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-output-schema', 'job-template', 'optional', 'CRUD',
               'JSON schema of the job output that describes the output from the job and could be used by UI to render the output automatically. This property stores the JSON schema content as string.') -->
-<xsd:element name="job-template-input-ui-schema" type="xsd:string"/>
+<xsd:element name="job-template-input-ui-schema" type="xsd:string"/>o
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-input-ui-schema', 'job-template', 'optional', 'CRUD',
               'UI JSON schema of the job input that could be used by UI to render the input form with certain nice-to-have features like ordering of the input fields, placeholders etc. This property stores the UI JSON schema content as string.') -->
@@ -1103,4 +1118,39 @@
           Link('role-definition-feature-config', 'role-definition', 'feature-config', ['has'], 'optional', 'CRUD',
              'list of feature configs for this role definition.') -->
 
+<xsd:element name="storm-control-profile" type="ifmap:IdentityType"
+    description="Storm control configuration definition"/>
+<xsd:element name="global-system-config-storm-control-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-storm-control-profile', 'global-system-config', 'storm-control-profile', ['has'], 'optional', 'CRUD',
+             'list of storm control profiles supported by the system.') -->
+<xsd:element name="storm-control-bandwidth" type="StormControlBandwidth"
+    description="Configure storm control bandwidth as a level in kbps or as a percentage"/>
+<xsd:element name="no-broadcast" type="xsd:boolean" default='false'
+                     description="if set to true, disable broadcast traffic storm control"/>
+<xsd:element name="no-multicast" type="xsd:boolean" default='false'
+                     description="if set to true, disable multicast traffic storm control"/>
+<xsd:element name="no-unknown-unicast" type="xsd:boolean" default='false'
+                     description="if set to true, disable unknown unicast traffic storm control"/>
+<xsd:element name="no-registered-multicast" type="xsd:boolean" default='false'
+                     description="if set to true, disable registered multicast storm control"/>
+<xsd:element name="no-unregistered-multicast" type="xsd:boolean" default='false'
+                     description="if set to true, disable unregistered multicast storm control"/>
+<xsd:element name="action" type="StormControlActionType"
+                     description="Default DROP or DISCARD action is implicit. In addition other actions can be specified here"/>
+
+<xsd:element name="access-port-profile" type="ifmap:IdentityType"
+    description="Encapsulates access port configurations like storm control etc"/>
+<xsd:element name="global-system-config-access-port-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-access-port-profile', 'global-system-config', 'access-port-profile', ['has'], 'optional', 'CRUD',
+             'list of access port profiles supported by the system.') -->
+<xsd:element name="access-port-profile-storm-control-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('access-port-profile-storm-control-profile', 'access-port-profile', 'storm-control-profile', ['has'], 'optional', 'CRUD',
+             'Storm control profile that this access port profile uses.') -->
+<xsd:element name="access-port-profile-virtual-machine-interface"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Link('access-port-profile-virtual-machine-interface', 'access-port-profile', 'virtual-machine-interface', ['ref'], 'optional', 'CRUD',
+         'Virtual machine interface for the port for which the access profile belongs to') -->
 </xsd:schema>
