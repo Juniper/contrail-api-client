@@ -53,6 +53,12 @@
      </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="StormControlActionType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="shutdown"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:simpleType name="FabricNetworkType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="management"/>
@@ -103,6 +109,15 @@
              description="Namespace as ASN ranges"/>
         <xsd:element name="serial-nums" type="xsd:string" required="optional" maxOccurs="unbounded"
              description="Namespace as MAC addresses"/>
+    </xsd:choice>
+</xsd:complexType>
+
+<xsd:complexType name="StormControlBandwidth">
+    <xsd:choice>
+        <xsd:element name="bandwidth-level" type="xsd:integer" required="optional"
+             description="Bandwidth expressed in kbps"/>
+        <xsd:element name="bandwidth-percentage" type="xsd:integer" required="optional"
+             description="Bandwidth expressed as percentage"/>
     </xsd:choice>
 </xsd:complexType>
 
@@ -1104,4 +1119,43 @@
           Link('role-definition-feature-config', 'role-definition', 'feature-config', ['has'], 'optional', 'CRUD',
              'list of feature configs for this role definition.') -->
 
+<xsd:element name="storm-control-profile" type="ifmap:IdentityType"
+    description="Storm control profile definition"/>
+
+<xsd:element name="project-storm-control-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('project-storm-control-profile',
+          'project', 'storm-control-profile', ['has'], 'optional', 'CRUD',
+          'list of storm control profiles supported.') -->
+<xsd:element name="storm-control-bandwidth" type="StormControlBandwidth"
+    description="Configure storm control bandwidth level in kbps or as percentage"/>
+<xsd:element name="no-broadcast" type="xsd:boolean" default='false'
+    description="if set to true, disable broadcast traffic storm control"/>
+<xsd:element name="no-multicast" type="xsd:boolean" default='false'
+    description="if set to true, disable multicast traffic storm control"/>
+<xsd:element name="no-unknown-unicast" type="xsd:boolean" default='false'
+    description="if set to true, disable unknown unicast traffic storm control"/>
+<xsd:element name="no-registered-multicast" type="xsd:boolean" default='false'
+    description="if set to true, disable registered multicast storm control"/>
+<xsd:element name="no-unregistered-multicast" type="xsd:boolean" default='false'
+    description="if set to true, disable unregistered multicast storm control"/>
+<xsd:element name="action" type="StormControlActionType"
+    description="Default DROP or DISCARD action is implicit. In addition, other actions can be specified here"/>
+
+<xsd:element name="port-profile" type="ifmap:IdentityType"
+    description="Encapsulates port configurations like storm control, QoS etc"/>
+
+<xsd:element name="project-port-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('project-port-profile',
+          'project', 'port-profile', ['has'], 'optional', 'CRUD',
+          'Encapsulates port configurations like storm control etc') -->
+<xsd:element name="port-profile-storm-control-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('port-profile-storm-control-profile', 'port-profile', 'storm-control-profile', ['ref'], 'optional', 'CRUD',
+          'Storm control profile that this port profile uses.') -->
+<xsd:element name="virtual-machine-interface-port-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('virtual-machine-interface-port-profile', 'virtual-machine-interface', 'port-profile', ['ref'], 'optional', 'CRUD',
+          'Port profiles attached to this virtual machine interface') -->
 </xsd:schema>
