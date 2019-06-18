@@ -334,6 +334,11 @@
           Property('fabric-ztp', 'fabric', 'optional', 'CRUD',
               'This attribute to indicate if the fabric is zero-touch provisioned or not. If this attribute is set to "True", user should not be allowed to remove any existing namespaces from the fabric as they may be used to provision the devices.') -->
 
+<xsd:element name="fabric-os-version" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('fabric-os-version', 'fabric', 'optional', 'CRUD',
+              'Os version of the entire fabric. It is updated when image upgrade is chosen during ztp.) -->
+
 <xsd:element name="fabric-virtual-network" type="FabricNetworkTag"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('fabric-virtual-network',
