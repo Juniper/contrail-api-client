@@ -6,6 +6,23 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:smi="urn:ietf:params:xml:ns:opsawg:smi:base:1.0">
 
+<xsd:complexType name="ExecutableInfoType">
+    <xsd:all>
+        <xsd:element name="executable-path" type="xsd:string" required="true"
+                     description="absolute path of the binary to execute"/>
+        <xsd:element name="executable-args" type="xsd:string" required="optional"
+                     description="Optional arguments to be passed to the executable"/>
+        <xsd:element name="job-completion-weightage" type="xsd:integer" default='100'
+                     description="Job percentage completion when this executable is completed." />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="ExecutableInfoListType">
+    <xsd:all>
+        <xsd:element name="executable-info" type="ExecutableInfoType" maxOccurs="unbounded"/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:complexType name="PlaybookInfoType">
     <xsd:all>
         <xsd:element name="playbook-uri" type="xsd:string" required="true"
@@ -228,6 +245,7 @@
         <xsd:enumeration value='workflow'/>
         <xsd:enumeration value='device_operation'/>
         <xsd:enumeration value='config'/>
+        <xsd:enumeration value='executable'/>
     </xsd:restriction>
 </xsd:simpleType>
 
@@ -255,6 +273,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           ListProperty('job-template-playbooks', 'job-template', 'required', 'CRUD',
               'List of vendor specific playbooks that achieve the same functionality on each vendor device. All the vendor specific playbooks listed here share the same input/output schema defined in the job template') -->
+<xsd:element name="job-template-executables" type="ExecutableInfoListType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          ListProperty('job-template-executables', 'job-template', 'optional', 'CRUD',
+              'List of Executables that needs to be Executed') -->
 <xsd:element name="job-template-input-schema" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('job-template-input-schema', 'job-template', 'optional', 'CRUD',
