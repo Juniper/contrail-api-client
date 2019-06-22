@@ -429,6 +429,13 @@
           Link('hardware-card', 'hardware', 'card', ['ref'], 'optional', 'CRUD',
              'List of installed interface cards in a specific hardware platform.') -->
 
+<xsd:element name="device-chassis" type="ifmap:IdentityType"
+    description="This resource contains information about the device chassis. The PR can refer to this object for chassis details. This resource name must follow the convention: 'vendorname_chassismac' (replacing mac ':' with '_'), for example, 'juniper_00_11_22_33_44_55' "/>
+<xsd:element name="device-chassis-type" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('device-chassis-type', 'device-chassis', 'optional', 'CRUD',
+              'type of the chassis address if known.') -->
+
 <xsd:simpleType name="NodeProfileType">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="physical-router"/>
@@ -476,6 +483,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Link('physical-router-node-profile', 'physical-router', 'node-profile', ['ref'], 'optional', 'CRUD',
              'Node profile assigned to the physical router during device discovery/onboarding.') -->
+<xsd:element name="physical-router-device-chassis"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-device-chassis', 'physical-router', 'device-chassis', ['ref'], 'optional', 'CRUD',
+             'Device Chassis info assigned to the physical router during device discovery/onboarding.') -->
 <xsd:element name="node-profile-hardware"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('node-profile-hardware', 'node-profile', 'hardware', ['ref'], 'optional', 'CRUD',
@@ -699,11 +710,6 @@
     <!--#IFMAP-SEMANTICS-IDL
               Property('physical-router-os-version', 'physical-router', 'optional', 'CRUD',
                   'os version for this physical router. It is updated when device is imported or device image is successfully upgraded') -->
-
-<xsd:element name="physical-router-chassis-id" type="xsd:string"/>
-    <!--#IFMAP-SEMANTICS-IDL
-              Property('physical-router-chassis-id', 'physical-router', 'optional', 'CRUD',
-                  'Device chassis identifier which is used in LLDP protocol to identify the peer device. This attribute can be either discovered via the fabric on-boarding workflow or manually specified by the user') -->
 
 <xsd:element name="physical-router-hostname" type="xsd:string"/>
     <!--#IFMAP-SEMANTICS-IDL
