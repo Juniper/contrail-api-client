@@ -651,9 +651,15 @@
 <xsd:element name="virtual-port-group" type="ifmap:IdentityType"/>
 
 <xsd:element name="fabric-virtual-port-group"/>
+<xsd:element name="project-virtual-port-group"/>
 <!--#IFMAP-SEMANTICS-IDL
-         Link('fabric-virtual-port-group', 'fabric', 'virtual-port-group', ['has'], 'optional', 'CRUD',
-         'List of link aggregation groups in this fabric.') -->
+         Link('fabric-virtual-port-group',
+              'fabric', 'virtual-port-group', ['has'], 'optional', 'CRUD',
+              'List of virtual port groups in this fabric.');
+         Link('project-virtual-port-group',
+              'project', 'virtual-port-group', ['has'], 'optional', 'CRUD',
+              'List of virtual port groups/trunk ports in this project.')
+ -->
 
 <xsd:element name="virtual-port-group-lacp-enabled" type="xsd:boolean"/>
 <!--#IFMAP-SEMANTICS-IDL
