@@ -697,6 +697,7 @@
          <xsd:enumeration value='rma'/>
          <xsd:enumeration value='activating'/>
          <xsd:enumeration value='active'/>
+         <xsd:enumeration value='maintenance'/>
          <xsd:enumeration value='error'/>
      </xsd:restriction>
 </xsd:simpleType>
