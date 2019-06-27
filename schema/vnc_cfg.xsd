@@ -2928,6 +2928,12 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'logical-router', 'route-table', ['ref'], 'optional', 'CRUD',
           'Reference to the route table attached to this logical router. By attaching route table, system will create static routes with the route target only of route targets linked to this logical router') -->
 
+
+<xsd:element name="logical-router-dhcp-relay-server" type="IpAddressType" required='optional' maxOccurs="unbounded"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('logical-router-dhcp-relay-server', 'logical-router', 'optional', 'CRUD',
+              'DHCP server IP(s) to serve managed BMS(s).') -->
+
 <xsd:simpleType name="LogicalRouterVirtualNetworkEnumType">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="ExternalGateway"
