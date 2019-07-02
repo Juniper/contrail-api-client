@@ -1389,10 +1389,6 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Link('project-virtual-network',
           'project', 'virtual-network', ['has'], 'optional', 'CRUD',
           'Virtual network is collection of end points (interface or ip(s) or MAC(s)) that can talk to each other by default. It is collection of subnets connected by implicit router which default gateway in each subnet.') -->
-<xsd:element name="virtual-network-vlan-tag" type="xsd:integer"/>
-<!--#IFMAP-SEMANTICS-IDL
-          Property('virtual-network-vlan-tag', 'virtual-network', 'required', 'CRUD',
-              'VLAN tag (.1Q) classifier for this virtual network.') -->
 
 <xsd:element name="forwarding-class" type="ifmap:IdentityType"/>
 <xsd:element name="forwarding-class-id" type="ForwardingClassId" required='true' default="0"/>
