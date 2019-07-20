@@ -1,6 +1,7 @@
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
+from builtins import object
 import fixtures
 
 
@@ -31,7 +32,7 @@ class ContrailFixture (fixtures.Fixture):
         self._pdetails['__links__'][lname] = []
 
     def links(self):
-        return self._get_link_dict().keys()
+        return list(self._get_link_dict().keys())
 
     def get_links(self, lname):
         return self._get_link_dict().get(lname, [])
@@ -43,4 +44,4 @@ class ContrailFixture (fixtures.Fixture):
         return self.get_links(lname).append(link)
 
     def get_link_fixtures(self, lname):
-        return map(lambda l: l.fixture(), self.get_links(lname))
+        return [l.fixture() for l in self.get_links(lname)]
