@@ -5,6 +5,8 @@
 #
 
 from __future__ import print_function
+from builtins import range
+from builtins import object
 import sys
 import getopt
 from xml.dom import minidom
@@ -42,7 +44,7 @@ def quote_xml(inStr):
 # Data representation classes.
 #
 
-class outline:
+class outline(object):
     subclass = None
     def __init__(self, name='', description='', children=None):
         self.name = name
@@ -100,7 +102,7 @@ class outline:
 # end class outline
 
 
-class node:
+class node(object):
     subclass = None
     def __init__(self, label='', text='', children=None, hidden=''):
         self.label = label
