@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 import sys
 import upcase_names_appl as appl
@@ -15,11 +16,11 @@ def create_people(names):
 def main():
     names = ['albert', 'betsy', 'charlie']
     people = create_people(names)
-    print 'Before:'
+    print('Before:')
     people.export(sys.stdout, 1)
     people.upcase_names()
-    print '-' * 50
-    print 'After:'
+    print('-' * 50)
+    print('After:')
     people.export(sys.stdout, 1)
 
 

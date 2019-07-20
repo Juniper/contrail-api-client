@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import platform
-import test_common
+from . import test_common
 import json
 import httpretty
 from urlparse import urlparse

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
@@ -28,15 +29,15 @@ from gen.resource_xsd import *
 from gen.resource_client import *
 from gen.generatedssuper import GeneratedsSuper
 
-from utils import (
+from .utils import (
     OP_POST, OP_PUT, OP_GET, OP_DELETE, hdr_client_tenant,
     _obj_serializer_all, obj_type_to_vnc_class, getCertKeyCaBundle,
     AAA_MODE_VALID_VALUES, CamelCase, str_to_class)
-from exceptions import (
+from .exceptions import (
     ServiceUnavailableError, NoIdError, PermissionDenied, OverQuota,
     RefsExistError, TimeOutError, BadRequest, HttpError,
     ResourceTypeUnknownError, RequestSizeError, AuthFailed)
-import ssl_adapter
+from . import ssl_adapter
 
 DEFAULT_LOG_DIR = "/var/tmp/contrail_vnc_lib"
 
