@@ -1,9 +1,12 @@
 from __future__ import absolute_import
+from future import standard_library
+standard_library.install_aliases()
+from builtins import range
 import platform
 from . import test_common
 import json
 import httpretty
-from urlparse import urlparse
+from urllib.parse import urlparse
 from requests.exceptions import ConnectionError
 
 from testtools.matchers import Contains

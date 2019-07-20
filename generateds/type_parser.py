@@ -3,6 +3,7 @@ from __future__ import print_function
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from builtins import object
 class TypeParserGenerator(object):
     def __init__(self, cTypeDict):
         self._cTypeDict = cTypeDict
@@ -384,7 +385,7 @@ namespace autogen {
 
 """ % hdrname
         file.write(header)
-        for ctype in self._cTypeDict.values():
+        for ctype in list(self._cTypeDict.values()):
             if ctype._is_attribute:
                 self.GenerateAttributeParser(file, ctype)
                 self.GenerateJsonAttributeParser(file, ctype)
