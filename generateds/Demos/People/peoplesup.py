@@ -5,6 +5,7 @@
 # Generated Tue Feb  1 14:34:02 2011 by generateDS.py version 2.5a.
 #
 
+from __future__ import print_function
 import sys
 import getopt
 import re as re_
@@ -70,7 +71,7 @@ def parsexml_(*args, **kwargs):
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError, exp:
+except ImportError as exp:
 
     class GeneratedsSuper(object):
         def gds_format_string(self, input_data, input_name=''):
@@ -855,14 +856,14 @@ class person(GeneratedsSuper):
             already_processed.append('ratio')
             try:
                 self.ratio = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (ratio): %s' % exp)
         value = attrs.get('id')
         if value is not None and 'id' not in already_processed:
             already_processed.append('id')
             try:
                 self.id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = attrs.get('value')
         if value is not None and 'value' not in already_processed:
@@ -879,7 +880,7 @@ class person(GeneratedsSuper):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             self.category = ival_
         elif nodeName_ == 'agent': 
@@ -1229,7 +1230,7 @@ class programmer(person):
             already_processed.append('attrnegint')
             try:
                 self.attrnegint = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.attrnegint >= 0:
                 raise_parse_error(node, 'Invalid NegativeInteger')
@@ -1238,7 +1239,7 @@ class programmer(person):
             already_processed.append('attrposint')
             try:
                 self.attrposint = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.attrposint <= 0:
                 raise_parse_error(node, 'Invalid PositiveInteger')
@@ -1247,7 +1248,7 @@ class programmer(person):
             already_processed.append('attrnonnegint')
             try:
                 self.attrnonnegint = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.attrnonnegint < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -1256,7 +1257,7 @@ class programmer(person):
             already_processed.append('attrnonposint')
             try:
                 self.attrnonposint = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.attrnonposint > 0:
                 raise_parse_error(node, 'Invalid NonPositiveInteger')
@@ -1269,7 +1270,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             if ival_ <= 0:
                 raise_parse_error(child_, 'requires positiveInteger')
@@ -1278,7 +1279,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             if ival_ > 0:
                 raise_parse_error(child_, 'requires nonPositiveInteger')
@@ -1287,7 +1288,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             if ival_ >= 0:
                 raise_parse_error(child_, 'requires negativeInteger')
@@ -1296,7 +1297,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             if ival_ < 0:
                 raise_parse_error(child_, 'requires nonNegativeInteger')
@@ -1312,14 +1313,14 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             self.elshort = ival_
         elif nodeName_ == 'ellong':
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             self.ellong = ival_
         elif nodeName_ == 'elparam': 
@@ -1476,7 +1477,7 @@ class param(GeneratedsSuper):
             already_processed.append('flow')
             try:
                 self.flow = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             self.validate_FlowType(self.flow)    # validate type FlowType
         value = attrs.get('sid')
@@ -1828,7 +1829,7 @@ class agent(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             self.priority = fval_
         elif nodeName_ == 'info': 
@@ -1965,7 +1966,7 @@ class special_agent(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             self.priority = fval_
         elif nodeName_ == 'info': 
@@ -2165,28 +2166,28 @@ class booster(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             self.other_name = fval_
         elif nodeName_ == 'class':
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             self.classxx = fval_
         elif nodeName_ == 'other-value':
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             self.other_value.append(fval_)
         elif nodeName_ == 'type':
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             self.type_.append(fval_)
         elif nodeName_ == 'client-handler': 
@@ -2275,7 +2276,7 @@ class client_handler(GeneratedsSuper):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             self.refid = ival_
 # end class client_handler
@@ -2376,14 +2377,14 @@ class info(GeneratedsSuper):
             already_processed.append('rating')
             try:
                 self.rating = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (rating): %s' % exp)
         value = attrs.get('type')
         if value is not None and 'type' not in already_processed:
             already_processed.append('type')
             try:
                 self.type_ = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = attrs.get('name')
         if value is not None and 'name' not in already_processed:
@@ -2458,7 +2459,7 @@ class vehicle(GeneratedsSuper):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             self.wheelcount = ival_
 # end class vehicle
@@ -2615,7 +2616,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 

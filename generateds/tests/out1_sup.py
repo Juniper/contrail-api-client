@@ -5,6 +5,7 @@
 # Generated  by generateDS.py.
 #
 
+from __future__ import print_function
 import sys
 import getopt
 import re as re_
@@ -70,7 +71,7 @@ def parsexml_(*args, **kwargs):
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError, exp:
+except ImportError as exp:
 
     class GeneratedsSuper(object):
         def gds_format_string(self, input_data, input_name=''):
@@ -88,7 +89,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError) as exp:
                     raise_parse_error(node, 'Requires sequence of integers')
             return input_data
         def gds_format_float(self, input_data, input_name=''):
@@ -102,7 +103,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError) as exp:
                     raise_parse_error(node, 'Requires sequence of floats')
             return input_data
         def gds_format_double(self, input_data, input_name=''):
@@ -116,7 +117,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError) as exp:
                     raise_parse_error(node, 'Requires sequence of doubles')
             return input_data
         def gds_format_boolean(self, input_data, input_name=''):
@@ -586,7 +587,7 @@ class people(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: people  depth: %d' % (counter, depth, )
+        print('%d. class: people  depth: %d' % (counter, depth, ))
         members = people._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -601,7 +602,7 @@ class people(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -743,7 +744,7 @@ class comments(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: comments  depth: %d' % (counter, depth, )
+        print('%d. class: comments  depth: %d' % (counter, depth, ))
         members = comments._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -758,7 +759,7 @@ class comments(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -1002,14 +1003,14 @@ class person(GeneratedsSuper):
             already_processed.append('ratio')
             try:
                 self.ratio = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (ratio): %s' % exp)
         value = find_attr_value_('id', node)
         if value is not None and 'id' not in already_processed:
             already_processed.append('id')
             try:
                 self.id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('value', node)
         if value is not None and 'value' not in already_processed:
@@ -1032,7 +1033,7 @@ class person(GeneratedsSuper):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             ival_ = self.gds_validate_integer(ival_, node, 'category')
             self.category = ival_
@@ -1069,7 +1070,7 @@ class person(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: person  depth: %d' % (counter, depth, )
+        print('%d. class: person  depth: %d' % (counter, depth, ))
         members = person._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -1084,7 +1085,7 @@ class person(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -1368,7 +1369,7 @@ class programmer(person):
             already_processed.append('attrnegint')
             try:
                 self.attrnegint = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.attrnegint >= 0:
                 raise_parse_error(node, 'Invalid NegativeInteger')
@@ -1377,7 +1378,7 @@ class programmer(person):
             already_processed.append('attrposint')
             try:
                 self.attrposint = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.attrposint <= 0:
                 raise_parse_error(node, 'Invalid PositiveInteger')
@@ -1386,7 +1387,7 @@ class programmer(person):
             already_processed.append('attrnonnegint')
             try:
                 self.attrnonnegint = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.attrnonnegint < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -1395,7 +1396,7 @@ class programmer(person):
             already_processed.append('attrnonposint')
             try:
                 self.attrnonposint = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.attrnonposint > 0:
                 raise_parse_error(node, 'Invalid NonPositiveInteger')
@@ -1413,7 +1414,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             if ival_ <= 0:
                 raise_parse_error(child_, 'requires positiveInteger')
@@ -1423,7 +1424,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             if ival_ > 0:
                 raise_parse_error(child_, 'requires nonPositiveInteger')
@@ -1433,7 +1434,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             if ival_ >= 0:
                 raise_parse_error(child_, 'requires negativeInteger')
@@ -1443,7 +1444,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             if ival_ < 0:
                 raise_parse_error(child_, 'requires nonNegativeInteger')
@@ -1462,7 +1463,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             ival_ = self.gds_validate_integer(ival_, node, 'elshort')
             self.elshort = ival_
@@ -1470,7 +1471,7 @@ class programmer(person):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             ival_ = self.gds_validate_integer(ival_, node, 'ellong')
             self.ellong = ival_
@@ -1505,7 +1506,7 @@ class programmer(person):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: programmer  depth: %d' % (counter, depth, )
+        print('%d. class: programmer  depth: %d' % (counter, depth, ))
         members = programmer._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -1520,7 +1521,7 @@ class programmer(person):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -1708,7 +1709,7 @@ class param(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: param  depth: %d' % (counter, depth, )
+        print('%d. class: param  depth: %d' % (counter, depth, ))
         members = param._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -1723,7 +1724,7 @@ class param(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -1849,7 +1850,7 @@ class python_programmer(programmer):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: python_programmer  depth: %d' % (counter, depth, )
+        print('%d. class: python_programmer  depth: %d' % (counter, depth, ))
         members = python_programmer._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -1864,7 +1865,7 @@ class python_programmer(programmer):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2005,7 +2006,7 @@ class java_programmer(programmer):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: java_programmer  depth: %d' % (counter, depth, )
+        print('%d. class: java_programmer  depth: %d' % (counter, depth, ))
         members = java_programmer._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2020,7 +2021,7 @@ class java_programmer(programmer):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2148,7 +2149,7 @@ class agent(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             fval_ = self.gds_validate_float(fval_, node, 'priority')
             self.priority = fval_
@@ -2177,7 +2178,7 @@ class agent(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: agent  depth: %d' % (counter, depth, )
+        print('%d. class: agent  depth: %d' % (counter, depth, ))
         members = agent._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2192,7 +2193,7 @@ class agent(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2320,7 +2321,7 @@ class special_agent(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             fval_ = self.gds_validate_float(fval_, node, 'priority')
             self.priority = fval_
@@ -2349,7 +2350,7 @@ class special_agent(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: special_agent  depth: %d' % (counter, depth, )
+        print('%d. class: special_agent  depth: %d' % (counter, depth, ))
         members = special_agent._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2364,7 +2365,7 @@ class special_agent(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2558,7 +2559,7 @@ class booster(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             fval_ = self.gds_validate_float(fval_, node, 'other_name')
             self.other_name = fval_
@@ -2566,7 +2567,7 @@ class booster(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             fval_ = self.gds_validate_float(fval_, node, 'class')
             self.classxx = fval_
@@ -2574,7 +2575,7 @@ class booster(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             fval_ = self.gds_validate_float(fval_, node, 'other_value')
             self.other_value.append(fval_)
@@ -2582,7 +2583,7 @@ class booster(GeneratedsSuper):
             sval_ = child_.text
             try:
                 fval_ = float(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires float or double: %s' % exp)
             fval_ = self.gds_validate_float(fval_, node, 'type')
             self.type_.append(fval_)
@@ -2611,7 +2612,7 @@ class booster(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: booster  depth: %d' % (counter, depth, )
+        print('%d. class: booster  depth: %d' % (counter, depth, ))
         members = booster._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2626,7 +2627,7 @@ class booster(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2729,14 +2730,14 @@ class info(GeneratedsSuper):
             already_processed.append('rating')
             try:
                 self.rating = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (rating): %s' % exp)
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.append('type')
             try:
                 self.type_ = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('name', node)
         if value is not None and 'name' not in already_processed:
@@ -2765,7 +2766,7 @@ class info(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: info  depth: %d' % (counter, depth, )
+        print('%d. class: info  depth: %d' % (counter, depth, ))
         members = info._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2780,7 +2781,7 @@ class info(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2880,7 +2881,7 @@ class client_handlerType(GeneratedsSuper):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             ival_ = self.gds_validate_integer(ival_, node, 'refid')
             self.refid = ival_
@@ -2905,7 +2906,7 @@ class client_handlerType(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: client_handlerType  depth: %d' % (counter, depth, )
+        print('%d. class: client_handlerType  depth: %d' % (counter, depth, ))
         members = client_handlerType._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2920,7 +2921,7 @@ class client_handlerType(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2938,7 +2939,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 

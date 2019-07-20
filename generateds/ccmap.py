@@ -1,3 +1,4 @@
+from __future__ import print_function
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
@@ -83,7 +84,7 @@ class IFMapGenerator(object):
 
     def _ProcessMetadata(self, element, annotation):
         if not annotation:
-            print "WARNING: no annotation for element " + str(element)
+            print("WARNING: no annotation for element " + str(element))
             return
 
         if self._idl_parser.IsAllProperty(annotation):

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import os
 import sys
 import subprocess
@@ -92,9 +93,9 @@ class GenTest(unittest.TestCase):
 
         cmdTempl = '''python -c "import %s_sub; node = %s_sub.childTypeSub.factory(name='child1', valueOf_ = 'value1'); print (node.get_name(), node.get_valueOf_())"'''
         cmd = cmdTempl % (t_, t_)
-        print 'cmd:', cmd
+        print('cmd:', cmd)
         result, err = self.execute(cmd)
-        print 'result: %s' % result
+        print('result: %s' % result)
         self.failUnlessEqual(result, """\
 ('child1', 'value1')
 """)
@@ -349,7 +350,7 @@ Example:
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 

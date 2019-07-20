@@ -4,6 +4,7 @@
 #
 # Imports
 
+from __future__ import print_function
 import sys
 import os
 import argparse
@@ -313,7 +314,7 @@ def etxpath(node, pat):
 USAGE_TEXT = __doc__
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 USAGE_TEXT = """synopsis: capture XML Schema simpleType descriptors
