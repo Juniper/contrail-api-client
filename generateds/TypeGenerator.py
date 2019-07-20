@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import time
 import logging
@@ -1097,14 +1098,14 @@ class PyGenerator(object):
             eltype in self._PGenr.SimpleTypeDict or
             self._PGenr.CurrentNamespacePrefix + eltype in self._PGenr.OtherSimpleTypes
             ):
-            print "SimpleContent()"
+            print("SimpleContent()")
             add(", valueOf_=None")
         if element.isMixed():
-            print "Mixed"
+            print("Mixed")
             add(', mixedclass_=None')
             add(', content_=None')
         if element.getExtended():
-            print "Extended"
+            print("Extended")
             add(', extensiontype_=None')
         s1 = ''.join(content)
         return s1
@@ -1120,14 +1121,14 @@ class PyGenerator(object):
         if not default:
             return 'None'
         types = self._PGenr
-        if etype in types.IntegerType + (types.FloatType, \
+        if etype in types.IntegerType + (float, \
                      types.DoubleType, types.DecimalType):
             return default
-        elif etype in types.StringType + (types.TokenType, \
+        elif etype in bytes + (types.TokenType, \
                        types.DateTimeType, types.TimeType, types.DateType):
             escape_default = escape_string(default)
             return "\'" + escape_default + "\'"
-        elif etype == types.BooleanType:
+        elif etype == bool:
             if default in ('false', '0'):
                  return "False"
             elif default in ('true', '1'):
