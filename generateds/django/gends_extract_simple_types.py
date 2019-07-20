@@ -5,10 +5,13 @@
 # Imports
 
 from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
 import sys
 import os
 import argparse
-import StringIO
+import io
 from lxml import etree
 import process_includes
 
@@ -191,7 +194,7 @@ def extract_descriptors(args):
     schema_file_name = os.path.join(
         os.path.abspath(os.path.curdir),
         args.infilename)
-    infile = StringIO.StringIO()
+    infile = io.StringIO()
     process_includes.process_include_files(args.infilename, infile,
         inpath=schema_file_name)
     infile.seek(0)
@@ -200,7 +203,7 @@ def extract_descriptors(args):
     root = doc.getroot()
     descriptors = {}
     extract(root, descriptors, outfile)
-    for descriptor in descriptors.itervalues():
+    for descriptor in descriptors.values():
         descriptor.export(outfile)
     outfile.close()
 
@@ -228,7 +231,7 @@ def export_defined_simple_types(outfile, resolved):
     wrt = outfile.write
     wrt(Header_template)
     wrt('Defined_simple_type_table = {\n')
-    for descriptor in resolved.itervalues():
+    for descriptor in resolved.values():
         name = descriptor.name
         prefix, type_name = get_prefix_name(descriptor.type_name)
         wrt("    '%s': SimpleTypeDescriptor('%s', '%s'),\n" % (
@@ -239,7 +242,7 @@ def export_defined_simple_types(outfile, resolved):
 def resolve_simple_types(unresolved):
     resolved = {}
     #import pdb; pdb.set_trace()
-    sorted_descriptors = unresolved.values()
+    sorted_descriptors = list(unresolved.values())
     sorted_descriptors.sort(key=get_descriptor_name)
     for descriptor in sorted_descriptors:
         resolve_1_simple_type(descriptor, resolved, unresolved)

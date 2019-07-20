@@ -15,7 +15,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 def process_properties(properties):
     if not properties:
         return
-    for id, property in properties.items():
+    for id, property in list(properties.items()):
         if property.get("xmlType"):
             continue
 
@@ -59,7 +59,7 @@ def process_data(schemas, definitions, schema):
     data_types = schema.get("definitions")
     if data_types:
         definitions.update(data_types)
-        for id, data_type in data_types.items():
+        for id, data_type in list(data_types.items()):
             process_schema(data_type)
         return
 

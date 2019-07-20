@@ -3,6 +3,7 @@ from __future__ import print_function
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from builtins import object
 import os
 import re
 import sys
@@ -35,7 +36,7 @@ var (
         TypeMap = map[string]reflect.Type {
 """
         file.write(decl)
-        for ident in self._identifier_map.values():
+        for ident in list(self._identifier_map.values()):
             decl = '\t\t"%s": reflect.TypeOf(%s{}),\n' % \
                    (ident.getName(), ident.getCppName())
             file.write(decl)
@@ -170,12 +171,12 @@ func (obj *%(typecamel)s) Add%(fieldcamel)s(value %(ptr)s%(fieldtype)s) {
     def _PromoteInnerTypes(self):
         inner_type_map = {}
 
-        for ctype in self._top_level_map.values():
+        for ctype in list(self._top_level_map.values()):
             self._ExamineInnerTypes(inner_type_map, ctype, ctype)
 
         while True:
             promoted = []
-            for itype, typeset in inner_type_map.iteritems():
+            for itype, typeset in inner_type_map.items():
                 if len(typeset) == 1:
                     continue
 
@@ -289,7 +290,7 @@ type %(camel)s struct {
         if parents:
             (parent, meta, _) = parents[0]
             try:
-                quoted_list = map(lambda x: '"%s"' % x, parent.getDefaultFQName())
+                quoted_list = ['"%s"' % x for x in parent.getDefaultFQName()]
                 parent_fqn = ', '.join(quoted_list)
                 parent_type = parent.getName()
             except AmbiguousParentType as e:
@@ -826,14 +827,14 @@ func %(camel)sByUuid(c contrail.ApiClient, uuid string) (*%(camel)s, error) {
 
         self._GenerateTypeMap(dirname)
 
-        for ident in self._identifier_map.values():
+        for ident in list(self._identifier_map.values()):
             filename = os.path.join(
                 dirname, ident.getCIdentifierName() + ".go")
             self._GenerateObject(ident, filename)
 
         self._PromoteInnerTypes()
 
-        for ctype in self._top_level_map.values():
+        for ctype in list(self._top_level_map.values()):
             filename = os.path.join(
                 dirname, ctype.getCIdentifierName() + ".go")
             self._GenerateStructType(ctype, filename)
