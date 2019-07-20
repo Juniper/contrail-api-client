@@ -3,6 +3,7 @@ from __future__ import print_function
 # Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
 #
 
+from builtins import object
 import os
 import re
 import json
@@ -162,9 +163,9 @@ class JsonSchemaGenerator(object):
         elif not os.path.isdir(dirname):
             print("-o option must specify directory")
             sys.exit(1)
-        for ctype in self._type_map.values():
+        for ctype in list(self._type_map.values()):
             self._GenerateTypeMap(ctype)
-        for ident in self._identifier_map.values():
+        for ident in list(self._identifier_map.values()):
             self._objectsList.append(ident._name)
             filename = os.path.join(dirname, ident._name + "-schema.json")
             self._GenerateJavascriptSchema(ident, filename)
