@@ -86,7 +86,7 @@ class GeneratedsSuper(object):
         for value in values:
             try:
                 fvalue = float(value)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(node, 'Requires sequence of integers')
         return input_data
 
@@ -104,7 +104,7 @@ class GeneratedsSuper(object):
         for value in values:
             try:
                 fvalue = float(value)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(node, 'Requires sequence of floats')
         return input_data
 
@@ -122,7 +122,7 @@ class GeneratedsSuper(object):
         for value in values:
             try:
                 fvalue = float(value)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(node, 'Requires sequence of doubles')
         return input_data
 

@@ -73,6 +73,7 @@ Options:
     --version                Print version and exit.
 
 """
+from __future__ import print_function
 
 
 ## LICENSE
@@ -663,7 +664,7 @@ if __name__ == '__main__':
                 'no-questions', 'session=', 'generator-category=',
                 'generated-language=', 'version',
                 ])
-        except getopt.GetoptError, exp:
+        except getopt.GetoptError as exp:
             usage()
         self.prefix = ''
         self.outFilename = None
@@ -805,7 +806,7 @@ if __name__ == '__main__':
                                             'json-schema'):
                     raise RuntimeError('Option --generator-category must be "type", service", "ifmap-frontend", "ifmap-backend", "device-api", "java-api", "golang-api", "contrail-json-schema" or "json-schema".')
         if showVersion:
-            print 'generateDS.py version %s' % VERSION
+            print('generateDS.py version %s' % VERSION)
             sys.exit(0)
 
     def countChildren(self, element, count):
@@ -1073,7 +1074,7 @@ if __name__ == '__main__':
             import generateds_config
             NameTable.update(generateds_config.NameTable)
             #print '2. updating NameTable'
-        except ImportError, exp:
+        except ImportError as exp:
             pass
 
     def parseAndGenerate(self):
@@ -1276,7 +1277,7 @@ class XschemaElement(XschemaElementBase):
     def isListType(self): return self.listType
     def getType(self):
         returnType = self.type
-        if self._PGenr.ElementDict.has_key(self.type):
+        if self.type in self._PGenr.ElementDict:
             typeObj = self._PGenr.ElementDict[self.type]
             typeObjType = typeObj.getRawType()
             if self._PGenr.is_builtin_simple_type(typeObjType):
@@ -1649,14 +1650,14 @@ class XschemaElement(XschemaElementBase):
     def replace_attributeGroup_names(self):
         for groupName in self.attributeGroupNameList:
             key = None
-            if self._PGenr.AttributeGroups.has_key(groupName):
+            if groupName in self._PGenr.AttributeGroups:
                 key =groupName
             else:
                 # Looking for name space prefix
                 keyList = groupName.split(':')
                 if len(keyList) > 1:
                     key1 = keyList[1]
-                    if self._PGenr.AttributeGroups.has_key(key1):
+                    if key1 in self._PGenr.AttributeGroups:
                         key = key1
             if key is not None:
                 attrGroup = self._PGenr.AttributeGroups[key]
@@ -1740,7 +1741,7 @@ class XschemaAttributeGroup:
     def setGroup(self, group): self.group = group
     def getGroup(self): return self.group
     def get(self, name, default=None):
-        if self.group.has_key(name):
+        if name in self.group:
             return self.group[name]
         else:
             return default
@@ -1778,7 +1779,7 @@ class XschemaAttribute:
     def getData_type(self): return self.data_type
     def getType(self):
         returnType = self.data_type
-        if self._PGenr.SimpleElementDict.has_key(self.data_type):
+        if self.data_type in self._PGenr.SimpleElementDict:
             typeObj = self._PGenr.SimpleElementDict[self.data_type]
             typeObjType = typeObj.getRawType()
             if typeObjType in StringType or \
@@ -2063,7 +2064,7 @@ class XschemaHandler(handler.ContentHandler):
             self.inSimpleType = 1
         elif name == RestrictionType:
             if self.inAttribute:
-                if attrs.has_key('base'):
+                if 'base' in attrs:
                     self.lastAttribute.setData_type(attrs['base'])
             else:
                 # If we are in a simpleType, capture the name of
@@ -2077,14 +2078,14 @@ class XschemaHandler(handler.ContentHandler):
                 self.stack[-1].setRestrictionAttrs(dict(attrs))
             self.inRestrictionType = 1
         elif name in [EnumerationType, MinInclusiveType, MaxInclusiveType]:
-            if not attrs.has_key('value'):
+            if 'value' not in attrs:
                 return
             if self.inAttribute:
                 # We know that the restriction is on an attribute and the
                 # attributes of the current element are un-ordered so the
                 # instance variable "lastAttribute" will have our attribute.
                 values = self.lastAttribute.values
-            elif self.inElement and attrs.has_key('value'):
+            elif self.inElement and 'value' in attrs:
                 # We're not in an attribute so the restriction must have
                 # been placed on an element and that element will still be
                 # in the stack. We search backwards through the stack to
@@ -2100,7 +2101,7 @@ class XschemaHandler(handler.ContentHandler):
                             attrs['value']), )
                     sys.exit(1)
                 values = element.values
-            elif self.inSimpleType and attrs.has_key('value'):
+            elif self.inSimpleType and 'value' in attrs:
                 # We've been defined as a simpleType on our own.
                 values = self.stack[-1].values
             if name == EnumerationType:
@@ -2117,11 +2118,11 @@ class XschemaHandler(handler.ContentHandler):
             # the parent to know what it's a union of.
             parentelement = self.stack[-1]
             if (isinstance(parentelement, SimpleTypeElement) and
-                attrs.has_key('memberTypes')):
+                'memberTypes' in attrs):
                 for member in attrs['memberTypes'].split(" "):
                     self.stack[-1].unionOf.append(member)
         elif name == WhiteSpaceType and self.inRestrictionType:
-            if attrs.has_key('value'):
+            if 'value' in attrs:
                 if attrs.getValue('value') == 'collapse':
                     self.stack[-1].collapseWhiteSpace = 1
         elif name == ListType:
@@ -2130,7 +2131,7 @@ class XschemaHandler(handler.ContentHandler):
             if self.inSimpleType: # and self.inRestrictionType:
                 self.stack[-1].setListType(1)
             if self.inSimpleType:
-                if attrs.has_key('itemType'):
+                if 'itemType' in attrs:
                     self.stack[-1].setBase(attrs['itemType'])
         elif name == AnnotationType:
             self.inAnnotationType = 1
@@ -2729,10 +2730,10 @@ def expandGroupReferences(grp):
 
 def debug_show_elements(root):
     #print 'ElementDict:', ElementDict
-    print '=' * 50
+    print('=' * 50)
     for name, obj in ElementDict.iteritems():
-        print 'element:', name, obj.getName(), obj.type
-    print '=' * 50
+        print('element:', name, obj.getName(), obj.type)
+    print('=' * 50)
 
 
 def fixSilence(txt, silent):
@@ -2750,7 +2751,7 @@ def err_msg(msg):
 USAGE_TEXT = __doc__
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 
