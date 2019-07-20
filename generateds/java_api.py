@@ -3,6 +3,9 @@ from __future__ import print_function
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from builtins import str
+from builtins import range
+from builtins import object
 import os
 import re
 
@@ -206,10 +209,9 @@ public void add%(caml)s(%(argdecl)s) {
 }
 """ % {'caml': methodname, 'typename': innertype, 'field': member.membername,
        'argdecl': ', '.join(
-                        map(lambda x: self._InnerPropertyArgument(x),
-                            inner.getDataMembers())),
+                        [self._InnerPropertyArgument(x) for x in inner.getDataMembers()]),
        'arglist': ', '.join(
-                        map(lambda x: x.membername, inner.getDataMembers()))
+                        [x.membername for x in inner.getDataMembers()])
        
        }
                 self._FileWrite(file, decl, indent_level)
@@ -293,7 +295,7 @@ public class %s extends ApiObjectBase {
         parent_type = 'null'
         try:
             fq_name = ident.getDefaultFQName()
-            quoted_list = map(lambda x: quoted(x), fq_name[:-1])
+            quoted_list = [quoted(x) for x in fq_name[:-1]]
             parent_fq_name = "Lists.newArrayList(%s)" % ', '.join(quoted_list)
             parents = ident.getParents()
             if parents:
@@ -464,12 +466,12 @@ public void set%(caml)s(%(type)s %(field)s) {
             print("-o option must specify directory")
             sys.exit(1)
 
-        for ident in self._identifier_map.values():
+        for ident in list(self._identifier_map.values()):
             filename = os.path.join(dirname, ident.getCppName() + ".java")
             self._GenerateClass(ident, filename)
 
         property_types = set([])
-        for ctype in self._type_map.values():
+        for ctype in list(self._type_map.values()):
             self._PopulatePropertyTypes(ctype, property_types)
 
         for ctype in property_types:
