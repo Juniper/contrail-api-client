@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import time
 import logging
@@ -894,14 +895,14 @@ class PyGenerator(object):
             eltype in self._PGenr.SimpleTypeDict or
             self._PGenr.CurrentNamespacePrefix + eltype in self._PGenr.OtherSimpleTypes
             ):
-            print "SimpleContent()"
+            print("SimpleContent()")
             add(", valueOf_=None")
         if element.isMixed():
-            print "Mixed"
+            print("Mixed")
             add(', mixedclass_=None')
             add(', content_=None')
         if element.getExtended():
-            print "Extended"
+            print("Extended")
             add(', extensiontype_=None')
         s1 = ''.join(content)
         return s1

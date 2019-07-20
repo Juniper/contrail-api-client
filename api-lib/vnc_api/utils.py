@@ -2,6 +2,7 @@ import os
 import sys
 import errno
 import logging
+from functools import reduce
 
 
 AAA_MODE_VALID_VALUES = ['no-auth', 'cloud-admin', 'rbac']

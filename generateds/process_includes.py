@@ -128,7 +128,7 @@ def resolve_ref(node, params, options):
                     urlfile.close()
                     params.parent_url = locn
                     params.base_url = os.path.split(locn)[0]
-                except urllib2.HTTPError, exp:
+                except urllib2.HTTPError as exp:
                     msg = "Can't find file %s referenced in %s." % (
                         locn, params.parent_url, )
                     raise SchemaIOError(msg)

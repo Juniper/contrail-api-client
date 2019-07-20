@@ -1,5 +1,6 @@
 # coding:utf-8
 # Simple utility to convert json schema using jinja2 template
+from __future__ import print_function
 import argparse
 import glob
 import os
@@ -100,7 +101,7 @@ def output(template_file, data_model):
     j2_env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(THIS_DIR),
         trim_blocks=True)
-    print j2_env.get_template(template_file).render(data_model)
+    print(j2_env.get_template(template_file).render(data_model))
 
 
 def convert():

@@ -5,6 +5,7 @@
 # Generated Wed Dec  8 14:24:46 2010 by generateDS.py version 2.3a.
 #
 
+from __future__ import print_function
 import sys
 import getopt
 import re as re_
@@ -70,7 +71,7 @@ def parsexml_(*args, **kwargs):
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError, exp:
+except ImportError as exp:
 
     class GeneratedsSuper(object):
         def gds_format_string(self, input_data, input_name=''):
@@ -780,7 +781,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 

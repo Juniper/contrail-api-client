@@ -4,6 +4,7 @@
 # Generated Fri Jul  2 13:32:06 2004 by generateDS.py.
 #
 
+from __future__ import print_function
 import sys
 import getopt
 from xml.dom import minidom
@@ -373,7 +374,7 @@ class SaxPurchase_orderHandler(handler.ContentHandler):
         self.locator = locator
     
     def showError(self, msg):
-        print '*** (showError):', msg
+        print('*** (showError):', msg)
         sys.exit(-1)
 
     def startElement(self, name, attrs):
@@ -555,7 +556,7 @@ Options:
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 
