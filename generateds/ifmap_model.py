@@ -2,6 +2,8 @@
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from past.builtins import basestring
+from builtins import object
 import logging
 import re
 import textwrap
