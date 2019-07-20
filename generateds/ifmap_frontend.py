@@ -2,6 +2,9 @@
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from builtins import str
+from builtins import range
+from builtins import object
 from ifmap_global import CamelCase
 from ifmap_model import IFMapIdentifier, IFMapProperty, IFMapLink, \
     IFMapLinkAttr, AmbiguousParentType
@@ -75,7 +78,7 @@ class IFMapApiGenerator(object):
 
     def _non_exclude_idents(self):
         _ret_idents = []
-        for ident in self._ident_dict.values():
+        for ident in list(self._ident_dict.values()):
             ident_name = ident.getName()
             # TODO put Exclude on identifiers too...
             if re.match("bgp:", ident_name):
@@ -1503,6 +1506,8 @@ class IFMapApiGenerator(object):
         write(self.gen_file, "# AUTO-GENERATED file from %s. Do Not Edit!" \
               %(self.__class__.__name__))
         write(self.gen_file, "")
+        write(self.gen_file, "from builtins import str")
+        write(self.gen_file, "from builtins import range")
         write(self.gen_file, "from contrail_heat.resources import contrail")
         write(self.gen_file, "try:")
         write(self.gen_file, "    from heat.common.i18n import _")
@@ -3230,7 +3235,7 @@ class IFMapApiGenerator(object):
             # end for all backrefs
 
             path_tags = [ident_name]
-            is_derived_set = set([pl['is_derived'] for _, pl in datamodel_objects[ident_name]['parents'].items()])
+            is_derived_set = set([pl['is_derived'] for _, pl in list(datamodel_objects[ident_name]['parents'].items())])
             if True in is_derived_set:
                 path_tags.append('system-created')
             if False in is_derived_set:
@@ -3538,7 +3543,7 @@ class IFMapApiGenerator(object):
             ret_props = OrderedDict({})
             ret_required = []
             for allof_item in defn_info.get('allOf', []):
-                for item_key, item_info in allof_item.items():
+                for item_key, item_info in list(allof_item.items()):
                     if item_key == 'properties':
                         ret_props.update(item_info)
                     elif item_key == '$ref':
@@ -3598,8 +3603,8 @@ class IFMapApiGenerator(object):
         write(gen_file, "[[_paths]]")
         write(gen_file, "== Paths")
         write(gen_file, "")
-        for path_name, path_info in openapi_dict['paths'].items():
-            for oper_name, oper_info in path_info.items():
+        for path_name, path_info in list(openapi_dict['paths'].items()):
+            for oper_name, oper_info in list(path_info.items()):
                 write(gen_file, "[[%s_%s]]" %(path_name[1:], oper_name))
                 write(gen_file, "=== %s" %(oper_info['summary']))
                 write(gen_file, "....")
@@ -3638,7 +3643,7 @@ class IFMapApiGenerator(object):
                                           '/')[-1]
                         oap_props, oap_required = get_props_and_allof(
                             openapi_dict['definitions'][schema_type])
-                        for oap_name, oap_info in oap_props.items():
+                        for oap_name, oap_info in list(oap_props.items()):
                             name_str = '*%s*' %(oap_name)
                             if oap_name in oap_required:
                                 presence_str = '_required_'
@@ -3660,7 +3665,7 @@ class IFMapApiGenerator(object):
                 write(gen_file, '[options="header", cols=".^1,.^15,.^4"]')
                 write(gen_file, "|===")
                 write(gen_file, "|HTTP Code|Description|Schema")
-                for rsp_code, rsp_info in oper_info['responses'].items():
+                for rsp_code, rsp_info in list(oper_info['responses'].items()):
                     code_str = "*%s*" %(rsp_code)
                     desc_str = "%s" %(rsp_info.get('description', ''))
                     schema_str = get_schema_str(rsp_info.get('schema'))
@@ -3683,7 +3688,7 @@ class IFMapApiGenerator(object):
         write(gen_file, "[[_definitions]]")
         write(gen_file, "== Definitions")
         write(gen_file, "")
-        for defn_name, defn_info in openapi_dict['definitions'].items():
+        for defn_name, defn_info in list(openapi_dict['definitions'].items()):
             write(gen_file, "[[_%s]]" %(defn_name.lower()))
             write(gen_file, "=== %s" %(defn_name))
             if 'allOf' in defn_info:
@@ -3694,7 +3699,7 @@ class IFMapApiGenerator(object):
             write(gen_file, "|===")
             write(gen_file, "|Name|Description|Schema")
             oap_props, oap_required = get_props_and_allof(defn_info)
-            for oap_name, oap_info in oap_props.items():
+            for oap_name, oap_info in list(oap_props.items()):
                 name_str = '*%s*' %(oap_name)
                 if oap_name in oap_required:
                     presence_str = '_required_'
@@ -3759,7 +3764,7 @@ class IFMapApiGenerator(object):
             ret_props = OrderedDict()
             ret_required = []
             for allof_item in defn_info.get('allOf', []):
-                for item_key, item_info in allof_item.items():
+                for item_key, item_info in list(allof_item.items()):
                     if item_key == 'properties':
                         ret_props.update(item_info)
                     elif item_key == '$ref':
@@ -3796,11 +3801,11 @@ class IFMapApiGenerator(object):
         used_schemas = set()
         user_obj_types = set([])
         system_obj_types = set([])
-        for res_type, dmo in openapi_dict['x-datamodel']['objects'].items():
+        for res_type, dmo in list(openapi_dict['x-datamodel']['objects'].items()):
             if not dmo.get('parents'):
                 user_obj_types.add(res_type)
                 continue
-            for parent_link in dmo['parents'].values():
+            for parent_link in list(dmo['parents'].values()):
                 if parent_link['is_derived']:
                     system_obj_types.add(res_type)
                 else:
@@ -3832,7 +3837,7 @@ class IFMapApiGenerator(object):
         write(gen_file, "")
         write(gen_file, 'Type specific REST API and data model')
         write(gen_file, '======================================')
-        for resource_type, datamodel_object in openapi_dict['x-datamodel']['objects'].items():
+        for resource_type, datamodel_object in list(openapi_dict['x-datamodel']['objects'].items()):
             write(gen_file, '.. _%s-label: ' %(resource_type))
             write(gen_file, '')
             write(gen_file, resource_type)
@@ -3851,7 +3856,7 @@ class IFMapApiGenerator(object):
                     [':ref:`%s <%s-label>`' %(p, p) for p in datamodel_object.get('parents', [])])))
             write(gen_file, '')
             write(gen_file, '*Children*')
-            children = [res_type for res_type, dmo in openapi_dict['x-datamodel']['objects'].items()
+            children = [res_type for res_type, dmo in list(openapi_dict['x-datamodel']['objects'].items())
                                            if resource_type in dmo.get('parents', [])]
             if not children:
                 write(gen_file, '        None')
@@ -3868,7 +3873,7 @@ class IFMapApiGenerator(object):
                 write(gen_file, '')
             else:
                 write(gen_file, '')
-            for prop_name, prop_info in datamodel_object.get('properties', {}).items():
+            for prop_name, prop_info in list(datamodel_object.get('properties', {}).items()):
                 prop_desc = csv_scrub(prop_info.get('description', 'None').replace('\n', ' '))
                 prop_reqd = prop_info['required']
                 if '$ref' in prop_info:
@@ -3891,7 +3896,7 @@ class IFMapApiGenerator(object):
                 write(gen_file, '')
             else:
                 write(gen_file, '    None')
-            for ref_name, ref_info in datamodel_object.get('references', {}).items():
+            for ref_name, ref_info in list(datamodel_object.get('references', {}).items()):
                 ref_desc = csv_scrub(ref_info.get('description', 'None').replace('\n', ' '))
                 ref_reqd = ref_info.get('required')
                 ref_attr = ref_info.get('attr', {}).get('$ref', 'None').split('/')[-1]
@@ -3906,7 +3911,7 @@ class IFMapApiGenerator(object):
             write(gen_file, '*Back References*')
             write(gen_file, '')
             backrefs = set([])
-            for res_type, dmo in openapi_dict['x-datamodel']['objects'].items():
+            for res_type, dmo in list(openapi_dict['x-datamodel']['objects'].items()):
                 if res_type == resource_type:
                     continue
                 if resource_type in dmo.get('references', {}):
@@ -3918,11 +3923,11 @@ class IFMapApiGenerator(object):
             write(gen_file, '')
             write(gen_file, 'REST API')
             write(gen_file, '^^^^^^^^')
-            for path_name, path_info in openapi_dict['paths'].items():
+            for path_name, path_info in list(openapi_dict['paths'].items()):
                 if resource_type not in path_name:
                     continue
 
-                for oper_name, oper_info in path_info.items():
+                for oper_name, oper_info in list(path_info.items()):
                     write(gen_file, '**%s**'%(oper_info['summary']))
                     write(gen_file, "")
                     write(gen_file, "%s %s" %(oper_name.upper(), path_name))
@@ -3962,7 +3967,7 @@ class IFMapApiGenerator(object):
                                               '/')[-1]
                             oap_props, oap_required = get_props_and_allof(
                                 openapi_dict['definitions'][schema_type])
-                            for oap_name, oap_info in oap_props.items():
+                            for oap_name, oap_info in list(oap_props.items()):
                                 name_str = '**%s**' %(oap_name)
                                 if oap_name in oap_required:
                                     presence_str = '*required*'
@@ -3985,7 +3990,7 @@ class IFMapApiGenerator(object):
                     write(gen_file, ".. csv-table::")
                     write(gen_file, '    :header: "HTTP Code", "Description", "Schema"')
                     write(gen_file, "")
-                    for rsp_code, rsp_info in oper_info['responses'].items():
+                    for rsp_code, rsp_info in list(oper_info['responses'].items()):
                         code_str = "**%s**" %(rsp_code)
                         desc_str = csv_scrub(rsp_info.get('description', ''))
                         schema_str = get_schema_str(rsp_info.get('schema'))
@@ -4004,11 +4009,11 @@ class IFMapApiGenerator(object):
         write(gen_file, "")
         write(gen_file, 'Generic REST API')
         write(gen_file, '================')
-        datamodel_object_types = openapi_dict['x-datamodel']['objects'].keys()
-        generic_path_items = dict((pname, pinfo) for pname, pinfo in openapi_dict['paths'].items()
+        datamodel_object_types = list(openapi_dict['x-datamodel']['objects'].keys())
+        generic_path_items = dict((pname, pinfo) for pname, pinfo in list(openapi_dict['paths'].items())
                                                  if not any([x in pname for x in datamodel_object_types]))
-        for path_name, path_info in generic_path_items.items():
-            for oper_name, oper_info in path_info.items():
+        for path_name, path_info in list(generic_path_items.items()):
+            for oper_name, oper_info in list(path_info.items()):
                 write(gen_file, '**%s**'%(oper_info['summary']))
                 write(gen_file, "")
                 write(gen_file, "%s %s" %(oper_name.upper(), path_name))
@@ -4048,7 +4053,7 @@ class IFMapApiGenerator(object):
                                           '/')[-1]
                         oap_props, oap_required = get_props_and_allof(
                             openapi_dict['definitions'][schema_type])
-                        for oap_name, oap_info in oap_props.items():
+                        for oap_name, oap_info in list(oap_props.items()):
                             name_str = '**%s**' %(oap_name)
                             if oap_name in oap_required:
                                 presence_str = '*required*'
@@ -4071,7 +4076,7 @@ class IFMapApiGenerator(object):
                 write(gen_file, ".. csv-table::")
                 write(gen_file, '    :header: "HTTP Code", "Description", "Schema"')
                 write(gen_file, "")
-                for rsp_code, rsp_info in oper_info['responses'].items():
+                for rsp_code, rsp_info in list(oper_info['responses'].items()):
                     code_str = "**%s**" %(rsp_code)
                     desc_str = csv_scrub(rsp_info.get('description', ''))
                     schema_str = get_schema_str(rsp_info.get('schema'))
@@ -4101,7 +4106,7 @@ class IFMapApiGenerator(object):
             write(gen_file, ".. csv-table::")
             write(gen_file, '    :header: "Name", "Description", "Schema"')
             write(gen_file, "")
-            for oap_name, oap_info in oap_props.items():
+            for oap_name, oap_info in list(oap_props.items()):
                 name_str = '**%s**' %(oap_name)
                 if oap_name in oap_required:
                     presence_str = '*required*'
@@ -4116,7 +4121,7 @@ class IFMapApiGenerator(object):
             write(gen_file, "")
             return now_used_schemas - used_schemas
         deferred_schemas = set()
-        for defn_name, defn_info in openapi_dict['definitions'].items():
+        for defn_name, defn_info in list(openapi_dict['definitions'].items()):
             if (defn_name in used_schemas or
                 defn_name.endswith('ReadDetail') or defn_name.endswith('ReadAll')):
                 deferred_schemas |= generate_def(defn_name, defn_info)

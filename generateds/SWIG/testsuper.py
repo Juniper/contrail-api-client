@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+from builtins import range
+from builtins import object
 import sys
 import getopt
 from xml.dom import minidom
@@ -33,7 +35,7 @@ def showIndent(outfile, level):
 # Data representation classes.
 #
 
-class top:
+class top(object):
     subclass = None
     def __init__(self, attributelist=None, include=None, id='', addr=''):
         self.attributelist = attributelist
@@ -88,7 +90,7 @@ class top:
 # end class top
 
 
-class attributelist:
+class attributelist(object):
     subclass = None
     def __init__(self, attribute=None, kwargs=None, parmlist=None, id='', addr=''):
         if attribute is None:
@@ -156,7 +158,7 @@ class attributelist:
 # end class attributelist
 
 
-class attribute:
+class attribute(object):
     subclass = None
     def __init__(self, name='', value='', id='', addr=''):
         self.name = name
@@ -199,7 +201,7 @@ class attribute:
 # end class attribute
 
 
-class include:
+class include(object):
     subclass = None
     def __init__(self, attributelist=None, include=None, typemap=None, insert=None, module=None, cdecl=None, klass=None, emport=None, enum=None, id='', addr=''):
         self.attributelist = attributelist
@@ -345,7 +347,7 @@ class include:
 # end class include
 
 
-class emport:
+class emport(object):
     subclass = None
     def __init__(self, attributelist=None, include=None, typemap=None, insert=None, module=None, cdecl=None, klass=None, emport=None, enum=None, id='', addr=''):
         self.attributelist = attributelist
@@ -491,7 +493,7 @@ class emport:
 # end class emport
 
 
-class enum:
+class enum(object):
     subclass = None
     def __init__(self, attributelist=None, enumitem=None, id='', addr=''):
         self.attributelist = attributelist
@@ -546,7 +548,7 @@ class enum:
 # end class enum
 
 
-class enumitem:
+class enumitem(object):
     subclass = None
     def __init__(self, attributelist=None, id='', addr=''):
         self.attributelist = attributelist
@@ -588,7 +590,7 @@ class enumitem:
 # end class enumitem
 
 
-class kwargs:
+class kwargs(object):
     subclass = None
     def __init__(self, attributelist=None, id='', addr=''):
         self.attributelist = attributelist
@@ -630,7 +632,7 @@ class kwargs:
 # end class kwargs
 
 
-class typemap:
+class typemap(object):
     subclass = None
     def __init__(self, attributelist=None, typemapitem=None, id='', addr=''):
         self.attributelist = attributelist
@@ -685,7 +687,7 @@ class typemap:
 # end class typemap
 
 
-class typemapitem:
+class typemapitem(object):
     subclass = None
     def __init__(self, attributelist=None, id='', addr=''):
         self.attributelist = attributelist
@@ -727,7 +729,7 @@ class typemapitem:
 # end class typemapitem
 
 
-class klass:
+class klass(object):
     subclass = None
     def __init__(self, attributelist=None, cdecl=None, access=None, constructor=None, destructor=None, id='', addr=''):
         self.attributelist = attributelist
@@ -815,7 +817,7 @@ class klass:
 # end class klass
 
 
-class cdecl:
+class cdecl(object):
     subclass = None
     def __init__(self, attributelist=None, id='', addr=''):
         self.attributelist = attributelist
@@ -857,7 +859,7 @@ class cdecl:
 # end class cdecl
 
 
-class access:
+class access(object):
     subclass = None
     def __init__(self, attributelist=None, id='', addr=''):
         self.attributelist = attributelist
@@ -899,7 +901,7 @@ class access:
 # end class access
 
 
-class parmlist:
+class parmlist(object):
     subclass = None
     def __init__(self, parm=None, id='', addr=''):
         if parm is None:
@@ -944,7 +946,7 @@ class parmlist:
 # end class parmlist
 
 
-class parm:
+class parm(object):
     subclass = None
     def __init__(self, attributelist=None, id='', addr=''):
         self.attributelist = attributelist
@@ -986,7 +988,7 @@ class parm:
 # end class parm
 
 
-class constructor:
+class constructor(object):
     subclass = None
     def __init__(self, attributelist=None, id='', addr=''):
         self.attributelist = attributelist
@@ -1028,7 +1030,7 @@ class constructor:
 # end class constructor
 
 
-class destructor:
+class destructor(object):
     subclass = None
     def __init__(self, attributelist=None, id='', addr=''):
         self.attributelist = attributelist
@@ -1070,7 +1072,7 @@ class destructor:
 # end class destructor
 
 
-class module:
+class module(object):
     subclass = None
     def __init__(self):
         pass
@@ -1094,7 +1096,7 @@ class module:
 # end class module
 
 
-class insert:
+class insert(object):
     subclass = None
     def __init__(self):
         pass

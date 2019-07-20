@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import object
 import sys
 import os
 from optparse import OptionParser
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from xml.dom import minidom
 from xml.parsers import expat
 import subprocess
