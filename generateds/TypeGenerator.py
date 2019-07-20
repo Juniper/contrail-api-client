@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import time
 import logging
@@ -51,8 +52,9 @@ class TypeGenerator(object):
         outfile.write('"""\n')
         outfile.write("This module defines the classes for types defined in :doc:`vnc_cfg.xsd`\n")
         outfile.write('"""\n')
+        outfile.write("from __future__ import absolute_import\n")
         outfile.write("import json\n")
-        outfile.write("from generatedssuper import *\n")
+        outfile.write("from .generatedssuper import *\n")
         self._generateFromTree(wrt, self._PGenr.prefix, elements, processed)
         while 1:
             if len(self._PGenr.DelayedElements) <= 0:
@@ -1097,14 +1099,14 @@ class PyGenerator(object):
             eltype in self._PGenr.SimpleTypeDict or
             self._PGenr.CurrentNamespacePrefix + eltype in self._PGenr.OtherSimpleTypes
             ):
-            print "SimpleContent()"
+            print("SimpleContent()")
             add(", valueOf_=None")
         if element.isMixed():
-            print "Mixed"
+            print("Mixed")
             add(', mixedclass_=None')
             add(', content_=None')
         if element.getExtended():
-            print "Extended"
+            print("Extended")
             add(', extensiontype_=None')
         s1 = ''.join(content)
         return s1
@@ -1119,15 +1121,15 @@ class PyGenerator(object):
     def getMappedDefault(self, etype, default):
         if not default:
             return 'None'
-        types = self._PGenr
-        if etype in types.IntegerType + (types.FloatType, \
-                     types.DoubleType, types.DecimalType):
+        genrTypes = self._PGenr
+        if etype in genrTypes.IntegerType + (genrTypes.FloatType, \
+                     genrTypes.DoubleType, genrTypes.DecimalType):
             return default
-        elif etype in types.StringType + (types.TokenType, \
-                       types.DateTimeType, types.TimeType, types.DateType):
+        elif etype in genrTypes.StringType + (genrTypes.TokenType, \
+                       genrTypes.DateTimeType, genrTypes.TimeType, genrTypes.DateType):
             escape_default = escape_string(default)
             return "\'" + escape_default + "\'"
-        elif etype == types.BooleanType:
+        elif etype == genrTypes.BooleanType:
             if default in ('false', '0'):
                  return "False"
             elif default in ('true', '1'):
@@ -2009,7 +2011,7 @@ class PyGenerator(object):
             wrt("            sval_ = child_.text\n")
             wrt("            try:\n")
             wrt("                ival_ = int(sval_)\n")
-            wrt("            except (TypeError, ValueError), exp:\n")
+            wrt("            except (TypeError, ValueError) as exp:\n")
             wrt("                raise_parse_error(child_, 'requires integer: %s' % exp)\n")
             if childType == self._PGenr.PositiveIntegerType:
                 wrt("            if ival_ <= 0:\n")
@@ -2049,7 +2051,7 @@ class PyGenerator(object):
             wrt("            sval_ = child_.text\n")
             wrt("            try:\n")
             wrt("                fval_ = float(sval_)\n")
-            wrt("            except (TypeError, ValueError), exp:\n")
+            wrt("            except (TypeError, ValueError) as exp:\n")
             wrt("                raise_parse_error(child_, 'requires float or double: %s' % exp)\n")
             wrt("            obj_ = self.mixedclass_(MixedContainer.CategorySimple,\n")
             wrt("                MixedContainer.TypeFloat, '%s', fval_)\n" % \
@@ -2149,7 +2151,7 @@ class PyGenerator(object):
             wrt("            sval_ = child_.text\n")
             wrt("            try:\n")
             wrt("                ival_ = int(sval_)\n")
-            wrt("            except (TypeError, ValueError), exp:\n")
+            wrt("            except (TypeError, ValueError) as exp:\n")
             wrt("                raise_parse_error(child_, 'requires integer: %s' % exp)\n")
             if childType == self._PGenr.PositiveIntegerType:
                 wrt("            if ival_ <= 0:\n")
@@ -2191,7 +2193,7 @@ class PyGenerator(object):
             wrt("            sval_ = child_.text\n")
             wrt("            try:\n")
             wrt("                fval_ = float(sval_)\n")
-            wrt("            except (TypeError, ValueError), exp:\n")
+            wrt("            except (TypeError, ValueError) as exp:\n")
             wrt("                raise_parse_error(child_, 'requires float or double: %s' % exp)\n")
             wrt("            fval_ = self.gds_validate_float(fval_, node, '%s')\n" % (
                 name, ))

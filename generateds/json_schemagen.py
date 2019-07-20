@@ -1,3 +1,4 @@
+from __future__ import print_function
 #
 # Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
 #
@@ -159,7 +160,7 @@ class JsonSchemaGenerator(object):
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         elif not os.path.isdir(dirname):
-            print "-o option must specify directory"
+            print("-o option must specify directory")
             sys.exit(1)
         for ctype in self._type_map.values():
             self._GenerateTypeMap(ctype)
@@ -172,6 +173,6 @@ class JsonSchemaGenerator(object):
         objFile = self._parser.makeFile(objFileName)
         objJson = {"objects":self._objectsList}
         objFile.write(json.dumps(objJson,indent=4))
-        print "Done!"
-        print "Schemas generated under directory: " + dirname
+        print("Done!")
+        print("Schemas generated under directory: " + dirname)
 

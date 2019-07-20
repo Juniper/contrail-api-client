@@ -762,29 +762,29 @@ class IFMapApiGenerator(object):
             # dump method
             write(gen_file, "    def dump(self):")
             write(gen_file, '        """Display %s object in compact form."""' %(ident_name))
-            write(gen_file, "        print '------------ %s ------------'" % (ident_name))
-            write(gen_file, "        print 'Name = ', self.get_fq_name()")
-            write(gen_file, "        print 'Uuid = ', self.uuid")
+            write(gen_file, "        print('------------ %s ------------')" % (ident_name))
+            write(gen_file, "        print('Name = ', self.get_fq_name())")
+            write(gen_file, "        print('Uuid = ', self.uuid)")
             if parents:
                 write(gen_file, "        if hasattr(self, 'parent_type'): # non config-root children")
-                write(gen_file, "            print 'Parent Type = ', self.parent_type")
+                write(gen_file, "            print('Parent Type = ', self.parent_type)")
             for prop in ident.getProperties():
                 prop_name = prop.getName().replace('-', '_')
-                write(gen_file, "        print 'P %s = ', self.get_%s()" %(prop_name, prop_name))
+                write(gen_file, "        print('P %s = ', self.get_%s())" %(prop_name, prop_name))
             for link_info in ident.getLinksInfo():
                 to_ident = ident.getLinkTo(link_info)
                 to_ident_name = to_ident.getName().replace('-', '_')
                 is_ref = ident.isLinkRef(link_info)
                 if is_ref:
-                    write(gen_file, "        print 'REF %s = ', self.get_%s_refs()" %(to_ident_name, to_ident_name))
+                    write(gen_file, "        print('REF %s = ', self.get_%s_refs())" %(to_ident_name, to_ident_name))
                 else:
-                    write(gen_file, "        print 'HAS %s = ', self.get_%ss()" %(to_ident_name, to_ident_name))
+                    write(gen_file, "        print('HAS %s = ', self.get_%ss())" %(to_ident_name, to_ident_name))
             for back_link_info in ident.getBackLinksInfo():
                 if not ident.isLinkRef(back_link_info):
                     continue
                 from_ident = ident.getBackLinkFrom(back_link_info)
                 from_ident_name = from_ident.getName().replace('-', '_')
-                write(gen_file, "        print 'BCK %s = ', self.get_%s_back_refs()" %(from_ident_name, from_ident_name))
+                write(gen_file, "        print('BCK %s = ', self.get_%s_back_refs())" %(from_ident_name, from_ident_name))
             write(gen_file, "    # end dump")
             write(gen_file, "")
 
@@ -1990,10 +1990,10 @@ class IFMapApiGenerator(object):
     def _generate_heat_resources(self, gen_filepath_pfx, gen_filename_pfx):
         # heat uses the generated code to build its resources
         # set the build path correctly and import resources
-        heat_path = os.environ.get('HEAT_BUILDTOP') + '/api-lib/vnc_api/gen'
+        heat_path = os.environ.get('HEAT_BUILDTOP') + '/api-lib'
         sys.path.append(heat_path)
-        self.res_cmn = importlib.import_module('resource_common')
-        self.res_xsd = importlib.import_module('resource_xsd')
+        self.res_cmn = importlib.import_module('.resource_common', package='vnc_api.gen')
+        self.res_xsd = importlib.import_module('.resource_xsd', package='vnc_api.gen')
 
         # list of attributes we can skip
         self.skip_list = ["id_perms"]
@@ -2134,14 +2134,15 @@ class IFMapApiGenerator(object):
         write(gen_file, "# AUTO-GENERATED file from %s. Do Not Edit!" \
               %(self.__class__.__name__))
         write(gen_file, "")
-        write(gen_file, "import cfixture")
+        write(gen_file, "from __future__ import absolute_import")
+        write(gen_file, "from . import cfixture")
         write(gen_file, "from vnc_api import vnc_api")
         write(gen_file, "try:")
         write(gen_file, "    from cfgm_common.exceptions import *")
         write(gen_file, "except ImportError:")
         write(gen_file, "    from vnc_api.exceptions import *")
         write(gen_file, "")
-        write(gen_file, "from generatedssuper import GeneratedsSuper")
+        write(gen_file, "from .generatedssuper import GeneratedsSuper")
         write(gen_file, "")
 
         for ident in self._non_exclude_idents():
@@ -2420,7 +2421,7 @@ class IFMapApiGenerator(object):
             write(gen_file, '        :param obj: :class:`.%s` object' % (camel_name))
             write(gen_file, '        ')
             write(gen_file, '        """')
-            write(gen_file, "        raise NotImplementedError, '%s_create is %%s\\'s responsibility' %% (str(type (self)))" % method_name)
+            write(gen_file, "        raise NotImplementedError('%s_create is %%s\\'s responsibility' %% (str(type (self))))" % method_name)
             write(gen_file, "    # end %s_create" %(method_name))
             write(gen_file, "")
 

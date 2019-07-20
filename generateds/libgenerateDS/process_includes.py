@@ -9,6 +9,7 @@ Examples:
     python %prog -f myschema.xsd newschema.xsd
     cat infile.xsd | python %prog > outfile.xsd
 """
+from __future__ import print_function
 
 #
 # Imports
@@ -94,10 +95,10 @@ def resolve_ref(node, params, options):
         schema_name = os.path.split(locn)
         if schema_name not in params.already_processed:
             params.already_processed.add(schema_name)
-            print 'trace --'
-            print '    base  : %s' % (params.base_url, )
-            print '    parent: %s' % (params.parent_url, )
-            print '    locn  : %s' % (locn, )
+            print('trace --')
+            print('    base  : %s' % (params.base_url, ))
+            print('    parent: %s' % (params.parent_url, ))
+            print('    locn  : %s' % (locn, ))
             if locn.startswith('http:') or locn.startswith('ftp:'):
                 try:
                     urlfile = urllib2.urlopen(locn)
@@ -105,7 +106,7 @@ def resolve_ref(node, params, options):
                     urlfile.close()
                     params.parent_url = locn
                     params.base_url = os.path.split(locn)[0]
-                except urllib2.HTTPError, exp:
+                except urllib2.HTTPError as exp:
                     msg = "Can't find file %s referenced in %s." % (
                         locn, params.parent_url, )
                     raise SchemaIOError(msg)
