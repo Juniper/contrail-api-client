@@ -27,6 +27,7 @@
 
 
 from __future__ import generators   # only needed for Python 2.2
+from __future__ import print_function
 
 import sys, os.path
 import getopt
@@ -160,7 +161,7 @@ class XschemaHandler(handler.ContentHandler):
         return self.root
 
     def showError(self, msg):
-        print msg
+        print(msg)
         sys.exit(-1)
 
     def startElement(self, name, attrs):
@@ -216,7 +217,7 @@ class XschemaHandler(handler.ContentHandler):
         elif name == 'xs:schema':
             self.inSchema = 0
             if len(self.stack) != 1:
-                print '*** error stack'
+                print('*** error stack')
                 sys.exit(-1)
             self.root = self.stack[0]
 
@@ -949,7 +950,7 @@ Options:
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 

@@ -11,6 +11,7 @@ Options:
     -h, --help
             Show this help message.
 """
+from __future__ import print_function
 
 
 import sys
@@ -106,16 +107,16 @@ def generate_model(options, module_name):
     models_writer.close()
     forms_writer.close()
     admin_writer.close()
-    print 'Wrote %d lines to models.py' % (models_writer.get_count(), )
-    print 'Wrote %d lines to forms.py' % (forms_writer.get_count(), )
-    print 'Wrote %d lines to admin.py' % (admin_writer.get_count(), )
+    print('Wrote %d lines to models.py' % (models_writer.get_count(), ))
+    print('Wrote %d lines to forms.py' % (forms_writer.get_count(), ))
+    print('Wrote %d lines to admin.py' % (admin_writer.get_count(), ))
 
 
 
 USAGE_TEXT = __doc__
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 

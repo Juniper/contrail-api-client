@@ -67,11 +67,17 @@ generated_rule = env.Command(generated_files,
                              repo_top + '/schema/all_cfg.xsd',
                              autogen_cmd + ' $SOURCE')
 
+
+generateds_setup_sources = [
+    ("vnc_api/gen", repo_top + '/generateds/generatedssuper.py'),
+    ("vnc_api/gen", repo_top + '/generateds/cfixture.py'),
+]
+for dest, file in generateds_setup_sources:
+    env.Install(dest, file)
+
 remote_setup_sources = [
     ("", repo_top + '/LICENSE'),
     ("", repo_top + '/base/version.info'),
-    ("vnc_api/gen", repo_top + '/generateds/generatedssuper.py'),
-    ("vnc_api/gen", repo_top + '/generateds/cfixture.py'),
 ]
 remote_setup_sources_rules = []
 for dest, file in remote_setup_sources:

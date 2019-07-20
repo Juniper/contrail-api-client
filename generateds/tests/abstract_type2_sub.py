@@ -4,6 +4,7 @@
 # Generated  by generateDS.py.
 #
 
+from __future__ import print_function
 import sys
 
 import abstract_type2_sup as supermod
@@ -168,7 +169,7 @@ Usage: python ???.py <infilename>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 
