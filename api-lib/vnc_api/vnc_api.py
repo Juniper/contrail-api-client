@@ -2,12 +2,17 @@
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 from __future__ import absolute_import
+from future import standard_library
+standard_library.install_aliases()
+
+from builtins import str
+from builtins import object
+from six.moves import configparser
 import logging
 from collections import OrderedDict
 import requests
 from requests.exceptions import ConnectionError
 
-import ConfigParser
 import pprint
 # always try to load simplejson first
 # as we get better performance
@@ -22,7 +27,7 @@ import __main__ as main
 import ssl
 import re
 import os
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 from .gen.vnc_api_client_gen import all_resource_type_tuples
 from .gen.resource_xsd import *
@@ -63,8 +68,8 @@ def _read_cfg(cfg_parser, section, option, default):
     try:
         val = cfg_parser.get(section, option)
     except (AttributeError,
-            ConfigParser.NoOptionError,
-            ConfigParser.NoSectionError):
+            configparser.NoOptionError,
+            configparser.NoSectionError):
         val = default
 
     return val
@@ -113,13 +118,13 @@ class CurlLogger(object):
         cmd_hdr = None
         cmd_op = str(op_str[op])
         cmd_data = None
-        header_list = [j + ":" + k for (j, k) in headers.items()]
+        header_list = [j + ":" + k for (j, k) in list(headers.items())]
         header_string = ''.join(['-H "' + str(i) + '" ' for i in header_list])
         cmd_hdr = re.sub(self.pattern, r'\1$TOKEN\2', header_string)
         if op == 'get':
             if data:
                 query_string = "?" + "&".join([str(i) + "=" + str(j)
-                                               for (i, j) in data.items()])
+                                               for (i, j) in list(data.items())])
                 cmd_url = url + query_string
         elif op == 'delete':
             pass
@@ -175,7 +180,7 @@ class ApiServerSession(object):
     # end __init__
 
     def roundrobin(self):
-        session_hosts = self.api_server_sessions.keys()
+        session_hosts = list(self.api_server_sessions.keys())
         if self.active_session[0] in session_hosts:
             last_used_index = session_hosts.index(self.active_session[0])
         else:
@@ -238,7 +243,7 @@ class ApiServerSession(object):
             except ConnectionError:
                 self.active_session = (None, None)
 
-        for host, session in self.api_server_sessions.items():
+        for host, session in list(self.api_server_sessions.items()):
             if host not in url:
                 url = self.get_url(url, host)
             crud_method = getattr(session, '%s' % method)
@@ -365,7 +370,7 @@ class VncApi(object):
                     setattr(self, '%s%s' % (object_type, oper_str),
                             bound_method)
 
-        cfg_parser = ConfigParser.ConfigParser()
+        cfg_parser = configparser.ConfigParser()
         try:
             cfg_parser.read(conf_file or
                             "/etc/contrail/vnc_api_lib.ini")
@@ -398,8 +403,8 @@ class VncApi(object):
                 self._apiinsecure = cfg_parser.getboolean('global', 'insecure')
             except (AttributeError,
                     ValueError,
-                    ConfigParser.NoOptionError,
-                    ConfigParser.NoSectionError):
+                    configparser.NoOptionError,
+                    configparser.NoSectionError):
                 self._apiinsecure = False
         apicertfile = (apicertfile or
                        _read_cfg(cfg_parser, 'global', 'certfile', ''))
@@ -466,8 +471,8 @@ class VncApi(object):
                     self._ksinsecure = cfg_parser.getboolean('auth', 'insecure')
                 except (AttributeError,
                         ValueError,
-                        ConfigParser.NoOptionError,
-                        ConfigParser.NoSectionError):
+                        configparser.NoOptionError,
+                        configparser.NoSectionError):
                     self._ksinsecure = False
             kscertfile = (kscertfile or
                           _read_cfg(cfg_parser, 'auth', 'certfile', ''))
@@ -853,7 +858,7 @@ class VncApi(object):
                 # Serialize all fields in xsd types
                 return obj.serialize_to_json()
         else:
-            return dict((k, v) for k, v in obj.__dict__.iteritems())
+            return dict((k, v) for k, v in list(obj.__dict__.items()))
     # end _obj_serializer_diff
 
     def _create_api_server_session(self):
@@ -1027,7 +1032,7 @@ class VncApi(object):
     # end _parse_homepage
 
     def _find_url(self, json_body, resource_name):
-        rname = unicode(resource_name)
+        rname = str(resource_name)
         py_obj = json.loads(json_body)
         pprint.pprint(py_obj)
         for link in py_obj['links']:
@@ -1560,7 +1565,7 @@ class VncApi(object):
 
         if filters:
             query_params['filters'] = ''
-            for key, value in filters.items():
+            for key, value in list(filters.items()):
                 if isinstance(value, list):
                     query_params['filters'] += ','.join(
                         '%s==%s' % (key, json.dumps(val)) for val in value)

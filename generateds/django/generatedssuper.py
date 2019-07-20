@@ -1,4 +1,5 @@
 
+from builtins import object
 import sys
 from generateds_definedsimpletypes import Defined_simple_type_table
 

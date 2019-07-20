@@ -6,6 +6,7 @@
 Generate the class definition corresponding to a given IFMap DB object.
 """
 
+from builtins import object
 from type_classgen import TypeClassGenerator, TypeImplGenerator
 from ifmap_global import CppTypeMap, GetModuleName
 from ifmap_model import IFMapIdentifier, IFMapProperty, IFMapLink, IFMapLinkAttr, MemberInfo, SimpleTypeWrapper
@@ -543,7 +544,7 @@ namespace autogen {
 
 """ % {'modname': module_name.upper()}
         file.write(header)
-        for idn in IdentifierDict.values():
+        for idn in list(IdentifierDict.values()):
             # generate all dependent types
             properties = idn.getProperties()
             for prop in properties:
@@ -552,20 +553,20 @@ namespace autogen {
                 elif prop.getParent() == 'all':
                     self._GenerateSimpleProperty(file, prop)
 
-        for meta in MetaDict.values():
+        for meta in list(MetaDict.values()):
             if type(meta) is IFMapLinkAttr:
                 ctype = meta.getCType()
                 if ctype:
                     self._TypeGenerator.GenerateType(file, ctype)
 
-        for idn in IdentifierDict.values():
+        for idn in list(IdentifierDict.values()):
             if not idn._xelement:
                 # cross-ref'd id from another file
                 continue
             generator = IFMapGenIdentifier(self._cTypeDict, idn)
             generator.ServerClassDefn(file)
 
-        for meta in MetaDict.values():
+        for meta in list(MetaDict.values()):
             if type(meta) is IFMapLinkAttr:
                 generator = IFMapGenLinkAttr(self, meta)
                 generator.ServerClassDefn(file)
@@ -629,12 +630,12 @@ namespace autogen {
 """ % hdrname
         file.write(header)
 
-        for ctype in self._cTypeDict.values():
+        for ctype in list(self._cTypeDict.values()):
             self._TypeImplGenerator.GenerateType(file, ctype)
 
         self._module_name = GetModuleName(file, '_types.cc')
 
-        for idn in IdentifierDict.values():
+        for idn in list(IdentifierDict.values()):
             if not idn._xelement:
                 # cross-ref'd id from another file
                 continue
@@ -643,7 +644,7 @@ namespace autogen {
             tbl = (idn.getCIdentifierName(), idn.getCppName())
             self._DBTableList.append(tbl)
 
-        for meta in MetaDict.values():
+        for meta in list(MetaDict.values()):
             if type(meta) is IFMapLinkAttr:
                 generator = IFMapGenLinkAttr(self, meta)
                 generator.ServerClassImpl(file)
@@ -660,7 +661,7 @@ void %(module)s_%(comp)s_GenerateGraphFilter(%(module)s_FilterInfo *filter_info)
 """ % { 'module': self._module_name, 'comp': component}
         file.write(cdecl)
 
-        for idn in IdentifierDict.values():
+        for idn in list(IdentifierDict.values()):
             links = idn.getLinksInfo()
             for link_info in links:
                 to_ident = idn.getLinkTo(link_info)
@@ -688,7 +689,7 @@ void %(module)s_%(comp)s_GenerateWrapperPropertyInfo(%(module)s_WrapperPropertyI
 """ % { 'module': self._module_name, 'comp': component}
         file.write(cdecl)
 
-        for idn in IdentifierDict.values():
+        for idn in list(IdentifierDict.values()):
             properties = idn.getProperties()
             for prop in properties:
                 if prop.isListUsingWrapper() or prop.isMapUsingWrapper():
@@ -705,7 +706,7 @@ void %(module)s_%(comp)s_GenerateObjectTypeList(std::set<std::string> *object_ty
 """ % { 'module': self._module_name, 'comp': component}
         file.write(cdecl)
 
-        for idn in IdentifierDict.values():
+        for idn in list(IdentifierDict.values()):
             fmt = '    object_type_list->insert("%s");\n'
             file.write(fmt % (idn.getName().replace('-', '_')))
 
@@ -736,7 +737,7 @@ namespace autogen {
 """ % {'hdrname': hdrname, 'comp': component.lower()}
         file.write(header)
 
-        for idn in IdentifierDict.values():
+        for idn in list(IdentifierDict.values()):
             if not idn._xelement:
                 # cross-ref'd id from another file
                 continue
@@ -744,7 +745,7 @@ namespace autogen {
             generator.TableClassDefn(file, component)
             generator.TableClassImpl(file, component)
 
-        for meta in MetaDict.values():
+        for meta in list(MetaDict.values()):
             if type(meta) is IFMapLinkAttr:
                 generator = IFMapGenLinkAttr(self, meta)
                 generator.TableClassDefn(file, component)

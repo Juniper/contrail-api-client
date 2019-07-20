@@ -1,4 +1,5 @@
 from __future__ import print_function
+from builtins import object
 import os
 import time
 import logging
@@ -77,7 +78,7 @@ class ServiceApiGenerator(object):
             parentName, parent = self._PGenr.getParentName(element)
             if parentName:
                 if (parentName in self._PGenr.AlreadyGenerated or 
-                    parentName in self._PGenr.SimpleTypeDict.keys()):
+                    parentName in list(self._PGenr.SimpleTypeDict.keys())):
                     self._generateClasses(wrt, prefix, element, 1)
                 else:
                     self._PGenr.PostponedExtensions.insert(0, element)
@@ -147,7 +148,7 @@ class ServiceApiGenerator(object):
         #   not been generated, then postpone it.
         if parentName:
             if (parentName not in self._PGenr.AlreadyGenerated and
-                parentName not in self._PGenr.SimpleTypeDict.keys()):
+                parentName not in list(self._PGenr.SimpleTypeDict.keys())):
                 self._PGenr.PostponedExtensions.append(element)
                 return
         if element.getName() in self._PGenr.AlreadyGenerated:
@@ -716,7 +717,7 @@ class PyGenerator(object):
         else:
             content = ['    member_data_items_ = [']
         add = content.append
-        for attrName, attrDef in element.getAttributeDefs().items():
+        for attrName, attrDef in list(element.getAttributeDefs().items()):
             item1 = attrName
             item2 = attrDef.getType()
             item3 = 0
@@ -1224,7 +1225,7 @@ class PyGenerator(object):
         if len(element.getAttributeDefs()) > 0:
             hasAttributes += 1
             attrDefs = element.getAttributeDefs()
-            for key in attrDefs.keys():
+            for key in list(attrDefs.keys()):
                 attrDef = attrDefs[key]
                 name = attrDef.getName()
                 cleanName = mapName(self._PGenr.cleanupName(name))

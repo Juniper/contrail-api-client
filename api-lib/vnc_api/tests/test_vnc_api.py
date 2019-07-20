@@ -1,9 +1,12 @@
 from __future__ import absolute_import
+from future import standard_library
+standard_library.install_aliases()
+from builtins import range
 import platform
 from . import test_common
 import json
 import httpretty
-from urlparse import urlparse
+from urllib.parse import urlparse
 from requests.exceptions import ConnectionError
 
 from testtools.matchers import Contains
@@ -16,7 +19,11 @@ from vnc_api.utils import OP_GET
 
 def _auth_request_status(request, url, status_code):
     ret_headers = {'server': '127.0.0.1'}
-    ret_headers.update(request.headers.dict)
+    try:
+        ret_headers.update(request.headers.dict)
+    except AttributeError:
+        ret_headers.update(dict(request.headers.items()))
+        del ret_headers['Content-Length']
     ret_body = {'access': {'token': {'id': 'foo'}}}
     return (status_code, ret_headers, json.dumps(ret_body))
 
