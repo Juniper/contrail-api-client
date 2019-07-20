@@ -37,7 +37,7 @@ setup_sources = [
     'vnc_api',
     '.coveragerc',
     '.pylintrc',
-    '.testr.conf',
+    '.stestr.conf',
     'MANIFEST.in',
     'README.md',
     'requirements.txt',

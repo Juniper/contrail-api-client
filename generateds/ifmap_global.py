@@ -53,7 +53,7 @@ def getGoLangType(xsd_simple_type):
     return GoLangTypeMap[xsd_simple_type]
 
 def IsGeneratedType(ctype):
-    for xtype in CppTypeMap.values():
+    for xtype in list(CppTypeMap.values()):
         if ctype == xtype:
             return False
     return True
