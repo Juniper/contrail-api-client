@@ -6,6 +6,12 @@
 #
 
 from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import range
+from past.builtins import basestring
+from builtins import object
 import sys
 import getopt
 import re as re_
@@ -14,7 +20,7 @@ etree_ = None
 Verbose_import_ = False
 (   XMLParser_import_none, XMLParser_import_lxml,
     XMLParser_import_elementtree
-    ) = range(3)
+    ) = list(range(3))
 XMLParser_import_library = None
 try:
     # lxml
@@ -272,7 +278,7 @@ def raise_parse_error(node, msg):
     raise GDSParseError(msg)
 
 
-class MixedContainer:
+class MixedContainer(object):
     # Constants for category:
     CategoryNone = 0
     CategoryText = 1
@@ -2838,7 +2844,7 @@ def parse(inFileName):
 
 
 def parseString(inString):
-    from StringIO import StringIO
+    from io import StringIO
     doc = parsexml_(StringIO(inString))
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)

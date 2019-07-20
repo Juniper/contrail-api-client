@@ -5,6 +5,8 @@
 #
 
 from __future__ import print_function
+from builtins import range
+from builtins import object
 import sys
 import getopt
 from xml.dom import minidom
@@ -60,7 +62,7 @@ def quote_python(inStr):
 # Data representation classes.
 #
 
-class purchase_order:
+class purchase_order(object):
     subclass = None
     def __init__(self, customer=None, date='', line_item=None, shipper=None):
         self.customer = customer
@@ -157,7 +159,7 @@ class purchase_order:
 # end class purchase_order
 
 
-class customer:
+class customer(object):
     subclass = None
     def __init__(self, name='', address=''):
         self.name = name
@@ -209,7 +211,7 @@ class customer:
 # end class customer
 
 
-class line_item:
+class line_item(object):
     subclass = None
     def __init__(self, description='', per_unit_ounces=0.0, price=0.0, quantity=-1):
         self.description = description
@@ -296,7 +298,7 @@ class line_item:
 # end class line_item
 
 
-class shipper:
+class shipper(object):
     subclass = None
     def __init__(self, name='', per_ounce_rate=0.0):
         self.name = name
@@ -353,7 +355,7 @@ class shipper:
 
 from xml.sax import handler, make_parser
 
-class SaxStackElement:
+class SaxStackElement(object):
     def __init__(self, name='', obj=None):
         self.name = name
         self.obj = obj
