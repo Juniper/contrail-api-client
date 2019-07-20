@@ -1,3 +1,4 @@
+from __future__ import print_function
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
@@ -8,7 +9,7 @@ class TypeParserGenerator(object):
         pass
 
     def GenerateJsonTypeParser(self, file, ctype):
-        print "generating parser for %s" %ctype.getName()
+        print("generating parser for %s" %ctype.getName())
         start = """
 bool %s::JsonParse(const contrail_rapidjson::Value &parent) {
     if (parent.IsNull())
@@ -102,7 +103,7 @@ bool %s::JsonParseProperty(const contrail_rapidjson::Value &parent,
         file.write(static_fn)
 
     def GenerateTypeParser(self, file, ctype):
-        print "generating parser for %s" %ctype.getName()
+        print("generating parser for %s" %ctype.getName())
         start = """
 bool %s::XmlParse(const xml_node &parent) {
     for (xml_node node = parent.first_child(); node;
@@ -278,7 +279,7 @@ void %s::Encode(xml_node *node_p) const {
         file.write('}\n')
 
     def GenerateAttributeParser(self, file, ctype):
-        print "generating parser for attribute %s" %ctype.getName()
+        print("generating parser for attribute %s" %ctype.getName())
         start = """
 bool %s::XmlParse(const xml_node &parent) {
     for (xml_attribute attr = parent.first_attribute(); attr;
@@ -359,7 +360,7 @@ void %s::Encode(xml_node *node_p) const {
         file.write('}\n')
 
     def GenerateJsonAttributeParser(self, file, ctype):
-        print "generating json parser for attribute %s" %ctype.getName()
+        print("generating json parser for attribute %s" %ctype.getName())
         function_def = """
 bool %s::JsonParse(const contrail_rapidjson::Value &parent) {
     return true;

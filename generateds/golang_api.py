@@ -1,3 +1,4 @@
+from __future__ import print_function
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
@@ -820,7 +821,7 @@ func %(camel)sByUuid(c contrail.ApiClient, uuid string) (*%(camel)s, error) {
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         elif not os.path.isdir(dirname):
-            print "-o option must specify directory"
+            print("-o option must specify directory")
             sys.exit(1)
 
         self._GenerateTypeMap(dirname)

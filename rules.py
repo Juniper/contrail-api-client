@@ -1,3 +1,4 @@
+from __future__ import print_function
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
@@ -70,11 +71,11 @@ def GetTestEnvironment(test):
     return env
 
 def RunUnitTest(env, target, source, timeout = 300):
-    if env['ENV'].has_key('BUILD_ONLY'):
+    if 'BUILD_ONLY' in env['ENV']:
         return
     import subprocess
 
-    if env['ENV'].has_key('CONTRAIL_UT_TEST_TIMEOUT'):
+    if 'CONTRAIL_UT_TEST_TIMEOUT' in env['ENV']:
         timeout = int(env['ENV']['CONTRAIL_UT_TEST_TIMEOUT'])
 
     test = str(source[0].abspath)
@@ -98,7 +99,7 @@ def RunUnitTest(env, target, source, timeout = 300):
 
     ShEnv.update(GetTestEnvironment(test))
     # Use gprof unless NO_HEAPCHECK is set or in CentOS
-    heap_check = ShEnv.has_key('NO_HEAPCHECK') == False
+    heap_check = ('NO_HEAPCHECK' in ShEnv) == False
     if heap_check:
         try:
             # Skip HEAPCHECK in CentOS 6.4
@@ -128,19 +129,18 @@ def RunUnitTest(env, target, source, timeout = 300):
     if code is None:
         proc.kill()
         logfile.write('[  TIMEOUT  ] ')
-        print test + '\033[91m' + " TIMEOUT" + '\033[0m'
+        print(test + '\033[91m' + " TIMEOUT" + '\033[0m')
         raise convert_to_BuildError(code)
-        return
 
     if code == 0:
-        print test + '\033[94m' + " PASS" + '\033[0m'
+        print(test + '\033[94m' + " PASS" + '\033[0m')
     else:
         logfile.write('[  FAILED  ] ')
         if code < 0:
             logfile.write('Terminated by signal: ' + str(-code) + '\n')
         else:
             logfile.write('Program returned ' + str(code) + '\n')
-        print test + '\033[91m' + " FAIL" + '\033[0m'
+        print(test + '\033[91m' + " FAIL" + '\033[0m')
         raise convert_to_BuildError(code)
 
 def TestSuite(env, target, source):
@@ -154,7 +154,7 @@ def TestSuite(env, target, source):
             # If BUILD_ONLY set, do not alias foo.log target, to avoid
             # invoking the RunUnitTest() as a no-op (i.e., this avoids
             # some log clutter)
-            if env['ENV'].has_key('BUILD_ONLY'):
+            if 'BUILD_ONLY' in env['ENV']:
                 env.Alias(target, test)
             else:
                 env.AlwaysBuild(cmd)
@@ -328,7 +328,7 @@ def venv_add_build_pkg(env, v, pkg):
     return cmd
 
 def PyTestSuite(env, target, source, venv=None):
-    if env['ENV'].has_key('BUILD_ONLY'):
+    if 'BUILD_ONLY' in env['ENV']:
         return target
     for test in source:
         log = test + '.log'
@@ -349,7 +349,7 @@ def UnitTest(env, name, sources, **kwargs):
 
     # Do not link with tcmalloc when running under valgrind/coverage env.
     if sys.platform not in ['darwin', 'win32'] and env.get('OPT') != 'coverage' and \
-           not env['ENV'].has_key('NO_HEAPCHECK') and env.get('OPT') != 'valgrind':
+           'NO_HEAPCHECK' not in env['ENV'] and env.get('OPT') != 'valgrind':
         test_env.Append(LIBPATH = '#/build/lib')
         test_env.Append(LIBS = ['tcmalloc'])
     test_exe_list = test_env.Program(name, sources)
@@ -569,7 +569,7 @@ def ProtocDescBuilder(target, source, env):
         ' --proto_path=/usr/include/ ' + \
         ' --proto_path=src/contrail-analytics/contrail-collector/ ' + \
         str(source[0])
-    print protoc_cmd
+    print(protoc_cmd)
     code = subprocess.call(protoc_cmd, shell=True)
     if code != 0:
         raise SCons.Errors.StopError(
@@ -599,7 +599,7 @@ def ProtocCppBuilder(target, source, env):
         spath + ' --cpp_out=' + str(env.Dir(env['TOP'])) + \
         env['PROTOC_MAP_TGT_DIR'] + ' ' + \
         str(source[0])
-    print protoc_cmd
+    print(protoc_cmd)
     code = subprocess.call(protoc_cmd, shell=True)
     if code != 0:
         raise SCons.Errors.StopError(
@@ -645,7 +645,7 @@ def wait_for_sandesh_install(env):
             except Exception as e:
                 rc = 0
         if (rc != 1):
-            print 'scons: warning: sandesh -version returned %d, retrying' % rc
+            print('scons: warning: sandesh -version returned %d, retrying' % rc)
             time.sleep(1)
 
 class SandeshWarning(SCons.Warnings.Warning):
@@ -881,7 +881,7 @@ def GoCniFunc(env, filepath, target=''):
         cmd += go_cmd + 'install'
         code = subprocess.call(cmd, shell=True, env=goenv)
     except Exception as e:
-        print str(e)
+        print(str(e))
     return env['TOP'] + '/container/cni/bin/' + filepath
 
 # ThriftGenCpp Methods
@@ -994,8 +994,8 @@ def CheckBuildConfiguration(conf):
     if ((opt_level == 'production' or opt_level == 'profile') and \
         (conf.env['CC'].endswith("gcc") or conf.env['CC'].endswith("g++"))):
         if commands.getoutput(conf.env['CC'] + ' -dumpversion') == "4.7.0":
-            print "Unsupported/Buggy compiler gcc 4.7.0 for building " + \
-                  "optimized binaries"
+            print("Unsupported/Buggy compiler gcc 4.7.0 for building " + \
+                  "optimized binaries")
             raise convert_to_BuildError(1)
     return conf.Finish()
 
@@ -1153,7 +1153,7 @@ def determine_job_value():
     (one,five,_) = os.getloadavg()
     avg_load = int(one + five / 2)
     avail = (ncore - avg_load) * 3 / 2
-    print "scons: available jobs = %d" % avail
+    print("scons: available jobs = %d" % avail)
     return avail
 
 
@@ -1185,7 +1185,7 @@ def SetupBuildEnvironment(conf):
         # assume 1 means -j not specified).
         nj = determine_job_value()
         if nj > 1:
-            print "scons: setting jobs (-j) to %d" % nj
+            print("scons: setting jobs (-j) to %d" % nj)
             SetOption('num_jobs', nj)
             env['NUM_JOBS'] = nj
 

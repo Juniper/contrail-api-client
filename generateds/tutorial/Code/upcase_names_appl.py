@@ -4,6 +4,7 @@
 # Generated Fri Sep 23 15:48:06 2011 by generateDS.py version 2.6b.
 #
 
+from __future__ import print_function
 import sys
 
 import people_api as supermod
@@ -263,7 +264,7 @@ Usage: python ???.py <infilename>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 
