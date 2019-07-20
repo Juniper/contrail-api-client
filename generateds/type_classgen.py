@@ -1,6 +1,7 @@
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
+from builtins import object
 from ifmap_global import GetModuleName
 
 class TypeClassGenerator(object):
@@ -210,7 +211,7 @@ namespace autogen {
 """ % {'modname': module_name.upper(), 'hdrname': hdrname }
         file.write(header)
 
-        for ctype in self._cTypeDict.values():
+        for ctype in list(self._cTypeDict.values()):
             self.GenerateType(file, ctype)
         file.write('}\n')
         file.write('#endif  // __SCHEMA__%s_TYPES_H__\n' %

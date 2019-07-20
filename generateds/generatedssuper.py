@@ -1,6 +1,9 @@
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
+from builtins import range
+from past.builtins import basestring
+from builtins import object
 import re
 import sys
 
