@@ -2,6 +2,7 @@
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from builtins import object
 import logging
 import re
 
@@ -82,7 +83,7 @@ class ComplexType(object):
                 member.default = child.getDefault()
                 self._data_members.append(member)
         else:
-            attributes = self._xsd_type.getAttributeDefs().values()
+            attributes = list(self._xsd_type.getAttributeDefs().values())
             if attributes:
                 self._is_attribute = True
             for attribute in attributes:

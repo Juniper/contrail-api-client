@@ -5,6 +5,8 @@
 #
 
 from __future__ import print_function
+from builtins import range
+from builtins import object
 import sys
 import getopt
 from xml.dom import minidom
@@ -60,7 +62,7 @@ def quote_python(inStr):
 # Data representation classes.
 #
 
-class xml_behavior:
+class xml_behavior(object):
     subclass = None
     def __init__(self, base_impl_url='', behaviors=None):
         self.base_impl_url = base_impl_url
@@ -115,7 +117,7 @@ class xml_behavior:
 # end class xml_behavior
 
 
-class behaviors:
+class behaviors(object):
     subclass = None
     def __init__(self, behavior=None):
         if behavior is None:
@@ -167,7 +169,7 @@ class behaviors:
 # end class behaviors
 
 
-class behavior:
+class behavior(object):
     subclass = None
     def __init__(self, klass='', name='', return_type='', args=None, impl_url='', ancillaries=None):
         self.klass = klass
@@ -277,7 +279,7 @@ class behavior:
 # end class behavior
 
 
-class args:
+class args(object):
     subclass = None
     def __init__(self, arg=None):
         if arg is None:
@@ -329,7 +331,7 @@ class args:
 # end class args
 
 
-class arg:
+class arg(object):
     subclass = None
     def __init__(self, name='', data_type=''):
         self.name = name
@@ -381,7 +383,7 @@ class arg:
 # end class arg
 
 
-class ancillaries:
+class ancillaries(object):
     subclass = None
     def __init__(self, ancillary=None):
         if ancillary is None:
@@ -433,7 +435,7 @@ class ancillaries:
 # end class ancillaries
 
 
-class ancillary:
+class ancillary(object):
     subclass = None
     def __init__(self, klass='', role='', return_type='', name='', args=None, impl_url=''):
         self.klass = klass
@@ -542,7 +544,7 @@ class ancillary:
 
 from xml.sax import handler, make_parser
 
-class SaxStackElement:
+class SaxStackElement(object):
     def __init__(self, name='', obj=None):
         self.name = name
         self.obj = obj
