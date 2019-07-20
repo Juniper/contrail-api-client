@@ -2,6 +2,7 @@
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from builtins import object
 import idl_parser
 from type_model import ComplexType, ComplexTypeLocate
 from type_classgen import TypeClassGenerator, TypeImplGenerator

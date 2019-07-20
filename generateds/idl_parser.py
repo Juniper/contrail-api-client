@@ -6,6 +6,7 @@ Parse IDL statements embedded in a XML schema file.
 Copyright (c) 2013 Contrail Systems. All rights reserved.
 """
 
+from builtins import object
 import logging
 import os
 import re
