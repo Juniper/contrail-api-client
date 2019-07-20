@@ -1,3 +1,4 @@
+from builtins import str
 import os
 import sys
 import errno
@@ -21,7 +22,7 @@ def _obj_serializer_all(obj):
     if hasattr(obj, 'serialize_to_json'):
         return obj.serialize_to_json()
     else:
-        return dict((k, v) for k, v in obj.__dict__.iteritems())
+        return dict((k, v) for k, v in list(obj.__dict__.items()))
 # end _obj_serializer_all
 
 
