@@ -4,6 +4,7 @@
 # Base class of all exceptions in VNC
 
 
+from builtins import str
 class VncError(Exception):
     pass
 # end class VncError
