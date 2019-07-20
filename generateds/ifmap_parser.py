@@ -14,6 +14,7 @@ There are 3 scenarios:
   - Link meta with content: creates an object;
 """
 
+from builtins import object
 from ifmap_global import GetModuleName
 from ifmap_model import IFMapIdentifier, IFMapProperty, IFMapLink, IFMapLinkAttr, SimpleTypeWrapper
 from type_parser import TypeParserGenerator
@@ -384,11 +385,11 @@ namespace autogen {
 
 """ % hdrname
         file.write(header)
-        for ctype in self._cTypesDict.values():
+        for ctype in list(self._cTypesDict.values()):
             self._TypeParserGenerator.GenerateTypeParser(file, ctype)
             self._TypeParserGenerator.GenerateJsonTypeParser(file, ctype)
 
-        for ident in IdDict.itervalues():
+        for ident in IdDict.values():
             if not ident._xelement:
                 # cross-ref'd id from another file
                 continue
@@ -396,7 +397,7 @@ namespace autogen {
             genr.GenerateEncoder(file)
             genr.GenerateDecoder(file)
 
-        for meta in MetaDict.itervalues():
+        for meta in MetaDict.values():
             genr = None
             if type(meta) is IFMapProperty:
                 genr = IFMapGenProperty(meta)
@@ -420,7 +421,7 @@ namespace autogen {
         file.write(cdecl)
 
         n_links = 0
-        for meta in MetaDict.itervalues():
+        for meta in MetaDict.values():
             genr = None
             if type(meta) is IFMapProperty:
                 genr = IFMapGenProperty(meta)
@@ -453,7 +454,7 @@ static bool ParseJsonLinkMetadata(const contrail_rapidjson::Value &parent,
         file.write('void %s_ParserInit(IFMapServerParser *xparser) {\n' %
                    module_name)
         indent = ' ' * 4
-        for kvp in self._DecoderDict.iteritems():
+        for kvp in self._DecoderDict.items():
             fmt = 'xparser->MetadataRegister("%s",\n'
             file.write(indent + fmt % kvp[0])
             indent1 = ' ' * 8
@@ -466,7 +467,7 @@ static bool ParseJsonLinkMetadata(const contrail_rapidjson::Value &parent,
         file.write('void %s_JsonParserInit(ConfigJsonParser *jparser) {\n' %
                    module_name)
         indent = ' ' * 4
-        for kvp in self._JsonDecoderDict.iteritems():
+        for kvp in self._JsonDecoderDict.items():
             fmt = 'jparser->MetadataRegister("%s",\n'
             file.write(indent + fmt % kvp[0])
             indent1 = ' ' * 8
@@ -482,7 +483,7 @@ using namespace pugi;
 """
         file.write(cdecl)
         module_name = GetModuleName(file, '_agent.cc')
-        for ident in IdDict.itervalues():
+        for ident in IdDict.values():
             if not ident._xelement:
                 # cross-ref'd id from another file
                 continue
@@ -507,7 +508,7 @@ IFMapObject* %(class)sAgentParse(const xml_node &node, DB *db, std::string *id_n
 """ % {'class': ident.getCppName(), 'nodename': ident.getName() } 
       	    file.write (cdecl)
 
-        for ident in MetaDict.itervalues():
+        for ident in MetaDict.values():
             if not type(ident) is IFMapLinkAttr:
                 continue
             cdecl = """
@@ -533,7 +534,7 @@ IFMapObject* %(class)sAgentParse(const xml_node &node, DB *db, std::string *id_n
         file.write('void %s_Agent_ParserInit(DB *db, IFMapAgentParser *xparser) {\n' %
                 module_name)
         indent = ' ' * 4
-        for ident in IdDict.itervalues():
+        for ident in IdDict.values():
             if not ident._xelement:
                 # cross-ref'd id from another file
                 continue
@@ -541,7 +542,7 @@ IFMapObject* %(class)sAgentParse(const xml_node &node, DB *db, std::string *id_n
             fmt = 'xparser->NodeRegister("%s", &%sAgentParse);\n'
             file.write(fmt % (ident.getName(),ident.getCppName()))
 
-        for ident in MetaDict.itervalues():
+        for ident in MetaDict.values():
             if not type(ident) is IFMapLinkAttr:
                 continue
             indent = ' ' * 4

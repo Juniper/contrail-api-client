@@ -5,6 +5,9 @@
 #
 
 from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import range
 import sys
 
 import annotations2_sup as supermod
@@ -13,7 +16,7 @@ etree_ = None
 Verbose_import_ = False
 (   XMLParser_import_none, XMLParser_import_lxml,
     XMLParser_import_elementtree
-    ) = range(3)
+    ) = list(range(3))
 XMLParser_import_library = None
 try:
     # lxml
@@ -121,7 +124,7 @@ def parse(inFilename):
 
 
 def parseString(inString):
-    from StringIO import StringIO
+    from io import StringIO
     doc = parsexml_(StringIO(inString))
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)

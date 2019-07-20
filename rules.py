@@ -1,8 +1,16 @@
 from __future__ import print_function
+from __future__ import division
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import zip
+from builtins import str
+from builtins import range
+from past.builtins import basestring
+from past.utils import old_div
 import os
 import re
 from SCons.Builder import Builder
@@ -15,7 +23,7 @@ import SCons.Util
 import subprocess
 import sys
 import time
-import commands
+import subprocess
 import platform
 import getpass
 import warnings
@@ -426,7 +434,7 @@ def GetBuildInfoData(env, target, source):
 
     # Fetch Time in UTC
     import datetime
-    build_time = unicode(datetime.datetime.utcnow())
+    build_time = str(datetime.datetime.utcnow())
 
     build_git_info, build_version = GetBuildVersion(env)
 
@@ -510,7 +518,7 @@ def GenerateBuildInfoPyCode(env, target, source, path):
 
     # Fetch Time in UTC
     import datetime
-    build_time = unicode(datetime.datetime.utcnow())
+    build_time = str(datetime.datetime.utcnow())
 
     build_git_info, build_version = GetBuildVersion(env)
 
@@ -584,7 +592,7 @@ def ProtocGenDescFunc(env, file):
     ProtocSconsEnvDescFunc(env)
     suffixes = ['.desc']
     basename = Basename(file)
-    targets = map(lambda suffix: basename + suffix, suffixes)
+    targets = [basename + suffix for suffix in suffixes]
     return env.ProtocDesc(targets, file)
 
 # ProtocCpp Methods
@@ -620,7 +628,7 @@ def ProtocGenCppMapTgtDirFunc(env, file, target_root = ''):
                 '.pb.cc'
                ]
     basename = Basename(file)
-    targets = map(lambda suffix: basename + suffix, suffixes)
+    targets = [basename + suffix for suffix in suffixes]
     return env.ProtocCpp(targets, file)
 
 def ProtocGenCppFunc(env, file):
@@ -706,7 +714,7 @@ def SandeshGenDocFunc(env, filepath, target=''):
         filename = path_split[1]
     else:
         filename = path_split[0]
-    targets = map(lambda suffix: target + 'gen-doc/' + filename + suffix, suffixes)
+    targets = [target + 'gen-doc/' + filename + suffix for suffix in suffixes]
     env.Depends(targets, '#build/bin/sandesh' + env['PROGSUFFIX'])
     return env.SandeshDoc(targets, filepath)
 
@@ -742,7 +750,7 @@ def SandeshGenOnlyCppFunc(env, file, extra_suffixes=[]):
         suffixes += extra_suffixes
 
     basename = Basename(file)
-    targets = map(lambda suffix: basename + suffix, suffixes)
+    targets = [basename + suffix for suffix in suffixes]
     env.Depends(targets, '#build/bin/sandesh' + env['PROGSUFFIX'])
     return env.SandeshOnlyCpp(targets, file)
 
@@ -799,7 +807,7 @@ def SandeshGenCppFunc(env, file, extra_suffixes=[]):
         suffixes += extra_suffixes
 
     basename = Basename(file)
-    targets = map(lambda suffix: basename + suffix, suffixes)
+    targets = [basename + suffix for suffix in suffixes]
     env.Depends(targets, '#build/bin/sandesh' + env['PROGSUFFIX'])
     return env.SandeshCpp(targets, file)
 
@@ -822,7 +830,7 @@ def SandeshGenCFunc(env, file):
     SandeshSconsEnvCFunc(env)
     suffixes = ['_types.h', '_types.c']
     basename = Basename(file)
-    targets = map(lambda suffix: 'gen-c/' + basename + suffix, suffixes)
+    targets = ['gen-c/' + basename + suffix for suffix in suffixes]
     env.Depends(targets, '#build/bin/sandesh' + env['PROGSUFFIX'])
     return env.SandeshC(targets, file)
 
@@ -860,10 +868,9 @@ def SandeshGenPyFunc(env, path, target='', gen_py=True):
     else:
         mod_dir = path_split[0] + '/'
     if gen_py:
-        targets = map(lambda module: target + 'gen_py/' + mod_dir + module,
-                      modules)
+        targets = [target + 'gen_py/' + mod_dir + module for module in modules]
     else:
-        targets = map(lambda module: target + mod_dir + module, modules)
+        targets = [target + mod_dir + module for module in modules]
 
     env.Depends(targets, '#build/bin/sandesh' + env['PROGSUFFIX'])
     return env.SandeshPy(targets, path)
@@ -905,10 +912,10 @@ def ThriftGenCppFunc(env, file, async):
     ThriftSconsEnvFunc(env, async)
     suffixes = ['_types.h', '_constants.h', '_types.cpp', '_constants.cpp']
     basename = Basename(file)
-    base_files = map(lambda s: 'gen-cpp/' + basename + s, suffixes)
+    base_files = ['gen-cpp/' + basename + s for s in suffixes]
     services = ThriftServicesFunc(env.File(file))
-    service_cfiles = map(lambda s: 'gen-cpp/' + s + '.cpp', services)
-    service_hfiles = map(lambda s: 'gen-cpp/' + s + '.h', services)
+    service_cfiles = ['gen-cpp/' + s + '.cpp' for s in services]
+    service_hfiles = ['gen-cpp/' + s + '.h' for s in services]
     targets = base_files + service_cfiles + service_hfiles
     env.Depends(targets, '#build/bin/thrift' + env['PROGSUFFIX'])
     return env.ThriftCpp(targets, file)
@@ -935,7 +942,7 @@ def ThriftGenPyFunc(env, path, target=''):
         mod_dir = path_split[0] + '/'
     if target[-1] != '/':
         target += '/'
-    targets = map(lambda module: target + 'gen_py/' + mod_dir + module, modules)
+    targets = [target + 'gen_py/' + mod_dir + module for module in modules]
     env.Depends(targets, '#build/bin/thrift' + env['PROGSUFFIX'])
     return env.ThriftPy(targets, path)
 
@@ -947,7 +954,7 @@ def IFMapTargetGen(target, source, env):
     suffixes = ['_types.h', '_types.cc', '_parser.cc',
                 '_server.cc', '_agent.cc']
     basename = Basename(source[0].abspath)
-    targets = map(lambda x: basename + x, suffixes)
+    targets = [basename + x for x in suffixes]
     return targets, source
 
 def CreateIFMapBuilder(env):
@@ -963,7 +970,7 @@ def DeviceAPIBuilderCmd(source, target, env, for_signature):
 def DeviceAPITargetGen(target, source, env):
     suffixes = []
     basename = Basename(source[0].abspath)
-    targets = map(lambda x: basename + x, suffixes)
+    targets = [basename + x for x in suffixes]
     return targets, source
 
 def CreateDeviceAPIBuilder(env):
@@ -978,7 +985,7 @@ def TypeBuilderCmd(source, target, env, for_signature):
 def TypeTargetGen(target, source, env):
     suffixes = ['_types.h', '_types.cc', '_parser.cc']
     basename = Basename(source[0].abspath)
-    targets = map(lambda x: basename + x, suffixes)
+    targets = [basename + x for x in suffixes]
     return targets, source
 
 def CreateTypeBuilder(env):
@@ -994,7 +1001,7 @@ def CheckBuildConfiguration(conf):
     opt_level = GetOption('opt')
     if ((opt_level == 'production' or opt_level == 'profile') and \
         (conf.env['CC'].endswith("gcc") or conf.env['CC'].endswith("g++"))):
-        if commands.getoutput(conf.env['CC'] + ' -dumpversion') == "4.7.0":
+        if subprocess.getoutput(conf.env['CC'] + ' -dumpversion') == "4.7.0":
             print("Unsupported/Buggy compiler gcc 4.7.0 for building " + \
                   "optimized binaries")
             raise convert_to_BuildError(1)
@@ -1147,13 +1154,13 @@ def determine_job_value():
     try:
         import multiprocessing
         ncpu = multiprocessing.cpu_count()
-        ncore = ncpu / 2
+        ncore = old_div(ncpu, 2)
     except:
         ncore = 1
 
     (one,five,_) = os.getloadavg()
-    avg_load = int(one + five / 2)
-    avail = (ncore - avg_load) * 3 / 2
+    avg_load = int(one + old_div(five, 2))
+    avail = old_div((ncore - avg_load) * 3, 2)
     print("scons: available jobs = %d" % avail)
     return avail
 
