@@ -3,6 +3,8 @@ from __future__ import print_function
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+from builtins import str
+from builtins import object
 import idl_parser
 from ifmap_model import IFMapIdentifier, IFMapMetadata, ElementXsdType
 from ifmap_classgen import IFMapClassGenerator, IFMapImplGenerator
@@ -46,13 +48,13 @@ class IFMapGenerator(object):
                 meta = self._MetadataLocate(element, annotation)
                 meta.SetSchemaElement(element)
                 meta.setParent('all')
-                for identifier in self._Identifiers.values():
+                for identifier in list(self._Identifiers.values()):
                     identifier.SetProperty(meta)
             elif self._idl_parser.IsAllLink(annotation):
                 (from_name, to_name, attrs) = \
                     self._idl_parser.GetLinkInfo(element.getName())
                 to_ident = self._IdentifierLocate(to_name)
-                for from_ident in self._Identifiers.values():
+                for from_ident in list(self._Identifiers.values()):
                     ann_copy = deepcopy(annotation)
                     ann_copy[0].name = '%s-%s' % (from_ident.getName(),
                                                   to_ident.getName())
@@ -62,10 +64,10 @@ class IFMapGenerator(object):
                     from_ident.addLinkInfo(meta, to_ident, attrs)
                     to_ident.addBackLinkInfo(meta, from_ident, attrs)
 
-        for idn in self._Identifiers.values():
+        for idn in list(self._Identifiers.values()):
             idn.Resolve(self._Parser.ElementDict, self._cTypesDict)
 
-        for meta in self._Metadata.values():
+        for meta in list(self._Metadata.values()):
             meta.Resolve(self._Parser.ElementDict, self._cTypesDict)
 
     def _ProcessElement(self, element):

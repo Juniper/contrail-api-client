@@ -1,4 +1,6 @@
 from __future__ import print_function
+from builtins import str
+from builtins import object
 import os
 import time
 import logging
@@ -53,6 +55,8 @@ class TypeGenerator(object):
         outfile.write("This module defines the classes for types defined in :doc:`vnc_cfg.xsd`\n")
         outfile.write('"""\n')
         outfile.write("from __future__ import absolute_import\n")
+        outfile.write("from builtins import map")
+        outfile.write("from builtins import str")
         outfile.write("import json\n")
         outfile.write("from .generatedssuper import *\n")
         self._generateFromTree(wrt, self._PGenr.prefix, elements, processed)
@@ -74,7 +78,7 @@ class TypeGenerator(object):
             parentName, parent = self._PGenr.getParentName(element)
             if parentName:
                 if (parentName in self._PGenr.AlreadyGenerated or 
-                    parentName in self._PGenr.SimpleTypeDict.keys()):
+                    parentName in list(self._PGenr.SimpleTypeDict.keys())):
                     self._generateClasses(wrt, prefix, element, 1)
                 else:
                     self._PGenr.PostponedExtensions.insert(0, element)
@@ -146,7 +150,7 @@ class TypeGenerator(object):
         #   not been generated, then postpone it.
         if parentName:
             if (parentName not in self._PGenr.AlreadyGenerated and
-                parentName not in self._PGenr.SimpleTypeDict.keys()):
+                parentName not in list(self._PGenr.SimpleTypeDict.keys())):
                 self._PGenr.PostponedExtensions.append(element)
                 return
         if element.getName() in self._PGenr.AlreadyGenerated:
@@ -914,7 +918,7 @@ class PyGenerator(object):
         else:
             content = ['    member_data_items_ = [']
         add = content.append
-        for attrName, attrDef in element.getAttributeDefs().items():
+        for attrName, attrDef in list(element.getAttributeDefs().items()):
             item1 = attrName
             item2 = attrDef.getType()
             item3 = 0
@@ -1262,7 +1266,7 @@ class PyGenerator(object):
             elif st and st.getBase() == "xsd:integer" and st.values:
                 s1 = '        error = False\n'
                 s1+= '        if isinstance(value, list):\n'
-                s1+= '            v_int = map(int, value)\n'
+                s1+= '            v_int = list(map(int, value))\n'
                 s1+= '            v1, v2 = min(v_int), max(v_int)\n'
                 s1+= '        else:\n'
                 s1+= '            v1, v2 = int(value), int(value)\n'
@@ -1373,7 +1377,7 @@ class PyGenerator(object):
         if len(element.getAttributeDefs()) > 0:
             hasAttributes += 1
             attrDefs = element.getAttributeDefs()
-            for key in attrDefs.keys():
+            for key in list(attrDefs.keys()):
                 attrDef = attrDefs[key]
                 name = attrDef.getName()
                 cleanName = self._PGenr.mapName(self._PGenr.cleanupName(name))
@@ -1758,7 +1762,7 @@ class PyGenerator(object):
         base = element.getBase()
         wrt("    def exportDict(self, name_='%s'):\n" % (name, ))
         wrt('        # do obj->json->dict to handle nested complextype in object\n')
-        wrt('        obj_json = json.dumps(self, default=lambda o: dict((k, v) for k, v in o.__dict__.iteritems()))\n')
+        wrt('        obj_json = json.dumps(self, default=lambda o: dict((k, v) for k, v in o.__dict__.items()))\n')
         wrt('        obj_dict = json.loads(obj_json)\n')
         wrt('        if name_:\n')
         wrt('            return {name_: obj_dict}\n')
