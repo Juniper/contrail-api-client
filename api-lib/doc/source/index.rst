@@ -24,8 +24,7 @@ Contrail configuration is expressed in terms of objects which have the following
 Juniper Contrail Configuration API Interfaces
 =============================================
 
-The Juniper Contrail configuration API server enables the manipulation of configuration
-elements exposed by the Contrail API server. Interaction with the API server is possible using the following interfaces.
+The Juniper Contrail configuration API server enables the manipulation of configuration elements exposed by the Contrail API server. Interaction with the API server is possible using the following interfaces.
    * REST interface: This interface can be accessed using a command line tool (e.g. cURL) or through a browser with an extension to parse/send JSON data.
    * Contrail Python VNC API: This interface internally uses the same REST API, but provides an easy to use interface in a python client. The API is also available in other languages (e.g. java, go, etc).
 
