@@ -265,6 +265,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='For internal use only'/>
         <xsd:element name="qos-action" type="xsd:string" required='optional'
              description='FQN of Qos configuration object for QoS marking'/>
+        <xsd:element name="host-based-service" type="xsd:boolean" default="False"
+             description="Forward traffic matching this rule to the project's host based service"/>
         <!-- More actions can come here. e.g. policer, QOS etc-->
     </xsd:all>
 </xsd:complexType>
@@ -799,6 +801,13 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
                  'all', 'key', 'optional', 'CRUD',
                  'Dictionary of arbitrary (key, value) on a resource.') -->
 
+<xsd:simpleType name="UniqueQuotaType">
+    <xsd:restriction base="xsd:integer">
+        <xsd:minInclusive value="0"/>
+        <xsd:maxInclusive value="1"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:complexType name="QuotaType">
     <xsd:all>
         <xsd:element name="defaults" type="xsd:integer" required='optional'
@@ -859,6 +868,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Maximum number of firewall policy'/>
         <xsd:element name="firewall-rule" type="xsd:integer" required='optional'
              description='Maximum number of firewall rule'/>
+        <xsd:element name="host-based-service" type="UniqueQuotaType" required="optional" default="0"
+             description="Maximum number of host based service. Actually limited to 0 or 1 for a project (can not be unlimited or more than 1)"/>
     </xsd:all>
 </xsd:complexType>
 
@@ -3633,5 +3644,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('igmp-enable', 'virtual-machine-interface', 'optional', 'CRUD',
               'IGMP mode at VMI level.') -->
+
+<!-- Host Based Service  -->
+<xsd:include schemaLocation='host_based_service.xsd'/>
 
 </xsd:schema>
