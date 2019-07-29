@@ -76,11 +76,25 @@
      </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="StormControlBandwidthPercentType">
+     <xsd:restriction base="xsd:integer">
+         <xsd:minInclusive value="1"/>
+         <xsd:maxInclusive value="100"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="StormControlRecoveryTimeoutType">
+     <xsd:restriction base="xsd:integer">
+         <xsd:minInclusive value="10"/>
+         <xsd:maxInclusive value="3600"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:complexType name="StormControlParameters">
     <xsd:all>
         <xsd:element name="storm-control-actions" type="StormControlActionType" maxOccurs="unbounded"
                      description= "Default action (Discard) is implicit. In addition, other list of actions can be specified here" />
-        <xsd:element name="recovery-timeout" type="xsd:integer" required="optional"
+        <xsd:element name="recovery-timeout" type="StormControlRecoveryTimeoutType" required="optional"
                      description= "Timeout in seconds. This enables the affected interface to recover automatically from the error condition after the specified period of time" />
         <xsd:element name="no-unregistered-multicast" type="xsd:boolean" default="false"
                      description= "if set to true, disable unregistered multicast traffic storm control" />
@@ -92,7 +106,7 @@
                      description= "if set to true, disable muticast traffic storm control" />
         <xsd:element name="no-broadcast" type="xsd:boolean" default="false"
                      description= "if set to true, disable broadcast traffic storm control" />
-        <xsd:element name="bandwidth-percent" type="xsd:integer" required="true"
+        <xsd:element name="bandwidth-percent" type="StormControlBandwidthPercentType" required="true"
                      description= "Configure storm control bandwidth level as percentage" />
     </xsd:all>
 </xsd:complexType>
