@@ -60,8 +60,6 @@ autogen_script = File(repo_top + '/generateds/generateDS.py').path
 autogen_cmd = '%s -f -o %s -g ifmap-frontend' % (
     autogen_script, Dir('vnc_api/gen/resource').path)
 
-env.Append(ENV={'HEAT_BUILDTOP': Dir(env['TOP']).abspath})
-
 generated_files = ['vnc_api/gen/__init__.py']
 generated_rule = env.Command(generated_files,
                              repo_top + '/schema/all_cfg.xsd',
