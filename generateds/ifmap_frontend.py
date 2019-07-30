@@ -1990,10 +1990,10 @@ class IFMapApiGenerator(object):
     def _generate_heat_resources(self, gen_filepath_pfx, gen_filename_pfx):
         # heat uses the generated code to build its resources
         # set the build path correctly and import resources
-        heat_path = os.environ.get('HEAT_BUILDTOP') + '/api-lib/vnc_api/gen'
+        heat_path = os.path.abspath(os.path.dirname(gen_filepath_pfx))
         sys.path.append(heat_path)
-        self.res_cmn = importlib.import_module('resource_common')
-        self.res_xsd = importlib.import_module('resource_xsd')
+        self.res_cmn = importlib.import_module('%s_common' % gen_filename_pfx)
+        self.res_xsd = importlib.import_module('%s_xsd' % gen_filename_pfx)
 
         # list of attributes we can skip
         self.skip_list = ["id_perms"]
@@ -2892,6 +2892,8 @@ class IFMapApiGenerator(object):
             ident_name = ident.getName()
             camel_name = CamelCase(ident_name)
             method_name = ident_name.replace('-', '_')
+            if ident.getElement() and 'attr:experimental' in ident.getElement().attrs:
+              continue
 
             tags.append(OrderedDict([
                 ('name', ident_name),
@@ -2993,7 +2995,7 @@ class IFMapApiGenerator(object):
                             ('minimum', r_base.values[0]['minimum']),
                             ('maximum', r_base.values[1]['maximum'])])
                     elif r_base.values:
-                        enum_values = {'enum': r_base.values}
+                        enum_values = {'enum': [v['value'] for v in r_base.valattrs if not 'attr:experimental' in v]}
                 else: # complex
                     type_name = xsd_type
 
