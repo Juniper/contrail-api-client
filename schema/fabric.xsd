@@ -486,6 +486,10 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-hitless-upgrade', 'node-profile', 'required', 'CRUD',
               'if set to false, do not perform hitless image upgrade on devices using this node profile') -->
+<xsd:element name="node-profile-os-version" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('node-profile-os-version', 'node-profile', 'optional', 'CRUD',
+              'Device OS version used to upgrade image during fabric onboarding. Overrides fabric-os-version in fabric object') -->
 <xsd:element name="node-profile-roles" type="NodeProfileRolesType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('node-profile-roles', 'node-profile', 'required', 'CRUD',
