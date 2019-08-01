@@ -2982,7 +2982,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 
 <xsd:element name="logical-router-type" type="LogicalRouterType" default='snat-routing'/>
 <!--#IFMAP-SEMANTICS-IDL
-          Property('logical-router-type', 'logical-router', 'optional', 'CRUD',
+          Property('logical-router-type', 'logical-router', 'optional', 'CRD',
               'Type of logical-router, used to signify the purpose of the logical-router.') -->
 
 <xsd:element name="logical-router-service-instance"/>
