@@ -2,7 +2,6 @@ import os
 import time
 import logging
 import textwrap
-from pprint import pformat
 from collections import OrderedDict
 
 def escape_string(instring):
@@ -155,8 +154,7 @@ class TypeGenerator(object):
                 element.getName(), ))
             return
         self._PGenr.ElementsForSubclasses.append(element)
-        name = element.getCleanName()
-        self._LangGenr.generateClassDefLine(wrt, parentName, prefix, name,
+        self._LangGenr.generateClassDefLine(wrt, parentName, prefix, element,
                                             self._openapi_dict)
         # If this element has documentation, generate a doc-string.
         if element.documentation:
@@ -171,6 +169,7 @@ class TypeGenerator(object):
         self._LangGenr.generateSubSuperInit(wrt, superclass_name)
         self._LangGenr._generateAttrMetadata(wrt, element)
         s4 = self._LangGenr.generateCtor(wrt, element)
+        name = element.getCleanName()
         self._LangGenr.generateFactory(wrt, prefix, name)
         self._generateGettersAndSetters(wrt, element)
         self._LangGenr.generateComparators(wrt, element)
@@ -644,7 +643,8 @@ class PyGenerator(object):
         s1 = self._PGenr.TEMPLATE_HEADER % (tstamp, version, self._PGenr.ExternalEncoding, )
         wrt(s1)
 
-    def generateClassDefLine(self, wrt, parentName, prefix, name, openapi_dict):
+    def generateClassDefLine(self, wrt, parentName, prefix, element, openapi_dict):
+        name = element.getCleanName()
         if parentName:
             s1 = 'class %s%s(%s):\n' % (prefix, name, parentName,)
         else:
@@ -652,16 +652,21 @@ class PyGenerator(object):
 
         wrt(s1)
         wrt('    """\n')
-        openapi_dict['definitions'][name] = OrderedDict([
-            ('properties', OrderedDict({})),
-            ('required', []),
-        ])
-        openapi_properties = openapi_dict['definitions'][name]['properties']
-        openapi_required = openapi_dict['definitions'][name]['required']
+
+        generate_openapi = 'attr:experimental' not in element.getAttrs()
+        if generate_openapi:
+          openapi_dict['definitions'][name] = OrderedDict([
+              ('properties', OrderedDict({})),
+              ('required', []),
+          ])
+          openapi_properties = openapi_dict['definitions'][name]['properties']
+          openapi_required = openapi_dict['definitions'][name]['required']
 
         description = self.get_description(self._PGenr.ElementDict[name].attrs)
         if description:
-            openapi_dict['definitions'][name]['description'] = ' '.join(description)
+            if generate_openapi:
+              openapi_dict['definitions'][name]['description'] = ' '.join(description)
+
             wrt('    Description:\n')
             for d_line in description:
                 for w_line in textwrap.wrap(d_line, 80,
@@ -732,6 +737,9 @@ class PyGenerator(object):
                         description_lines.append(w_line)
                         wrt('          %s\n\n' %(w_line))
 
+            if not generate_openapi or "attr:experimental" in child.attrs:
+                continue
+
             openapi_properties[child.name.replace('-', '_')] = OrderedDict([])
             openapi_prop = openapi_properties[child.name.replace('-', '_')]
             if description_lines:
@@ -747,7 +755,7 @@ class PyGenerator(object):
                         openapi_prop['minimum'] = r_base.values[0]['minimum']
                         openapi_prop['maximum'] = r_base.values[1]['maximum']
                     elif r_base.values:
-                        openapi_prop['enum'] = r_base.values
+                        openapi_prop['enum'] = [v['value'] for v in r_base.valattrs if not 'attr:experimental' in v]
 
                 if child_type.lower() == 'xsd:datetime':
                     openapi_prop["type"] = "string"
@@ -764,7 +772,7 @@ class PyGenerator(object):
             if doc_info['is_optional'] == False:
                 openapi_required.append(child.name.replace('-', '_'))
         # end for all attrs of type
-        if not openapi_required:
+        if generate_openapi and not openapi_required:
             del openapi_dict['definitions'][name]['required']
 
         wrt('    """\n')
@@ -2398,7 +2406,8 @@ class CppGenerator(object):
     def generateHeader(self, wrt, prefix):
         pass
 
-    def generateClassDefLine(self, wrt, parentName, prefix, name):
+    def generateClassDefLine(self, wrt, parentName, prefix, element):
+        name = element.getCleanName()
         self._Prefix = prefix
         if parentName:
             s1 = 'class %s%s: public %s {\n' % (prefix, name, parentName,)

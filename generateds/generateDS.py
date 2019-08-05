@@ -1136,8 +1136,10 @@ class SimpleTypeElement(XschemaElementBase):
         # Attribute definitions for the currect element.
         self.attributeDefs = {}
         self.complexType = 0
-        # Enumeration values for the current element.
+        # Enumeration values for the current element, as a string.
         self.values = list()
+        # Same as above, as xml elements.
+        self.valattrs = list()
         # The other simple types this is a union of.
         self.unionOf = list()
         self.simpleType = 0
@@ -1242,8 +1244,10 @@ class XschemaElement(XschemaElementBase):
         self.anyAttribute = 0
         self.explicit_define = 0
         self.simpleType = None
-        # Enumeration values for the current element.
+        # Enumeration values for the current element, as a string.
         self.values = list()
+        # Same as above, as xml elements.
+        self.valattrs = list()
         # The parent choice for the current element.
         self.choice = None
         self.listType = 0
@@ -1489,6 +1493,7 @@ class XschemaElement(XschemaElementBase):
                     element = self._PGenr.ElementDict[type_val1]
                     # Resolve our potential values if present
                     self.values = element.values
+                    self.valattrs = element.valattrs
                     # If the type is available in the SimpleTypeDict, we
                     # know we've gone far enough in the Element hierarchy
                     # and can return the correct base type.
@@ -1769,8 +1774,10 @@ class XschemaAttribute:
         self.data_type = data_type
         self.use = use
         self.default = default
-        # Enumeration values for the attribute.
+        # Enumeration values for the current element, as a string.
         self.values = list()
+        # Same as above, as xml elements.
+        self.valattrs = list()
     def getCleanName(self): return self.cleanName
     def setName(self, name): self.name = name
     def getName(self): return self.name
@@ -2084,6 +2091,7 @@ class XschemaHandler(handler.ContentHandler):
                 # attributes of the current element are un-ordered so the
                 # instance variable "lastAttribute" will have our attribute.
                 values = self.lastAttribute.values
+                valattrs = self.lastAttribute.valattrs
             elif self.inElement and attrs.has_key('value'):
                 # We're not in an attribute so the restriction must have
                 # been placed on an element and that element will still be
@@ -2100,11 +2108,14 @@ class XschemaHandler(handler.ContentHandler):
                             attrs['value']), )
                     sys.exit(1)
                 values = element.values
+                valattrs = element.valattrs
             elif self.inSimpleType and attrs.has_key('value'):
                 # We've been defined as a simpleType on our own.
                 values = self.stack[-1].values
+                valattrs = self.stack[-1].valattrs
             if name == EnumerationType:
                 values.append(attrs['value'])
+                valattrs.append(attrs)
             else:
                 if len(values) == 0:
                     values.extend([None, None])

@@ -2892,6 +2892,8 @@ class IFMapApiGenerator(object):
             ident_name = ident.getName()
             camel_name = CamelCase(ident_name)
             method_name = ident_name.replace('-', '_')
+            if ident.getElement() and 'attr:experimental' in ident.getElement().attrs:
+              continue
 
             tags.append(OrderedDict([
                 ('name', ident_name),
@@ -2993,7 +2995,7 @@ class IFMapApiGenerator(object):
                             ('minimum', r_base.values[0]['minimum']),
                             ('maximum', r_base.values[1]['maximum'])])
                     elif r_base.values:
-                        enum_values = {'enum': r_base.values}
+                        enum_values = {'enum': [v['value'] for v in r_base.valattrs if not 'attr:experimental' in v]}
                 else: # complex
                     type_name = xsd_type
 
