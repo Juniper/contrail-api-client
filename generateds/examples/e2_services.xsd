@@ -3,6 +3,7 @@
  -->
 <xsd:schema
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:attr="http://www.contrailsystems.com/2012/EXTRA-ATTRIBUTES/0" 
     xmlns:smi="urn:ietf:params:xml:ns:opsawg:smi:base:1.0">
 
 <xsd:element name='service-endpoint' type="ifmap:IdentityType"/>
@@ -14,7 +15,7 @@
 
 <xsd:simpleType name="E2servicetype">
     <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="point-to-point"/>
+        <xsd:enumeration value="point-to-point" attr:experimental="" />
         <xsd:enumeration value="point-to-list"/>
         <xsd:enumeration value="multi-point-to-multi-point"/>
     </xsd:restriction>
@@ -30,7 +31,7 @@
 </xsd:simpleType>
 
 <xsd:element name='service-connection-module' type="ifmap:IdentityType"/>
-<xsd:element name='e2-service' type='E2servicetype'/>
+<xsd:element name='e2-service' type='E2servicetype' attr:experimental="" />
 <!--#IFMAP-SEMANTICS-IDL
      Property('e2-service', 'service-connection-module', 'required', 'CRUD',
               'E2 service type.') -->
@@ -79,7 +80,7 @@
     <xsd:all>
         <xsd:element name="name" type="xsd:string"/>
         <xsd:element name="path" type="xsd:string"/>
-        <xsd:element name="rate" type="xsd:string"/>
+        <xsd:element name="rate" type="xsd:string" attr:experimental="" />
     </xsd:all>
 </xsd:complexType>
 

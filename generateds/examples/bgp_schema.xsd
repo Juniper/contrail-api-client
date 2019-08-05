@@ -4,6 +4,7 @@
 <xsd:schema 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:bgp="http://www.contrailsystems.com/2012/BGP-CONFIG/0"
+    xmlns:attr="http://www.contrailsystems.com/2012/EXTRA-ATTRIBUTES/0"
     xmlns:smi="urn:ietf:params:xml:ns:opsawg:smi:base:1.0">
 
 <xsd:include schemaLocation='ietf-l3vpn-schema.xsd'/>
@@ -328,7 +329,7 @@
 
 <xsd:simpleType name="AuthenticationKeyType">
     <xsd:restriction base='xsd:string'>
-        <xsd:enumeration value="md5"/>
+        <xsd:enumeration value="md5" attr:experimental="" />
     </xsd:restriction>
 </xsd:simpleType>
 
@@ -411,6 +412,7 @@
         <xsd:element name='next-hop' type='xsd:string'/>
         <xsd:element name='route-target' type='xsd:string' maxOccurs="unbounded"/>
         <xsd:element name='community' type='xsd:string' maxOccurs="unbounded"/>
+        <xsd:element name='fuffa' type='xsd:string' maxOccurs="unbounded"/>
     </xsd:all>
 </xsd:complexType>
 

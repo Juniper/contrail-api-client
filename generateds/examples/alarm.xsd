@@ -2,6 +2,7 @@
  Copyright (c) 2016 Juniper Networks, Inc. All rights reserved.
  -->
 <xsd:schema
+    xmlns:attr="http://www.contrailsystems.com/2012/EXTRA-ATTRIBUTES/0"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
 <xsd:simpleType name="AlarmOperation">
@@ -42,7 +43,7 @@
 
 <xsd:complexType name="AlarmOrList">
     <xsd:all>
-        <xsd:element name="or_list" type="AlarmAndList" maxOccurs="unbounded"/>
+        <xsd:element name="or_list" type="AlarmAndList" maxOccurs="unbounded" attr:experimental="" />
     </xsd:all>
 </xsd:complexType>
 

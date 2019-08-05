@@ -4,6 +4,7 @@
 <xsd:schema
 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 xmlns:ifmap="http://www.trustedcomputinggroup.org/2010/IFMAP/2"
+xmlns:attr="http://www.contrailsystems.com/2012/EXTRA-ATTRIBUTES/0"
 xmlns:meta="http://www.trustedcomputinggroup.org/2010/IFMAP-METADATA/2"
 targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 
@@ -121,7 +122,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
     <xsd:element name="minor" type="xsd:integer" required='true'/>
 </xsd:complexType>
 
-<xsd:complexType name="TimerType">
+<xsd:complexType name="TimerType" attr:experimental="">
     <xsd:all>
         <xsd:element name="start-time" type="xsd:dateTime" required='true'/>
         <xsd:element name="on-interval" type="xsd:time" required='true'/>
@@ -133,7 +134,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <xsd:complexType name="VirtualNetworkPolicyType">
     <xsd:element name="sequence" type="SequenceType" required='optional'
          description='Sequence number to specify order of policy attachment to network'/>
-    <xsd:element name="timer" type="TimerType" required='optional'
+    <xsd:element name="timer" type="TimerType" required='optional' attr:experimental=""
          description='Timer to specify when the policy can be active'/>
 </xsd:complexType>
 
@@ -184,7 +185,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
         <xsd:element name="protocol"    type="xsd:string"  required='true'
              description='Layer 4 protocol in ip packet'/>
         <xsd:element name="src-address" type="AddressType" required='true'
-             description='Source ip matching criteria'/>
+             description='Source ip matching criteria' attr:experimental="" />
         <xsd:element name="src-port"    type="PortType"    required='true'
              description='Range of source port for layer 4 protocol'/>
         <xsd:element name="dst-address" type="AddressType" required='true'
@@ -212,7 +213,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <xsd:complexType name="StaticMirrorNhType">
     <xsd:all>
     <xsd:element name="vtep-dst-ip-address" type="smi:IpAddress" required='true'
-        description='ip address of destination vtep'/>
+        description='ip address of destination vtep' attr:experimental="" />
     <xsd:element name="vtep-dst-mac-address" type="xsd:string" required='optional'
         description='mac address of destination vtep'/>
     <xsd:element name="vni" type="VxlanNetworkIdentifierType" required='true'
@@ -1281,14 +1282,14 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('encryption-mode', 'global-vrouter-config', 'optional', 'CRUD',
               'Enable encryption mode') -->
 
-<xsd:complexType name="EncryptionTunnelEndpoint">
+<xsd:complexType name="EncryptionTunnelEndpoint" attr:deprecated="">
     <xsd:all>
         <xsd:element name="tunnel-remote-ip-address" type="IpAddressType"
              required='true' operation='CRUD' description='Tunnel endpoint remote address'/>
     </xsd:all>
 </xsd:complexType>
 
-<xsd:complexType name="EncryptionTunnelEndpointList">
+<xsd:complexType name="EncryptionTunnelEndpointList"> <!-- attr:experimental=""> -->
     <xsd:all>
         <xsd:element name="endpoint" type="EncryptionTunnelEndpoint" maxOccurs="unbounded"
              description='Tunnel endpoint remote address'/>
