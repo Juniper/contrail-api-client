@@ -158,6 +158,8 @@
      <xsd:restriction base='xsd:string'>
          <xsd:enumeration value='regular'/>
          <xsd:enumeration value='lag'/>
+         <xsd:enumeration value='service'/>
+         <xsd:enumeration value='fabric'/>
      </xsd:restriction>
 </xsd:simpleType>
 
@@ -569,7 +571,7 @@
 <xsd:element name="physical-interface-type" type="PhysicalInterfaceType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-interface-type', 'physical-interface', 'optional', 'CRUD',
-              'Physical interface type that can be either regular physical interface or LAG interface.') -->
+              'Physical interface type that can be either regular or LAG or Service or Fabric link.') -->
 
 <xsd:element name="physical-interface-mac-addresses" type="MacAddressesType"/>
 <!--#IFMAP-SEMANTICS-IDL
@@ -837,6 +839,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-underlay-config', 'physical-router', 'optional', 'CRUD',
               'Brownfield device underlay configuration stored during underlay onboarding. Only valid if physical-router-underlay-managed is false') -->
+
+<xsd:element name="physical-router-autonomous-system" type="AutonomousSystemsType"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('physical-router-autonomous-system', 'physical-router', 'optional', 'CRUD',
+         'Autonomous system configured on the device represented by the physical router.') -->
 
 <xsd:complexType name="BaremetalProperties">
     <xsd:all>
