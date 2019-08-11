@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2eb88c9_9701d4b8",
+        "filename": "schema/fabric.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2019-08-11T23:44:48Z",
+      "side": 1,
+      "message": "Just curious, shouldn\u0027t hardware inventory be a property of PRouter rather than a object by itself.\n\nAs i understand from the comments this object just holds the output of \"show chassis\" and it would be an overhead to maintain an object for each prouter and a property would make very much sense here since its localized to that prouter.\n\nDo correct me if my understanding is wrong.",
+      "revId": "f568d02a839f6b3f2c56bc1eec6696496f973682",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
