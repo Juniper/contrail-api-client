@@ -16,6 +16,24 @@
       "revId": "f568d02a839f6b3f2c56bc1eec6696496f973682",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fd5ff4_dc82d601",
+        "filename": "schema/fabric.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 512
+      },
+      "writtenOn": "2019-08-12T23:55:27Z",
+      "side": 1,
+      "message": "The JSON string stored here will be a huge  data blob. We donot want to clutter the PR object. And it is anyway not in a readable format (used by UI to parse and display) so doesn make sense to display it on the PR object directly. This object is anyway a child of PR.",
+      "parentUuid": "c2eb88c9_9701d4b8",
+      "revId": "f568d02a839f6b3f2c56bc1eec6696496f973682",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
