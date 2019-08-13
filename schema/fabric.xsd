@@ -510,6 +510,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Link('physical-router-node-profile', 'physical-router', 'node-profile', ['ref'], 'optional', 'CRUD',
              'Node profile assigned to the physical router during device discovery/onboarding.') -->
+<xsd:element name="physical-router-device-functional-group"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-device-functional-group',
+             'physical-router', 'device-functional-group', ['ref'], 'optional', 'CRUD',
+             'Device functional group that this physical-router belongs to.') -->
 <xsd:element name="physical-router-device-chassis"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('physical-router-device-chassis', 'physical-router', 'device-chassis', ['ref'], 'optional', 'CRUD',
@@ -534,6 +539,24 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('role-config-config', 'role-config', 'required', 'CRUD',
               'role config in JSON format. This JSON config must conform to the input-schema of the job template for the role provisioning.') -->
+
+<xsd:element name="device-functional-group" type="ifmap:IdentityType"
+    description="Device functional group is used to group together any selected list of devices for the purpose of assigning identical attributes. For example, os-version, physical-roles, rb-roles"/>
+
+<xsd:element name="device-functional-group-os-version" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('device-functional-group-os-version', 'device-functional-group', 'optional', 'CRUD',
+              'OS version for devices in this group. If set, it is the first choice for device image upgrade during ztp. If not set, fabric-os-version is used') -->
+
+<xsd:element name="device-functional-group-routing-bridging-roles" type="RoutingBridgingRolesType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('routing-bridging-roles', 'device-functional-group', 'optional', 'CRUD',
+              'Routing-bridging role (e.g. CRB, ERB, etc.), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
+
+<xsd:element name="device-functional-group-physical-role"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('device-functional-group-physical-role', 'device-functional-group', 'physical-role', ['ref'], 'optional', 'CRUD',
+             'Physical role assigned to all physical routers which are members of this device functional group') -->
 
 <xsd:element name="physical-router" type="ifmap:IdentityType"/>
 <xsd:element name="global-system-config-physical-router"/>
