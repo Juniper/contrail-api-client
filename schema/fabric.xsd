@@ -535,6 +535,14 @@
           Property('role-config-config', 'role-config', 'required', 'CRUD',
               'role config in JSON format. This JSON config must conform to the input-schema of the job template for the role provisioning.') -->
 
+<xsd:element name="device-functional-group" type="ifmap:IdentityType"
+    description="Device functional group is used to group together any selected list of devices for the purpose of assigning identical attributes. For example, os-version, physical-roles, rb-roles"/>
+
+<xsd:element name="device-functional-group-os-version" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('device-functional-group-os-version', 'device-functional-group', 'required', 'CRUD',
+              'OS version for devices in this group. If set, it is the first choice for device image upgrade during ztp. If not set, fabric-os-version is used') -->
+
 <xsd:element name="physical-router" type="ifmap:IdentityType"/>
 <xsd:element name="global-system-config-physical-router"/>
 <!--#IFMAP-SEMANTICS-IDL
