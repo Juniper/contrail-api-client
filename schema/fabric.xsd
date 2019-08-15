@@ -562,6 +562,17 @@
           Link('physical-router-overlay-role', 'physical-router', 'overlay-role', ['ref'], 'optional', 'CRUD',
              'Overlay roles assigned to this physical router') -->
 
+<xsd:element name="hardware-inventory" type="ifmap:IdentityType"/>
+<xsd:element name="physical-router-hardware-inventory"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-hardware-inventory',
+          'physical-router', 'hardware-inventory', ['has'], 'optional', 'CRUD',
+          'Hardware Inventory on a physical router.') -->
+<xsd:element name="hardware-inventory-inventory-info" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('hardware-inventory-inventory-info', 'hardware-inventory', 'optional', 'CRUD',
+              'chassis inventory info of the physical router. Stored as json string. Will be used to render chassis hardware details in UI') -->
+
 <xsd:element name="physical-interface" type="ifmap:IdentityType"/>
 <xsd:element name="ethernet-segment-identifier" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
