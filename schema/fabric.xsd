@@ -97,6 +97,66 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:simpleType name="SampleRate">
+    <xsd:restriction base="xsd:integer">
+        <xsd:minInclusive value="1"/>
+        <xsd:maxInclusive value="16777215"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="PollingInterval">
+    <xsd:restriction base="xsd:integer">
+        <xsd:minInclusive value="0"/>
+        <xsd:maxInclusive value="3600"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="AdativeSampleRate">
+    <xsd:restriction base="xsd:integer">
+        <xsd:minInclusive value="300"/>
+        <xsd:maxInclusive value="900"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="StatsCollectionFrequency">
+    <xsd:all>
+        <xsd:element name="sample-rate" type="SampleRate" required="optional" default="2000"/>
+        <xsd:element name="polling-interval" type="PollingInterval" required="optional" default="20"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:simpleType name="EnabledInterfaceType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="all"/>
+         <xsd:enumeration value="fabric"/>
+         <xsd:enumeration value="service"/>
+         <xsd:enumeration value="access"/>
+         <xsd:enumeration value="custom"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="EnabledInterfaceParams">
+    <xsd:all>
+        <xsd:element name="name" type="xsd:string"/>
+        <xsd:element name="stats-collection-frequency" type="StatsCollectionFrequency"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="SflowParameters">
+    <xsd:all>
+       <xsd:element name="stats-collection-frequency" type="StatsCollectionFrequency"
+            description= "Represents polling interval and sample rate either at the global level or at per interface level. Polling interval is specified in seconds that the device waits between port statistics update messages. Sample rate is specified as a number (one packet out of number)." />
+       <xsd:element name="agent-id" type="smi:IpAddress"
+            description= "IP address to be assigned as the agent ID for the sFlow agent." />
+       <xsd:element name="adaptive-sample-rate" type="AdativeSampleRate" required="optional" default="300"
+            description= "Represents  maximum number of samples that should be generated per line card." />
+       <xsd:element name="enabled-interface-type" type="EnabledInterfaceType"
+            description= "User can enable sflow either on all interfaces or all fabric ports or all access ports or custom list of interfaces." />
+       <xsd:element name="enabled-interface-params" type="EnabledInterfaceParams" maxOccurs="unbounded"
+            description= "If interface type is set to custom, this represents the list of physical interfaces to be enabled for sflow. User can specify polling interval and sample rate for each interface in this custom list." />
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:simpleType name="FabricNetworkType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="management"/>
@@ -1194,14 +1254,41 @@
           Link('role-definition-feature-config', 'role-definition', 'feature-config', ['has'], 'optional', 'CRUD',
              'list of feature configs for this role definition.') -->
 
+<xsd:element name="telemetry-profile" type="ifmap:IdentityType"
+    description="Encapsulates data related to telemetry from network devices like sflow, JTI, gRPC, SNMP etc"/>
+
+<xsd:element name="project-telemetry-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('project-telemetry-profile', 'project', 'telemetry-profile', ['has'], 'optional', 'CRUD',
+             'list of telemetry profiles supported under the project.') -->
+<xsd:element name="telemetry-profile-sflow-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('telemetry-profile-sflow-profile', 'telemetry-profile', 'sflow-profile', ['ref'], 'optional', 'CRUD',
+             'Sflow profile that this telemetry profile uses. Only one sflow profile can be associated to one telemetry profile.') -->
+<xsd:element name="physical-router-telemetry-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-telemetry-profile', 'physical-router', 'telemetry-profile', ['ref'], 'optional', 'CRUD',
+             'Telemetry profile assigned to the physical router by user. Each physical router is associated with only one telemetry profile.') -->
+
+<xsd:element name="sflow-profile" type="ifmap:IdentityType"
+    description="This resource contains information specific to sflow parameters"/>
+
+<xsd:element name="project-sflow-profile"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('project-sflow-profile', 'project', 'sflow-profile', ['has'], 'optional', 'CRUD',
+             'list of sflow profiles supported under the project.') -->
+<xsd:element name="sflow-parameters" type="SflowParameters"/>
+<!--#IFMAP-SEMANTICS-IDL
+              Property('sflow-parameters', 'sflow-profile', 'optional', 'CRUD',
+                  'Parameters for each sflow profile, such as polling interval, sample rate, list of sflow enabled interfaces, sflow agent ID etc.') -->
+
 <xsd:element name="storm-control-profile" type="ifmap:IdentityType"
     description="Storm control profile definition"/>
 
 <xsd:element name="project-storm-control-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Link('project-storm-control-profile',
-          'project', 'storm-control-profile', ['has'], 'optional', 'CRUD',
-          'list of storm control profiles supported.') -->
+     Link('project-storm-control-profile', 'project', 'storm-control-profile', ['has'], 'optional', 'CRUD',
+        'list of storm control profiles supported.') -->
 <xsd:element name="storm-control-parameters" type="StormControlParameters"/>
 <!--#IFMAP-SEMANTICS-IDL
          Property('storm-control-parameters', 'storm-control-profile', 'optional', 'CRUD',
@@ -1212,15 +1299,14 @@
 
 <xsd:element name="project-port-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
-     Link('project-port-profile',
-          'project', 'port-profile', ['has'], 'optional', 'CRUD',
-          'Encapsulates port configurations like storm control etc') -->
+     Link('project-port-profile', 'project', 'port-profile', ['has'], 'optional', 'CRUD',
+        'Encapsulates port configurations like storm control etc') -->
 <xsd:element name="port-profile-storm-control-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('port-profile-storm-control-profile', 'port-profile', 'storm-control-profile', ['ref'], 'optional', 'CRUD',
-          'Storm control profile that this port profile uses.') -->
+        'Storm control profile that this port profile uses.') -->
 <xsd:element name="virtual-machine-interface-port-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('virtual-machine-interface-port-profile', 'virtual-machine-interface', 'port-profile', ['ref'], 'optional', 'CRUD',
-          'Port profiles attached to this virtual machine interface') -->
+        'Port profiles attached to this virtual machine interface') -->
 </xsd:schema>
