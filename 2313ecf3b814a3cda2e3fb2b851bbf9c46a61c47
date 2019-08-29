@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe0abeb_cde9cbb9",
+        "filename": "generateds/ifmap_frontend.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-08-29T08:02:05Z",
+      "side": 1,
+      "message": "Do we need to add . here for importing local package?",
+      "range": {
+        "startLine": 104,
+        "startChar": 32,
+        "endLine": 104,
+        "endChar": 40
+      },
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3334d7ec_959c54ed",
+        "filename": "generateds/ifmap_frontend.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-08-29T08:02:05Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 107,
+        "startChar": 36,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db4712f_caea2a62",
+        "filename": "generateds/ifmap_frontend.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-08-29T08:02:05Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2139,
+        "startChar": 28,
+        "endLine": 2139,
+        "endChar": 35
+      },
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3ce6f3_e61898f5",
+        "filename": "generateds/ifmap_frontend.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 213
+      },
+      "writtenOn": "2019-08-29T08:02:05Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 2141,
+        "startChar": 32,
+        "endLine": 2141,
+        "endChar": 38
+      },
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
