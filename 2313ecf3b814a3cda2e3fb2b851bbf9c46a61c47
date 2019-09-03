@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfc0a4fb_d7ebe43e",
+        "filename": "api-lib/vnc_api/vnc_api.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-09-03T21:26:35Z",
+      "side": 1,
+      "message": "Yes python3 don\u0027t support implicit relative import https://chrisyeh96.github.io/2017/08/08/definitive-guide-python-imports.html#absolute-vs-relative-import\n\nAnd futurize tool proposes to use the explicit relative import.",
+      "parentUuid": "e6564e2b_8c7cec5c",
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fe0abeb_cde9cbb9",
         "filename": "generateds/ifmap_frontend.py",
         "patchSetId": 5
