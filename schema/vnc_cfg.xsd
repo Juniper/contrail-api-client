@@ -3021,6 +3021,29 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Property('analytics-node-ip-address', 'analytics-node', 'admin-only', 'CRUD',
               'Ip address of the analytics node, set while provisioning.') -->
 
+<xsd:element name="flow-node" type="ifmap:IdentityType"/>
+<xsd:element name="global-system-config-flow-node"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-flow-node',
+             'global-system-config', 'flow-node', ['has'], 'admin-only', 'CRUD',
+             'Appformix flows node is object representing a logical node in system which serves xflow collectors.') -->
+
+<xsd:element name="flow-node-ip-address" type="IpAddressType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('flow-node-ip-address', 'flow-node', 'admin-only', 'CRUD',
+              'Ip address of the appformix flow node, set while provisioning.') -->
+
+<xsd:element name="flow-node-virtual-network"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Link('flow-node-virtual-network',
+             'flow-node', 'virtual-network', ['ref'], 'optional', 'CRUD',
+             'Similar to using virtual-machine to model the bare metal server, we are using virtual-network to model telemetry underlay network. This would allow us to re-use the same IPAM data model and code base to manage the IP auto-assignments for the underlay telemetry networks.') -->
+
+<xsd:element name="flow-node-load-balancer-ip" type="IpAddressType"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('flow-node-load-balancer-ip', 'flow-node', 'admin-only', 'CRUD',
+              'IP address of the load balancer node for xflow collectors, set while provisioning.') -->
+
 <xsd:element name="devicemgr-node" type="ifmap:IdentityType"/>
 <xsd:element name="global-system-config-devicemgr-node"/>
 <!--#IFMAP-SEMANTICS-IDL
