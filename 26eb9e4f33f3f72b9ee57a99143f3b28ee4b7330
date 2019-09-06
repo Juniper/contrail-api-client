@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6010499_75012352",
+        "filename": "api-lib/vnc_api/vnc_api.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 64
+      },
+      "writtenOn": "2019-09-06T08:56:07Z",
+      "side": 1,
+      "message": "how about variable name VNC_API_CONNECTION_TIMEOUT instead of TIMEOUT?",
+      "revId": "26eb9e4f33f3f72b9ee57a99143f3b28ee4b7330",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
