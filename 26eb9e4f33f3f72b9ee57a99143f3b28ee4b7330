@@ -16,6 +16,24 @@
       "revId": "26eb9e4f33f3f72b9ee57a99143f3b28ee4b7330",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4260f4_9a0d30ab",
+        "filename": "api-lib/vnc_api/vnc_api.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2019-09-06T09:36:33Z",
+      "side": 1,
+      "message": "This is a VNC API library, do you think we need to precise that timeout will apply on the VNC API connection? Other variables like max pools are not prefixed by \u0027VNC_API_CONNECTION\u0027",
+      "parentUuid": "c6010499_75012352",
+      "revId": "26eb9e4f33f3f72b9ee57a99143f3b28ee4b7330",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
