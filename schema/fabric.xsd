@@ -300,6 +300,13 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:simpleType name="CredentialEncryptionType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="none" description="Not encrypted"/>
+         <xsd:enumeration value="local" description="Encrypted using object UUID, e.g. physical-router UUID"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:complexType name="SNMPCredentials">
     <xsd:all>
         <xsd:element name="version" type='xsd:integer' default='2'/>
@@ -918,6 +925,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-user-credentials', 'physical-router', 'optional', 'CRUD',
               'Username and password for netconf to the physical router by device manager.') -->
+
+<xsd:element name="physical-router-encryption-type" type="CredentialEncryptionType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-encryption-type', 'physical-router', 'optional', 'CRUD',
+              'Type of encryption used for physical-router-user-credentials.') -->
 
 <xsd:element name="physical-router-snmp-credentials" type='SNMPCredentials'/>
 <!--#IFMAP-SEMANTICS-IDL
