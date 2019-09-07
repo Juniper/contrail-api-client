@@ -2009,7 +2009,7 @@ class PyGenerator(object):
             wrt("            sval_ = child_.text\n")
             wrt("            try:\n")
             wrt("                ival_ = int(sval_)\n")
-            wrt("            except (TypeError, ValueError), exp:\n")
+            wrt("            except (TypeError, ValueError) as exp:\n")
             wrt("                raise_parse_error(child_, 'requires integer: %s' % exp)\n")
             if childType == self._PGenr.PositiveIntegerType:
                 wrt("            if ival_ <= 0:\n")
@@ -2049,7 +2049,7 @@ class PyGenerator(object):
             wrt("            sval_ = child_.text\n")
             wrt("            try:\n")
             wrt("                fval_ = float(sval_)\n")
-            wrt("            except (TypeError, ValueError), exp:\n")
+            wrt("            except (TypeError, ValueError) as exp:\n")
             wrt("                raise_parse_error(child_, 'requires float or double: %s' % exp)\n")
             wrt("            obj_ = self.mixedclass_(MixedContainer.CategorySimple,\n")
             wrt("                MixedContainer.TypeFloat, '%s', fval_)\n" % \
@@ -2149,7 +2149,7 @@ class PyGenerator(object):
             wrt("            sval_ = child_.text\n")
             wrt("            try:\n")
             wrt("                ival_ = int(sval_)\n")
-            wrt("            except (TypeError, ValueError), exp:\n")
+            wrt("            except (TypeError, ValueError) as exp:\n")
             wrt("                raise_parse_error(child_, 'requires integer: %s' % exp)\n")
             if childType == self._PGenr.PositiveIntegerType:
                 wrt("            if ival_ <= 0:\n")
@@ -2191,7 +2191,7 @@ class PyGenerator(object):
             wrt("            sval_ = child_.text\n")
             wrt("            try:\n")
             wrt("                fval_ = float(sval_)\n")
-            wrt("            except (TypeError, ValueError), exp:\n")
+            wrt("            except (TypeError, ValueError) as exp:\n")
             wrt("                raise_parse_error(child_, 'requires float or double: %s' % exp)\n")
             wrt("            fval_ = self.gds_validate_float(fval_, node, '%s')\n" % (
                 name, ))

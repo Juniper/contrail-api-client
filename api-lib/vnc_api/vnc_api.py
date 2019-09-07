@@ -6,7 +6,7 @@ from collections import OrderedDict
 import requests
 from requests.exceptions import ConnectionError
 
-import ConfigParser
+from configparser import ConfigParser
 import pprint
 # always try to load simplejson first
 # as we get better performance
@@ -21,7 +21,7 @@ import __main__ as main
 import ssl
 import re
 import os
-from urlparse import urlparse
+from six.moves.urllib.parse import urlparse
 
 from gen.vnc_api_client_gen import all_resource_type_tuples
 from gen.resource_xsd import *
