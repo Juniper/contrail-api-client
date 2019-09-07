@@ -65,11 +65,11 @@ class MethodSpec(object):
         source = self.source % values_dict
         return source
     def show(self):
-        print 'specification:'
-        print '    name: %s' % (self.name, )
-        print self.source
-        print '    class_names: %s' % (self.class_names, )
-        print '    names pat  : %s' % (self.class_names_compiled.pattern, )
+        print('specification:')
+        print('    name: %s' % (self.name, ))
+        print(self.source)
+        print('    class_names: %s' % (self.class_names, ))
+        print('    names pat  : %s' % (self.class_names_compiled.pattern, ))
 
 
 #
@@ -120,7 +120,7 @@ method2 = MethodSpec(name='walk_and_show',
         global counter
         counter += 1
         depth += 1
-        print '%%d. class: %(class_name)s  depth: %%d' %% (counter, depth, )
+        print('%%d. class: %(class_name)s  depth: %%d' %% (counter, depth, ))
         members = %(class_name)s._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -135,7 +135,7 @@ method2 = MethodSpec(name='walk_and_show',
                 else:
                     s4 = '<instance>'
             s5 = '%%s%%s%%s  %%s' %% (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):

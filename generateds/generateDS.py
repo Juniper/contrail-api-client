@@ -284,7 +284,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError) as exp:
                     raise_parse_error(node, 'Requires sequence of integers')
             return input_data
         def gds_format_float(self, input_data, input_name=''):
@@ -298,7 +298,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError) as exp:
                     raise_parse_error(node, 'Requires sequence of floats')
             return input_data
         def gds_format_double(self, input_data, input_name=''):
@@ -312,7 +312,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError) as exp:
                     raise_parse_error(node, 'Requires sequence of doubles')
             return input_data
         def gds_format_boolean(self, input_data, input_name=''):
@@ -569,7 +569,7 @@ Usage: python <%(prefix)sParser>.py [ -s ] <in_xml_file>
 \"\"\"
 
 def usage():
-    print USAGE_TEXT
+    (USAGE_TEXT)
     sys.exit(1)
 
 
@@ -805,7 +805,7 @@ if __name__ == '__main__':
                                             'json-schema'):
                     raise RuntimeError('Option --generator-category must be "type", service", "ifmap-frontend", "ifmap-backend", "device-api", "java-api", "golang-api", "contrail-json-schema" or "json-schema".')
         if showVersion:
-            print 'generateDS.py version %s' % VERSION
+            print('generateDS.py version %s' % VERSION)
             sys.exit(0)
 
     def countChildren(self, element, count):
@@ -1069,10 +1069,10 @@ if __name__ == '__main__':
 
     def _load_config(self):
         try:
-            #print '1. updating NameTable'
+            #print('1. updating NameTable')
             import generateds_config
             NameTable.update(generateds_config.NameTable)
-            #print '2. updating NameTable'
+            #print('2. updating NameTable')
         except ImportError, exp:
             pass
 
@@ -1107,9 +1107,9 @@ if __name__ == '__main__':
         parser.parse(infile)
         root = dh.getRoot()
         root.annotate()
-    ##     print '-' * 60
+    ##     print('-' * 60)
     ##     root.show(sys.stdout, 0)
-    ##     print '-' * 60
+    ##     print('-' * 60)
         #debug_show_elements(root)
         infile.seek(0)
         self._Generator.generate(root, infile, self.outFilename)
@@ -2606,7 +2606,7 @@ Usage: python ???.py <infilename>
 \"\"\"
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 
@@ -2728,11 +2728,11 @@ def expandGroupReferences(grp):
     _expandGR(grp, visited)
 
 def debug_show_elements(root):
-    #print 'ElementDict:', ElementDict
-    print '=' * 50
+    #print('ElementDict:', ElementDict)
+    print('=' * 50)
     for name, obj in ElementDict.iteritems():
-        print 'element:', name, obj.getName(), obj.type
-    print '=' * 50
+        print('element:', name, obj.getName(), obj.type)
+    print('=' * 50)
 
 
 def fixSilence(txt, silent):
@@ -2750,7 +2750,7 @@ def err_msg(msg):
 USAGE_TEXT = __doc__
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 

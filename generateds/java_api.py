@@ -165,7 +165,7 @@ public void set%(caml)s(%(type)s %(field)s) {
                 if m:
                     innertype = m.group(1)
                 else:
-                    print 'Unable to determine inner type for Collection: ' + member.jtypename
+                    print('Unable to determine inner type for Collection: ' + member.jtypename)
                     continue
                 methodname = CamelCase(member.membername)
                 decl = """
@@ -460,7 +460,7 @@ public void set%(caml)s(%(type)s %(field)s) {
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         elif not os.path.isdir(dirname):
-            print "-o option must specify directory"
+            print("-o option must specify directory")
             sys.exit(1)
 
         for ident in self._identifier_map.values():

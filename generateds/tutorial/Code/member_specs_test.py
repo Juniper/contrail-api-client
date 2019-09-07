@@ -36,7 +36,7 @@ Usage:
 """
 
 def usage():
-    print USAGE_MSG
+    print(USAGE_MSG)
     sys.exit(1)
 
 def main():

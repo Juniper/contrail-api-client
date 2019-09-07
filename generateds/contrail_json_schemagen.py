@@ -258,13 +258,13 @@ class ContrailJsonSchemaGenerator(object):
 
     def Generate(self, dirname):
         if pyaml_found == False:
-            print "please install pyaml"
+            print("please install pyaml")
             sys.exit(1)
 
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         elif not os.path.isdir(dirname):
-            print "-o option must specify directory"
+            print("-o option must specify directory")
             sys.exit(1)
 
         for ctype in self._type_map.values():
@@ -296,5 +296,5 @@ class ContrailJsonSchemaGenerator(object):
         typeJson = {"definitions": self._json_type_map}
         typeFile.write(pyaml.dumps(typeJson, indent=2, safe=True))
 
-        print "Done!"
-        print "Schemas generated under directory: " + dirname
+        print("Done!")
+        print("Schemas generated under directory: " + dirname)

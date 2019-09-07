@@ -586,7 +586,7 @@ class people(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: people  depth: %d' % (counter, depth, )
+        print('%d. class: people  depth: %d' % (counter, depth, ))
         members = people._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -601,7 +601,7 @@ class people(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -743,7 +743,7 @@ class comments(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: comments  depth: %d' % (counter, depth, )
+        print('%d. class: comments  depth: %d' % (counter, depth, ))
         members = comments._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -758,7 +758,7 @@ class comments(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -1069,7 +1069,7 @@ class person(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: person  depth: %d' % (counter, depth, )
+        print('%d. class: person  depth: %d' % (counter, depth, ))
         members = person._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -1084,7 +1084,7 @@ class person(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -1505,7 +1505,7 @@ class programmer(person):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: programmer  depth: %d' % (counter, depth, )
+        print('%d. class: programmer  depth: %d' % (counter, depth, ))
         members = programmer._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -1520,7 +1520,7 @@ class programmer(person):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -1708,7 +1708,7 @@ class param(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: param  depth: %d' % (counter, depth, )
+        print('%d. class: param  depth: %d' % (counter, depth, ))
         members = param._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -1723,7 +1723,7 @@ class param(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -1849,7 +1849,7 @@ class python_programmer(programmer):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: python_programmer  depth: %d' % (counter, depth, )
+        print('%d. class: python_programmer  depth: %d' % (counter, depth, ))
         members = python_programmer._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -1864,7 +1864,7 @@ class python_programmer(programmer):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2005,7 +2005,7 @@ class java_programmer(programmer):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: java_programmer  depth: %d' % (counter, depth, )
+        print('%d. class: java_programmer  depth: %d' % (counter, depth, ))
         members = java_programmer._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2020,7 +2020,7 @@ class java_programmer(programmer):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2177,7 +2177,7 @@ class agent(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: agent  depth: %d' % (counter, depth, )
+        print('%d. class: agent  depth: %d' % (counter, depth, ))
         members = agent._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2192,7 +2192,7 @@ class agent(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2349,7 +2349,7 @@ class special_agent(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: special_agent  depth: %d' % (counter, depth, )
+        print('%d. class: special_agent  depth: %d' % (counter, depth, ))
         members = special_agent._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2364,7 +2364,7 @@ class special_agent(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2611,7 +2611,7 @@ class booster(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: booster  depth: %d' % (counter, depth, )
+        print('%d. class: booster  depth: %d' % (counter, depth, ))
         members = booster._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2626,7 +2626,7 @@ class booster(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2765,7 +2765,7 @@ class info(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: info  depth: %d' % (counter, depth, )
+        print('%d. class: info  depth: %d' % (counter, depth, ))
         members = info._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2780,7 +2780,7 @@ class info(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2905,7 +2905,7 @@ class client_handlerType(GeneratedsSuper):
         global counter
         counter += 1
         depth += 1
-        print '%d. class: client_handlerType  depth: %d' % (counter, depth, )
+        print('%d. class: client_handlerType  depth: %d' % (counter, depth, ))
         members = client_handlerType._member_data_items
         for member in members:
             s1 = member.get_name()
@@ -2920,7 +2920,7 @@ class client_handlerType(GeneratedsSuper):
                 else:
                     s4 = '<instance>'
             s5 = '%s%s%s  %s' % (s1.ljust(16), s2.ljust(16), s3.rjust(4), s4, )
-            print '   ', s5
+            print('   ', s5)
         for member in members:
             if member.get_container():
                 for child in getattr(self, member.get_name()):
@@ -2938,7 +2938,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 
