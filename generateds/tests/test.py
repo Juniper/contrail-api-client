@@ -31,7 +31,7 @@ class GenTest(unittest.TestCase):
     def test_001_compare_superclasses(self):
         cmd = 'diff out1_sup.py out2_sup.py'
         result, err = self.execute(cmd)
-        #print 'len(result):', len(result)
+        #print('len(result):', len(result))
         # Ignore the differing lines containing the date/time.
         #self.failUnless(len(result) < 130 and result.find('Generated') > -1)
         self.check_result(result, err, ())
@@ -49,7 +49,7 @@ class GenTest(unittest.TestCase):
         cmd = cmdTempl % (t_, t_, t_, t_)
         result, err = self.execute(cmd, cwd='..')
         # Verify the structure
-        cmdTempl = '''python -c "import %s_sub; print [ x.name for x in %s_sub.node1TypeSub.member_data_items_ ]; print [ x.name for x in %s_sub.node2TypeSub.member_data_items_ ]"'''
+        cmdTempl = '''python -c "import %s_sub; print([ x.name for x in %s_sub.node1TypeSub.member_data_items_ ]); print([ x.name for x in %s_sub.node2TypeSub.member_data_items_ ])"'''
         cmd = cmdTempl % (t_, t_, t_)
         result, err = self.execute(cmd)
         self.failUnlessEqual(result, """\
@@ -57,7 +57,7 @@ class GenTest(unittest.TestCase):
 ['node2node1', 'group1', 'group2', 'node2node2']
 """)
         # load the XML, and verify the proper data was loaded
-        cmdTempl = '''python -c "import %s_sub; obj = %s_sub.parse('%s.xml'); fields = [ x.name for x in obj.node1.member_data_items_ ]; print [ getattr(obj.node1, x) for x in fields ]; fields = [ x.name for x in obj.node2.member_data_items_ ]; print [ getattr(obj.node2, x) for x in fields ]"'''
+        cmdTempl = '''python -c "import %s_sub; obj = %s_sub.parse('%s.xml'); fields = [ x.name for x in obj.node1.member_data_items_ ]; print([ getattr(obj.node1, x) for x in fields ]); fields = [ x.name for x in obj.node2.member_data_items_ ]; print([ getattr(obj.node2, x) for x in fields ])"'''
         cmd = cmdTempl % (t_, t_, t_)
         result, err = self.execute(cmd)
         self.failUnlessEqual(result, """\
@@ -75,9 +75,9 @@ class GenTest(unittest.TestCase):
         #     import valueof_sub
         #     obj = valueof_sub.parse('valueof.xml')
         #     children = obj.get_child()
-        #     print [ (x.get_name(), x.get_valueOf_()) for x in children ]
+        #     print([ (x.get_name(), x.get_valueOf_()) for x in children ])
         #
-        cmdTempl = '''python -c "import %s_sub; obj = %s_sub.parse('%s.xml'); children = obj.get_child(); print [ (x.get_name(), x.get_valueOf_()) for x in children ]"'''
+        cmdTempl = '''python -c "import %s_sub; obj = %s_sub.parse('%s.xml'); children = obj.get_child(); print([ (x.get_name(), x.get_valueOf_()) for x in children ])"'''
         cmd = cmdTempl % (t_, t_, t_)
         result, err = self.execute(cmd)
         self.failUnlessEqual(result, """\
@@ -88,13 +88,13 @@ class GenTest(unittest.TestCase):
         # Run these commands::
         #     import valueof_sub
         #     node = valueof_sub.childTypeSub.factory(name='child1', valueOf_ = 'value1')
-        #     print (node.get_name(), node.get_valueOf_())
+        #     print(node.get_name(), node.get_valueOf_())
 
-        cmdTempl = '''python -c "import %s_sub; node = %s_sub.childTypeSub.factory(name='child1', valueOf_ = 'value1'); print (node.get_name(), node.get_valueOf_())"'''
+        cmdTempl = '''python -c "import %s_sub; node = %s_sub.childTypeSub.factory(name='child1', valueOf_ = 'value1'); print(node.get_name(), node.get_valueOf_())"'''
         cmd = cmdTempl % (t_, t_)
-        print 'cmd:', cmd
+        print('cmd:', cmd)
         result, err = self.execute(cmd)
-        print 'result: %s' % result
+        print('result: %s' % result)
         self.failUnlessEqual(result, """\
 ('child1', 'value1')
 """)
@@ -134,7 +134,7 @@ class GenTest(unittest.TestCase):
         root2 = etree.fromstring(GenTest.ns_for_import_xml2)
         for child in root2.getchildren():
             root1.append(child.__copy__())
-        #print etree.tostring(root1, pretty_print = True)
+        #print(etree.tostring(root1, pretty_print = True))
         result = etree.tostring(root1, pretty_print = True)
         self.failUnlessEqual(GenTest.ns_for_import_xml_result, result)
 
@@ -349,7 +349,7 @@ Example:
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 

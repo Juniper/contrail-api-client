@@ -238,7 +238,7 @@ class GeneratedsGui(object):
             self.error_message(msg)
         else:
             cmd = self.create_command_line(params_dict, CmdTemplate)
-            #print 'cmd: %s' % (cmd, )
+            #print('cmd: %s' % (cmd, ))
             self.run_command(cmd)
         return True
 
@@ -305,7 +305,7 @@ class GeneratedsGui(object):
                     method(value)
 
     def dump_params(self, msg, params):
-        print msg
+        print(msg)
         params.export(sys.stdout, 0, name_='session')
 
     def trans_params_2_dict(self):
@@ -371,7 +371,7 @@ class GeneratedsGui(object):
 
     def validate_params(self, params_dict):
         p = params_dict
-        #print sorted(p.keys())
+        #print(sorted(p.keys()))
         result = 0
         msg = ''
         if not p['input_schema']:
@@ -593,7 +593,7 @@ class GeneratedsGui(object):
 
     def error_message(self, message, message_type=gtk.MESSAGE_ERROR):
         # log to terminal window
-        #print message
+        #print(message)
         # create an error message dialog and display modally to the user
         dialog = gtk.MessageDialog(None,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -718,7 +718,7 @@ class GeneratedsGui(object):
         return True
 
     def on_ok_button_activate(self, widget, data=None):
-        #print '(GeneratedsGui) widget:', widget
+        #print('(GeneratedsGui) widget:', widget)
         response = self.content_dialog.on_ok_button_activate(
             self.content_dialog, data)
         return response
@@ -756,7 +756,7 @@ class ContentDialog(gtk.Dialog):
         self.content_dialog.hide()
 
     def on_ok_button_activate(self, widget, data=None):
-        #print '(content_dialog) widget:', widget
+        #print('(content_dialog) widget:', widget)
         return False
 
 
@@ -803,9 +803,9 @@ def capture_ui_names():
             ui_item.set_ui_type('checkbutton')
             ui_item.set_access_action('active')
         ParamNameList.append(ui_item)
-##     print 'ParamNameList:'
+##     print('ParamNameList:')
 ##     for item in ParamNameList:
-##         print '    %s  %s' % (item.get_name(), item.get_ui_type(), )
+##         print('    %s  %s' % (item.get_name(), item.get_ui_type(), ))
 
 
 USAGE_TEXT = """

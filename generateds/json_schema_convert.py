@@ -100,7 +100,7 @@ def output(template_file, data_model):
     j2_env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(THIS_DIR),
         trim_blocks=True)
-    print j2_env.get_template(template_file).render(data_model)
+    print(j2_env.get_template(template_file).render(data_model))
 
 
 def convert():

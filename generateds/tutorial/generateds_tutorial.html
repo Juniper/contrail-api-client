@@ -698,11 +698,11 @@ def create_people(names):
 def main():
     names = ['albert', 'betsy', 'charlie']
     people = create_people(names)
-    print 'Before:'
+    print('Before:')
     people.export(sys.stdout, 1)
     people.upcase_names()
-    print '-' * 50
-    print 'After:'
+    print('-' * 50)
+    print('After:')
     people.export(sys.stdout, 1)
 
 main()
@@ -1001,7 +1001,7 @@ Usage: python ???.py &lt;infilename&gt;
 &quot;&quot;&quot;
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 
@@ -1071,7 +1071,7 @@ Usage:
 &quot;&quot;&quot;
 
 def usage():
-    print USAGE_MSG
+    print(USAGE_MSG)
     sys.exit(1)
 
 def main():

@@ -178,9 +178,9 @@ func (obj *%(typecamel)s) Add%(fieldcamel)s(value %(ptr)s%(fieldtype)s) {
                 if len(typeset) == 1:
                     continue
 
-                # print "promote %s" % itype
+                # print("promote %s" % itype)
                 # for typ in typeset:
-                #     print "    %s" % typ.getName()
+                #     print("    %s" % typ.getName())
                 self._top_level_map[itype] = self._type_map[itype]
                 promoted.append(itype)
 
@@ -820,7 +820,7 @@ func %(camel)sByUuid(c contrail.ApiClient, uuid string) (*%(camel)s, error) {
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         elif not os.path.isdir(dirname):
-            print "-o option must specify directory"
+            print("-o option must specify directory")
             sys.exit(1)
 
         self._GenerateTypeMap(dirname)

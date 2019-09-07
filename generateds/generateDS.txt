@@ -1291,7 +1291,7 @@ want to use and possibly extend it.)::
                     impl = implFile.read()
                     implFile.close()
                 except:
-                    print '*** Implementation at %s not found.' % implUrl
+                    print('*** Implementation at %s not found.' % implUrl)
         return impl
 
 
@@ -2026,7 +2026,7 @@ There are a number of things of interest in this sample file
   percent signs in order to "pass through" a single percent sign,
   for example::
 
-        print '%%d. class: %(class_name)s  depth: %%d' %% (counter, depth, )
+        print('%%d. class: %(class_name)s  depth: %%d' %% (counter, depth, ))
 
   where the single percent signs are interpolated
   ("%(class_name)s" is replace by the class name), and double
@@ -2416,8 +2416,8 @@ Then, define ``date_calcs.py`` as::
     # 2007-09-01
 
     # test="2007-09-01"
-    # print test
-    # print date_from_string(test)
+    # print(test)
+    # print(date_from_string(test))
 
     def date_from_string(str):
         year = int(str[:4])

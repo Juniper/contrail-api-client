@@ -160,12 +160,12 @@ class XschemaHandler(handler.ContentHandler):
         return self.root
 
     def showError(self, msg):
-        print msg
+        print(msg)
         sys.exit(-1)
 
     def startElement(self, name, attrs):
-        #print '(startElement) name: %s len(stack): %d' % \
-        #      (name, len(self.stack))
+        #print('(startElement) name: %s len(stack): %d' % \
+        #      (name, len(self.stack)))
         if name == 'xs:element':
             self.inElement = 1
             if 'name' in attrs.keys() and 'type' in attrs.keys():
@@ -216,7 +216,7 @@ class XschemaHandler(handler.ContentHandler):
         elif name == 'xs:schema':
             self.inSchema = 0
             if len(self.stack) != 1:
-                print '*** error stack'
+                print('*** error stack')
                 sys.exit(-1)
             self.root = self.stack[0]
 
@@ -760,7 +760,7 @@ Usage: python <%sParser>.py <in_xml_file>
 \"\"\"
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 
@@ -836,7 +836,7 @@ Usage: python ???.py <infilename>
 \"\"\"
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 
@@ -917,10 +917,10 @@ def parseAndGenerate(outfileName, subclassFilename, prefix, \
     #parser = saxexts.make_parser('xml.sax.drivers2.drv_libxmlop')
     #parser = saxexts.make_parser()
     parser = saxexts.make_parser("xml.sax.drivers2.drv_pyexpat")
-    #print "Parser: %s (%s, %s)" % \
+    #print("Parser: %s (%s, %s)" % \
     #    (parser.get_parser_name(),parser.get_parser_version(),
-    #        parser.get_driver_version())
-    #print 'dir(parser):', dir(parser)
+    #        parser.get_driver_version()))
+    #print('dir(parser):', dir(parser))
     dh = XschemaHandler()
     #parser.setDocumentHandler(dh)
     parser.setContentHandler(dh)
@@ -931,8 +931,8 @@ def parseAndGenerate(outfileName, subclassFilename, prefix, \
     root.annotate()
     #response = raw_input('Press Enter')
     #root.show(sys.stdout, 0)
-    #print '=' * 50
-    #print ']]] root: ', root, '[[['
+    #print('=' * 50)
+    #print(']]] root: ', root, '[[[')
     generate(outfileName, subclassFilename, prefix, root)
 
 
@@ -949,7 +949,7 @@ Options:
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 
