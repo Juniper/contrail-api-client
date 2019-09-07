@@ -6,7 +6,7 @@ from collections import OrderedDict
 import requests
 from requests.exceptions import ConnectionError
 
-import ConfigParser
+from six.moves import configparser
 import pprint
 # always try to load simplejson first
 # as we get better performance
@@ -21,7 +21,7 @@ import __main__ as main
 import ssl
 import re
 import os
-from urlparse import urlparse
+from six.moves.urllib.parse import urlparse
 
 from gen.vnc_api_client_gen import all_resource_type_tuples
 from gen.resource_xsd import *
@@ -62,8 +62,8 @@ def _read_cfg(cfg_parser, section, option, default):
     try:
         val = cfg_parser.get(section, option)
     except (AttributeError,
-            ConfigParser.NoOptionError,
-            ConfigParser.NoSectionError):
+            configparser.NoOptionError,
+            configparser.NoSectionError):
         val = default
 
     return val
@@ -356,7 +356,7 @@ class VncApi(object):
                     setattr(self, '%s%s' % (object_type, oper_str),
                             bound_method)
 
-        cfg_parser = ConfigParser.ConfigParser()
+        cfg_parser = configparser.ConfigParser()
         try:
             cfg_parser.read(conf_file or
                             "/etc/contrail/vnc_api_lib.ini")
@@ -389,8 +389,8 @@ class VncApi(object):
                 self._apiinsecure = cfg_parser.getboolean('global', 'insecure')
             except (AttributeError,
                     ValueError,
-                    ConfigParser.NoOptionError,
-                    ConfigParser.NoSectionError):
+                    configparser.NoOptionError,
+                    configparser.NoSectionError):
                 self._apiinsecure = False
         apicertfile = (apicertfile or
                        _read_cfg(cfg_parser, 'global', 'certfile', ''))
@@ -457,8 +457,8 @@ class VncApi(object):
                     self._ksinsecure = cfg_parser.getboolean('auth', 'insecure')
                 except (AttributeError,
                         ValueError,
-                        ConfigParser.NoOptionError,
-                        ConfigParser.NoSectionError):
+                        configparser.NoOptionError,
+                        configparser.NoSectionError):
                     self._ksinsecure = False
             kscertfile = (kscertfile or
                           _read_cfg(cfg_parser, 'auth', 'certfile', ''))

@@ -83,7 +83,7 @@ class IFMapGenerator(object):
 
     def _ProcessMetadata(self, element, annotation):
         if not annotation:
-            print "WARNING: no annotation for element " + str(element)
+            print("WARNING: no annotation for element " + str(element))
             return
 
         if self._idl_parser.IsAllProperty(annotation):

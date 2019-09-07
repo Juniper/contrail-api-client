@@ -761,30 +761,30 @@ class IFMapApiGenerator(object):
 
             # dump method
             write(gen_file, "    def dump(self):")
-            write(gen_file, '        """Display %s object in compact form."""' %(ident_name))
-            write(gen_file, "        print '------------ %s ------------'" % (ident_name))
-            write(gen_file, "        print 'Name = ', self.get_fq_name()")
-            write(gen_file, "        print 'Uuid = ', self.uuid")
+            write(gen_file, '        """Display %s object in compact form.""")' %(ident_name))
+            write(gen_file, "        print('------------ %s ------------')" % (ident_name))
+            write(gen_file, "        print('Name = ', self.get_fq_name())")
+            write(gen_file, "        print('Uuid = ', self.uuid)")
             if parents:
                 write(gen_file, "        if hasattr(self, 'parent_type'): # non config-root children")
-                write(gen_file, "            print 'Parent Type = ', self.parent_type")
+                write(gen_file, "            print('Parent Type = ', self.parent_type)")
             for prop in ident.getProperties():
                 prop_name = prop.getName().replace('-', '_')
-                write(gen_file, "        print 'P %s = ', self.get_%s()" %(prop_name, prop_name))
+                write(gen_file, "        print('P %s = ', self.get_%s())" %(prop_name, prop_name))
             for link_info in ident.getLinksInfo():
                 to_ident = ident.getLinkTo(link_info)
                 to_ident_name = to_ident.getName().replace('-', '_')
                 is_ref = ident.isLinkRef(link_info)
                 if is_ref:
-                    write(gen_file, "        print 'REF %s = ', self.get_%s_refs()" %(to_ident_name, to_ident_name))
+                    write(gen_file, "        print('REF %s = ', self.get_%s_refs())" %(to_ident_name, to_ident_name))
                 else:
-                    write(gen_file, "        print 'HAS %s = ', self.get_%ss()" %(to_ident_name, to_ident_name))
+                    write(gen_file, "        print('HAS %s = ', self.get_%ss())" %(to_ident_name, to_ident_name))
             for back_link_info in ident.getBackLinksInfo():
                 if not ident.isLinkRef(back_link_info):
                     continue
                 from_ident = ident.getBackLinkFrom(back_link_info)
                 from_ident_name = from_ident.getName().replace('-', '_')
-                write(gen_file, "        print 'BCK %s = ', self.get_%s_back_refs()" %(from_ident_name, from_ident_name))
+                write(gen_file, "        print('BCK %s = ', self.get_%s_back_refs())" %(from_ident_name, from_ident_name))
             write(gen_file, "    # end dump")
             write(gen_file, "")
 

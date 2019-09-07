@@ -220,7 +220,7 @@ def extract(root, descriptors, outfile):
     resolved = resolve_simple_types(unresolved)
     export_defined_simple_types(outfile, resolved)
 ##     for descriptor in resolved.itervalues():
-##         print '%s  type name: %s' % (descriptor, descriptor.type_obj.name, )
+##         print('%s  type name: %s' % (descriptor, descriptor.type_obj.name, ))
 
 
 def export_defined_simple_types(outfile, resolved):
@@ -313,7 +313,7 @@ def etxpath(node, pat):
 USAGE_TEXT = __doc__
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 USAGE_TEXT = """synopsis: capture XML Schema simpleType descriptors

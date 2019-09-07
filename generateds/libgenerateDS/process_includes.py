@@ -80,7 +80,7 @@ def resolve_ref(node, params, options):
         sys.stderr.write(msg)
         return None
     # Uncomment the next line to help track down missing schemaLocation etc.
-    # print '(resolve_ref) url: %s\n    parent-url: %s' % (url, params.parent_url, )
+    # print('(resolve_ref) url: %s\n    parent-url: %s' % (url, params.parent_url, ))
 
     if params.base_url and not (
         url.startswith('/') or
@@ -94,10 +94,10 @@ def resolve_ref(node, params, options):
         schema_name = os.path.split(locn)
         if schema_name not in params.already_processed:
             params.already_processed.add(schema_name)
-            print 'trace --'
-            print '    base  : %s' % (params.base_url, )
-            print '    parent: %s' % (params.parent_url, )
-            print '    locn  : %s' % (locn, )
+            print('trace --')
+            print('    base  : %s' % (params.base_url, ))
+            print('    parent: %s' % (params.parent_url, ))
+            print('    locn  : %s' % (locn, ))
             if locn.startswith('http:') or locn.startswith('ftp:'):
                 try:
                     urlfile = urllib2.urlopen(locn)

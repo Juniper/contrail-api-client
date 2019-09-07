@@ -1499,7 +1499,7 @@ def get_impl_body(classBehavior, baseImplUrl, implUrl):
                 impl = implFile.read()
                 implFile.close()
             except:
-                print '*** Implementation at %s not found.' % implUrl
+                print('*** Implementation at %s not found.' % implUrl)
     return impl
 </pre>
 </div>
@@ -2157,7 +2157,7 @@ if type(obj1) == types.InstanceType:
 percent signs in order to &quot;pass through&quot; a single percent sign,
 for example:</p>
 <pre class="literal-block">
-print '%%d. class: %(class_name)s  depth: %%d' %% (counter, depth, )
+print('%%d. class: %(class_name)s  depth: %%d' %% (counter, depth, ))
 </pre>
 <p>where the single percent signs are interpolated
 (&quot;%(class_name)s&quot; is replace by the class name), and double
@@ -2501,8 +2501,8 @@ import datetime
 # 2007-09-01
 
 # test=&quot;2007-09-01&quot;
-# print test
-# print date_from_string(test)
+# print(test)
+# print(date_from_string(test))
 
 def date_from_string(str):
     year = int(str[:4])
