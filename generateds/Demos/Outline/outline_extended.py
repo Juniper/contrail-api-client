@@ -69,7 +69,7 @@ Usage: python outline_extended.py <infilename>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 

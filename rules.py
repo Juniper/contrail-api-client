@@ -128,19 +128,18 @@ def RunUnitTest(env, target, source, timeout = 300):
     if code is None:
         proc.kill()
         logfile.write('[  TIMEOUT  ] ')
-        print test + '\033[91m' + " TIMEOUT" + '\033[0m'
+        print(test + '\033[91m' + " TIMEOUT" + '\033[0m')
         raise convert_to_BuildError(code)
-        return
 
     if code == 0:
-        print test + '\033[94m' + " PASS" + '\033[0m'
+        print(test + '\033[94m' + " PASS" + '\033[0m')
     else:
         logfile.write('[  FAILED  ] ')
         if code < 0:
             logfile.write('Terminated by signal: ' + str(-code) + '\n')
         else:
             logfile.write('Program returned ' + str(code) + '\n')
-        print test + '\033[91m' + " FAIL" + '\033[0m'
+        print(test + '\033[91m' + " FAIL" + '\033[0m')
         raise convert_to_BuildError(code)
 
 def TestSuite(env, target, source):
@@ -569,7 +568,7 @@ def ProtocDescBuilder(target, source, env):
         ' --proto_path=/usr/include/ ' + \
         ' --proto_path=src/contrail-analytics/contrail-collector/ ' + \
         str(source[0])
-    print protoc_cmd
+    print(protoc_cmd)
     code = subprocess.call(protoc_cmd, shell=True)
     if code != 0:
         raise SCons.Errors.StopError(
@@ -599,7 +598,7 @@ def ProtocCppBuilder(target, source, env):
         spath + ' --cpp_out=' + str(env.Dir(env['TOP'])) + \
         env['PROTOC_MAP_TGT_DIR'] + ' ' + \
         str(source[0])
-    print protoc_cmd
+    print(protoc_cmd)
     code = subprocess.call(protoc_cmd, shell=True)
     if code != 0:
         raise SCons.Errors.StopError(
@@ -645,7 +644,7 @@ def wait_for_sandesh_install(env):
             except Exception as e:
                 rc = 0
         if (rc != 1):
-            print 'scons: warning: sandesh -version returned %d, retrying' % rc
+            print('scons: warning: sandesh -version returned %d, retrying' % rc)
             time.sleep(1)
 
 class SandeshWarning(SCons.Warnings.Warning):
@@ -881,7 +880,7 @@ def GoCniFunc(env, filepath, target=''):
         cmd += go_cmd + 'install'
         code = subprocess.call(cmd, shell=True, env=goenv)
     except Exception as e:
-        print str(e)
+        print(str(e))
     return env['TOP'] + '/container/cni/bin/' + filepath
 
 # ThriftGenCpp Methods
@@ -994,8 +993,8 @@ def CheckBuildConfiguration(conf):
     if ((opt_level == 'production' or opt_level == 'profile') and \
         (conf.env['CC'].endswith("gcc") or conf.env['CC'].endswith("g++"))):
         if commands.getoutput(conf.env['CC'] + ' -dumpversion') == "4.7.0":
-            print "Unsupported/Buggy compiler gcc 4.7.0 for building " + \
-                  "optimized binaries"
+            print("Unsupported/Buggy compiler gcc 4.7.0 for building " + \
+                  "optimized binaries")
             raise convert_to_BuildError(1)
     return conf.Finish()
 
@@ -1153,7 +1152,7 @@ def determine_job_value():
     (one,five,_) = os.getloadavg()
     avg_load = int(one + five / 2)
     avail = (ncore - avg_load) * 3 / 2
-    print "scons: available jobs = %d" % avail
+    print("scons: available jobs = %d" % avail)
     return avail
 
 
@@ -1185,7 +1184,7 @@ def SetupBuildEnvironment(conf):
         # assume 1 means -j not specified).
         nj = determine_job_value()
         if nj > 1:
-            print "scons: setting jobs (-j) to %d" % nj
+            print("scons: setting jobs (-j) to %d" % nj)
             SetOption('num_jobs', nj)
             env['NUM_JOBS'] = nj
 
