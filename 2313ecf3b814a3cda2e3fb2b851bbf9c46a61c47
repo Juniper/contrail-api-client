@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "84bbbd28_570bdff1",
+        "filename": "api-lib/vnc_api/vnc_api.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 382
+      },
+      "writtenOn": "2019-09-09T04:58:57Z",
+      "side": 1,
+      "message": "bash-3.2$ python3\nPython 3.7.4 (default, Jul  9 2019, 18:13:23) \n[Clang 10.0.1 (clang-1001.0.46.4)] on darwin\nType \"help\", \"copyright\", \"credits\" or \"license\" for more information.\n\u003e\u003e\u003e import ConfigParser\nTraceback (most recent call last):\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\nModuleNotFoundError: No module named \u0027ConfigParser\u0027\n\u003e\u003e\u003e import configparser\n\u003e\u003e\u003e \n\nlet\u0027s use six.moves for this.",
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6564e2b_8c7cec5c",
         "filename": "api-lib/vnc_api/vnc_api.py",
         "patchSetId": 5
