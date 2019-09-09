@@ -143,6 +143,23 @@
       "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50928d56_1041dea1",
+        "filename": "rules.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 382
+      },
+      "writtenOn": "2019-09-09T18:51:11Z",
+      "side": 1,
+      "message": "the \u0027return\u0027 can be removed...",
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
