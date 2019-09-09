@@ -160,6 +160,24 @@
       "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de54ef3_5f9b4099",
+        "filename": "rules.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-09-09T19:07:33Z",
+      "side": 1,
+      "message": "This is an existing dead code. Not added as part of this review.\n\nI will fix it in stage 2 change",
+      "parentUuid": "50928d56_1041dea1",
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
