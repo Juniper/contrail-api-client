@@ -178,6 +178,24 @@
       "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a477f470_d86b6f40",
+        "filename": "rules.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 382
+      },
+      "writtenOn": "2019-09-09T19:18:40Z",
+      "side": 1,
+      "message": "sure. it\u0027s not showstopper )",
+      "parentUuid": "6de54ef3_5f9b4099",
+      "revId": "2313ecf3b814a3cda2e3fb2b851bbf9c46a61c47",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
