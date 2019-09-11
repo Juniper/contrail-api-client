@@ -1284,6 +1284,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Link('project-telemetry-profile', 'project', 'telemetry-profile', ['has'], 'optional', 'CRUD',
              'list of telemetry profiles supported under the project.') -->
+<xsd:element name="telemetry-profile-is-default" type="xsd:boolean" default="false"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('telemetry-profile-is-default', 'telemetry-profile', 'optional', 'CRUD',
+              'This attribute indicates whether it is a default telemetry profile or not. Default profiles are non-editable.') -->
+
 <xsd:element name="telemetry-profile-sflow-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('telemetry-profile-sflow-profile', 'telemetry-profile', 'sflow-profile', ['ref'], 'optional', 'CRUD',
@@ -1300,6 +1305,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Link('project-sflow-profile', 'project', 'sflow-profile', ['has'], 'optional', 'CRUD',
              'list of sflow profiles supported under the project.') -->
+<xsd:element name="sflow-profile-is-default" type="xsd:boolean" default="false"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('sflow-profile-is-default', 'sflow-profile', 'optional', 'CRUD',
+              'This attribute indicates whether it is a default sflow profile or not. Default profiles are non-editable.') -->
+
 <xsd:element name="sflow-parameters" type="SflowParameters"/>
 <!--#IFMAP-SEMANTICS-IDL
               Property('sflow-parameters', 'sflow-profile', 'optional', 'CRUD',
