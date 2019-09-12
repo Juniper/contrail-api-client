@@ -603,6 +603,17 @@
 <xsd:element name="device-functional-group" type="ifmap:IdentityType"
     description="Device functional group is used to group together any selected list of devices for the purpose of assigning identical attributes. For example, os-version, physical-roles, rb-roles"/>
 
+<xsd:element name="project-device-functional-group"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Link('project-device-functional-group',
+              'project', 'device-functional-group', ['has'], 'optional', 'CRUD',
+              'List of device functional groups in this project.')-->
+
+<xsd:element name="device-functional-group-description" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('device-functional-group-description', 'device-functional-group', 'optional', 'CRUD',
+              'Description of the functional group stating the functionality the devices would get if assigned to this group') -->
+
 <xsd:element name="device-functional-group-os-version" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('device-functional-group-os-version', 'device-functional-group', 'optional', 'CRUD',
@@ -610,7 +621,7 @@
 
 <xsd:element name="device-functional-group-routing-bridging-roles" type="RoutingBridgingRolesType"/>
 <!--#IFMAP-SEMANTICS-IDL
-          Property('routing-bridging-roles', 'device-functional-group', 'optional', 'CRUD',
+          Property('device-functional-group-routing-bridging-roles', 'device-functional-group', 'optional', 'CRUD',
               'Routing-bridging role (e.g. CRB, ERB, etc.), used by the device manager to provision physical router, for e.g device manager may choose to configure physical router based on its role.') -->
 
 <xsd:element name="device-functional-group-physical-role"/>
