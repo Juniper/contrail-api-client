@@ -143,6 +143,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='Any address that belongs to this subnet'/>
     <xsd:element name="virtual-network" type="xsd:string"  required='exclusive'
              description='Any address that belongs to this virtual network '/>
+    <xsd:element name="logical-router" type="xsd:string"  required='exclusive'
+             description='Any address that belongs to this logical router virtual-network'/>
     <xsd:element name="security-group"  type="xsd:string"  required='exclusive'
              description='Any address that belongs to interface with this security-group'/>
     <xsd:element name="network-policy"  type="xsd:string"  required='exclusive'
@@ -2091,6 +2093,7 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
         <xsd:element name="mpls-label" type="xsd:integer"/>
         <xsd:element name="service-chain-address" type="smi:IpAddress"/>
         <xsd:element name="ipv6-service-chain-address" type="IpAddressType"/>
+        <xsd:element name="evpn-service-chain-address" type="IpAddressType"/>
         <xsd:element name="protocol" type="xsd:string"/>
     </xsd:all>
 </xsd:complexType>
