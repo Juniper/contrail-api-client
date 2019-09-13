@@ -318,6 +318,7 @@ class VncApi(object):
     # Number of pools and number of pool per conn to api-server
     _DEFAULT_MAX_POOLS = 100
     _DEFAULT_MAX_CONNS_PER_POOL = 100
+    # Default time in seconds used for connection request to VNC API
     _DEFAULT_TIMEOUT = 5
 
     # Defined in Sandesh common headers but not importable in vnc_api lib
