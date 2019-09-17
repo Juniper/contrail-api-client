@@ -220,6 +220,7 @@
          <xsd:enumeration value='lag'/>
          <xsd:enumeration value='service'/>
          <xsd:enumeration value='fabric'/>
+         <xsd:enumeration value='access'/>
      </xsd:restriction>
 </xsd:simpleType>
 
@@ -665,7 +666,7 @@
 <xsd:element name="physical-interface-type" type="PhysicalInterfaceType"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-interface-type', 'physical-interface', 'optional', 'CRUD',
-              'Physical interface type that can be either regular or LAG or Service or Fabric link.') -->
+              'Physical interface type that can be either regular/LAG/service/fabric/access link.') -->
 
 <xsd:element name="physical-interface-mac-addresses" type="MacAddressesType"/>
 <!--#IFMAP-SEMANTICS-IDL
