@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8cf27ab5_bd37615e",
+        "filename": "schema/fabric.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2019-09-18T19:33:25Z",
+      "side": 1,
+      "message": "Can you add a description for each type to explain what they means?\nBtw I prefer CredentialEncryptionType as we already have a property named EncryptionMode for he vrouter flow encryption https://github.com/Juniper/contrail-api-client/blob/master/schema/vnc_cfg.xsd#L1281",
+      "revId": "09e098a00918c6c5df7db1211431f0bc0f0f3128",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a373598_016849c0",
         "filename": "schema/fabric.xsd",
         "patchSetId": 1
