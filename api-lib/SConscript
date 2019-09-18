@@ -67,6 +67,7 @@ generated_rule = env.Command(generated_files,
                              repo_top + '/schema/all_cfg.xsd',
                              autogen_cmd + ' $SOURCE')
 
+
 remote_setup_sources = [
     ("", repo_top + '/LICENSE'),
     ("", repo_top + '/base/version.info'),
@@ -79,9 +80,9 @@ for dest, file in remote_setup_sources:
 
 doc_sources_rules = SConscript(dirs=['doc'], exports='BuildEnv')
 
-sdist_depends = [generated_rule]
+sdist_depends = [remote_setup_sources_rules]
+sdist_depends.extend(generated_rule)
 sdist_depends.extend(setup_sources_rules)
-sdist_depends.extend(remote_setup_sources_rules)
 sdist_depends.extend(doc_sources_rules)
 
 version_file_path = File(repo_top + '/base/version.info').abspath

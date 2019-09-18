@@ -1,6 +1,7 @@
 #
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
+from __future__ import absolute_import
 import logging
 from collections import OrderedDict
 import requests
@@ -23,20 +24,20 @@ import re
 import os
 from urlparse import urlparse
 
-from gen.vnc_api_client_gen import all_resource_type_tuples
-from gen.resource_xsd import *
-from gen.resource_client import *
-from gen.generatedssuper import GeneratedsSuper
+from .gen.vnc_api_client_gen import all_resource_type_tuples
+from .gen.resource_xsd import *
+from .gen.resource_client import *
+from .gen.generatedssuper import GeneratedsSuper
 
-from utils import (
+from .utils import (
     OP_POST, OP_PUT, OP_GET, OP_DELETE, hdr_client_tenant,
     _obj_serializer_all, obj_type_to_vnc_class, getCertKeyCaBundle,
     AAA_MODE_VALID_VALUES, CamelCase, str_to_class)
-from exceptions import (
+from .exceptions import (
     ServiceUnavailableError, NoIdError, PermissionDenied, OverQuota,
     RefsExistError, TimeOutError, BadRequest, HttpError,
     ResourceTypeUnknownError, RequestSizeError, AuthFailed)
-import ssl_adapter
+from . import ssl_adapter
 
 DEFAULT_LOG_DIR = "/var/tmp/contrail_vnc_lib"
 

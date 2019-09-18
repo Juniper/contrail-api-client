@@ -4,6 +4,7 @@
 # Generated Mon Aug 18 17:09:37 2003 by generateDS.py.
 #
 
+from __future__ import print_function
 import sys
 import getopt
 from xml.dom import minidom
@@ -52,9 +53,9 @@ class outline:
             self.children = children
     def factory(*args):
         if outline.subclass:
-            return apply(outline.subclass, args)
+            return outline.subclass(*args)
         else:
-            return apply(outline, args)
+            return outline(*args)
     factory = staticmethod(factory)
     def getName(self): return self.name
     def setName(self, name): self.name = name
@@ -111,9 +112,9 @@ class node:
         self.hidden = hidden
     def factory(*args):
         if node.subclass:
-            return apply(node.subclass, args)
+            return node.subclass(*args)
         else:
-            return apply(node, args)
+            return node(*args)
     factory = staticmethod(factory)
     def getLabel(self): return self.label
     def setLabel(self, label): self.label = label
@@ -170,7 +171,7 @@ Usage: python <Parser>.py <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(-1)
 
 
