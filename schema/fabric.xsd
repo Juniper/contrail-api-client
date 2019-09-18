@@ -323,6 +323,13 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:complexType name="DnsmasqLeaseParameters">
+    <xsd:all>
+        <xsd:element name="lease_expiry_time" type='xsd:integer'/>
+        <xsd:element name="client_id" type='xsd:string'/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:simpleType name="JobConcurrencyLevelType">
     <xsd:restriction base='xsd:string'>
         <xsd:enumeration value='fabric'/>
@@ -925,6 +932,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-snmp-credentials', 'physical-router', 'optional', 'CRUD',
               'SNMP credentials for the physical router used by SNMP collector.') -->
+
+<xsd:element name="physical-router-dhcp-parameters" type='DnsmasqLeaseParameters'/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-dhcp-parameters', 'physical-router', 'optional', 'CRUD',
+              'Dnsmasq lease parameters for the physical router.') -->
 
 <xsd:element name="physical-router-managed-state" type='ManagedStateType' default="active"/>
 <!--#IFMAP-SEMANTICS-IDL
