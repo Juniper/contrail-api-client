@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "812ae994_ce591968",
+        "filename": "schema/fabric.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 510
+      },
+      "writtenOn": "2019-09-18T23:16:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cf27ab5_bd37615e",
+      "revId": "09e098a00918c6c5df7db1211431f0bc0f0f3128",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a373598_016849c0",
         "filename": "schema/fabric.xsd",
         "patchSetId": 1
