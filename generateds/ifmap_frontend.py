@@ -1990,7 +1990,7 @@ class IFMapApiGenerator(object):
     def _generate_heat_resources(self, gen_filepath_pfx, gen_filename_pfx):
         # heat uses the generated code to build its resources
         # set the build path correctly and import resources
-        heat_path = os.environ.get('HEAT_BUILDTOP') + '/api-lib'
+        heat_path = os.environ.get('HEAT_BUILDTOP') + '/api-lib/vnc_api/gen'
         sys.path.append(heat_path)
         self.res_cmn = importlib.import_module('.resource_common', package='vnc_api.gen')
         self.res_xsd = importlib.import_module('.resource_xsd', package='vnc_api.gen')
