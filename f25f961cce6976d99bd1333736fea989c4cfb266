@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01542c18_b733a89b",
+        "filename": "generateds/ifmap_frontend.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-09-25T13:54:03Z",
+      "side": 0,
+      "message": "This change was required to make explicit relative import work(while running around from contrail-api-client repo instead of sandbox). But I did not notice that the heat_path variable is used later. I assumed it is used only to append the path to sys path.\n\nWe can,\n1. keep this line of change by using different variable name say apilib_path\n2.along with heat_path\n3.append both to sys path",
+      "revId": "f25f961cce6976d99bd1333736fea989c4cfb266",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
