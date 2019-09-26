@@ -1990,8 +1990,8 @@ class IFMapApiGenerator(object):
     def _generate_heat_resources(self, gen_filepath_pfx, gen_filename_pfx):
         # heat uses the generated code to build its resources
         # set the build path correctly and import resources
-        heat_path = os.environ.get('HEAT_BUILDTOP') + '/api-lib'
-        sys.path.append(heat_path)
+        api_lib_path = os.environ.get('HEAT_BUILDTOP') + '/api-lib'
+        sys.path.append(api_lib_path)
         self.res_cmn = importlib.import_module('.resource_common', package='vnc_api.gen')
         self.res_xsd = importlib.import_module('.resource_xsd', package='vnc_api.gen')
 
@@ -2001,6 +2001,7 @@ class IFMapApiGenerator(object):
         #self.ref_special_handling_list['virtual-machine-interface'] = 'virtual_network_refs'
         #self.ref_special_handling_list['instance-ip'] = 'virtual_network_refs'
 
+        heat_path = os.environ.get('HEAT_BUILDTOP') + '/api-lib/vnc_api/gen'
         for ident in self._non_exclude_idents():
             #if ident.getName() != "virtual-machine-interface":
             #if ident.getName() != "network-policy":
