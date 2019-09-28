@@ -341,7 +341,7 @@ class VncApi(object):
                  domain_name=None, exclude_hrefs=None, auth_token_url=None,
                  apicertfile=None, apikeyfile=None, apicafile=None,
                  kscertfile=None, kskeyfile=None, kscafile=None,
-                 apiinsecure=None, ksinsecure=None):
+                 apiinsecure=None, ksinsecure=None, timeout=None):
         # TODO allow for username/password to be present in creds file
 
         self._obj_serializer = self._obj_serializer_diff
@@ -527,9 +527,11 @@ class VncApi(object):
         self._max_conns_per_pool = int(_read_cfg(
             cfg_parser, 'global', 'MAX_CONNS_PER_POOL',
             self._DEFAULT_MAX_CONNS_PER_POOL))
-        self._timeout = int(_read_cfg(
-            cfg_parser, 'global', 'TIMEOUT',
-            self._DEFAULT_TIMEOUT))
+        if not timeout:
+            self._timeout = int(_read_cfg(
+                cfg_parser, 'global', 'TIMEOUT', self._DEFAULT_TIMEOUT))
+        else:
+            self._timeout = int(timeout)
 
         self.curl_logger = None
         if _read_cfg(cfg_parser, 'global', 'curl_log', False):
