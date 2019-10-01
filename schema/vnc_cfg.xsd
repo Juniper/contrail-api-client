@@ -2183,6 +2183,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      Link('instance-ip-logical-interface',
           'instance-ip', 'logical-interface', ['ref'], 'optional', 'CRUD',
           'Reference to the logical interface that this instance ip is assigned to.') -->
+<xsd:element name="instance-ip-flow-node"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('instance-ip-flow-node',
+          'instance-ip', 'flow-node', ['ref'], 'optional', 'CRUD',
+          'Reference to the flow node that this instance ip is assigned to.') -->
 
 <xsd:element name="subnet" type="ifmap:IdentityType"/>
 <xsd:element name="subnet-ip-prefix" type="SubnetType"/>
@@ -3037,12 +3042,17 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
          Link('flow-node-virtual-network',
              'flow-node', 'virtual-network', ['ref'], 'optional', 'CRUD',
-             'Similar to using virtual-machine to model the bare metal server, we are using virtual-network to model telemetry underlay network. This would allow us to re-use the same IPAM data model and code base to manage the IP auto-assignments for the underlay telemetry networks.') -->
+             'Similar to using virtual-machine to model the bare metal server, we are using virtual-network to model telemetry underlay infra network. This would allow us to re-use the same IPAM data model and code base to manage the IP auto-assignments for the underlay telemetry networks.') -->
 
 <xsd:element name="flow-node-load-balancer-ip" type="IpAddressType"/>
 <!--#IFMAP-SEMANTICS-IDL
          Property('flow-node-load-balancer-ip', 'flow-node', 'required', 'CRUD',
               'IP address of the load balancer node for xflow collectors, set while provisioning.') -->
+
+<xsd:element name="flow-node-inband-interface" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+         Property('flow-node-inband-interface', 'flow-node', 'optional', 'CRUD',
+              'In-Band interface name used for this flow node.') -->
 
 <xsd:element name="devicemgr-node" type="ifmap:IdentityType"/>
 <xsd:element name="global-system-config-devicemgr-node"/>
