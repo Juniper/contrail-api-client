@@ -35,6 +35,8 @@
                      description="Device family name"/>
         <xsd:element name="job-completion-weightage" type="xsd:integer" default='100'
                      description="Job percentage completion when this playbook is completed. This attribute value should 100 if there is only one playbook defined in the job template. The job-completion-weigtages for all playbooks in the same job-template should add up to 100 exact."/>
+        <xsd:element name="sequence-number" type="xsd:integer" required="optional"
+                     description="Sequence number of the playbook"/>
     </xsd:all>
 </xsd:complexType>
 
