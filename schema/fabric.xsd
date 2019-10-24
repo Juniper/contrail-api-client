@@ -971,6 +971,11 @@
           Property('physical-router-underlay-config', 'physical-router', 'optional', 'CRUD',
               'Brownfield device underlay configuration stored during underlay onboarding. Only valid if physical-router-underlay-managed is false') -->
 
+<xsd:element name="physical-router-supplemental-config" type='xsd:string'/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-supplemental-config', 'physical-router', 'optional', 'CRUD',
+              'Supplemental configuration stored during ZTP onboarding.') -->
+
 <xsd:element name="physical-router-autonomous-system" type="AutonomousSystemsType"/>
 <!--#IFMAP-SEMANTICS-IDL
          Property('physical-router-autonomous-system', 'physical-router', 'optional', 'CRUD',
