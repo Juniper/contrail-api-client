@@ -370,6 +370,16 @@
      Property('ipv6-service-chain-information', 'routing-instance', 'system-only', 'CRUD',
               'Internal service chaining information, should not be modified.') -->
 
+<xsd:element name='evpn-service-chain-information' type='ServiceChainInfo'/>
+<!-- #IFMAP-SEMANTICS-IDL
+     Property('evpn-service-chain-information', 'routing-instance', 'system-only', 'CRUD',
+              'Internal service chaining information, should not be modified.') -->
+
+<xsd:element name='evpn-ipv6-service-chain-information' type='ServiceChainInfo'/>
+<!-- #IFMAP-SEMANTICS-IDL
+     Property('evpn-ipv6-service-chain-information', 'routing-instance', 'system-only', 'CRUD',
+              'Internal service chaining information, should not be modified.') -->
+
 <xsd:element name="routing-instance-is-default" type="xsd:boolean" default="false"/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('routing-instance-is-default', 'routing-instance', 'system-only', 'CRUD',
@@ -402,6 +412,7 @@
         <xsd:element name='service-instance' type='xsd:string'/>
         <xsd:element name='source-routing-instance' type='xsd:string'/>
         <xsd:element name='service-chain-id' type='xsd:string'/>
+        <xsd:element name='sc-head' type='xsd:boolean' default="false"/>
     </xsd:all>
 </xsd:complexType>
 
