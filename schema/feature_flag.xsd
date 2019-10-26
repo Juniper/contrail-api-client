@@ -1,0 +1,49 @@
+<!--
+ Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+ -->
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:bgp="http://www.contrailsystems.com/2012/BGP-CONFIG/0"
+    xmlns:smi="urn:ietf:params:xml:ns:opsawg:smi:base:1.0">
+
+<xsd:element name="feature-flag" type="ifmap:IdentityType"
+    description="Feature Flag to swtich on/off the allowed feature"/>
+
+<xsd:element name="global-system-config-feature-flag"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('global-system-config-feature-flag', 'global-system-config', 'feature-flag', ['has'], 'optional', 'CRUD',
+             'configurable list of features allowed in this system.') -->
+
+<xsd:element name="feature-flag-feature-flag"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('feature-flag-feature-flag', 'feature-flag', 'feature-flag', ['ref'], 'optional', 'CRUD',
+             'list of dependent features.') -->
+
+<xsd:element name="feature-description" type="xsd:string">
+<!--#IFMAP-SEMANTICS-IDL
+     Property('feature-description', 'feature-flag', 'required', 'CRUD',
+              'short explanation about the feature.') -->
+
+<xsd:element name="feature-release" type="xsd:string">
+<!--#IFMAP-SEMANTICS-IDL
+     Property('enable-feature', 'feature-flag', 'required', 'CR',
+              'version of release in which the feature is introduced.') -->
+
+<xsd:element name="enable-feature" type="xsd:boolean" default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('enable-feature', 'feature-flag', 'optional', 'CRUD',
+              'knob to enable or disable an allowed feature.') -->
+
+<xsd:element name="feature-state" type="FeatureStateType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('feature-state', 'feature-flag', 'required', 'CRUD',
+              'state of the feature') -->
+
+<xsd:simpleType name="FeatureStateType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="immature"/>
+        <xsd:enumeration value="alpha"/>
+        <xsd:enumeration value="beta"/>
+        <xsd:enumeration value="stable"/>
+    </xsd:restriction>
+</xsd:simpleType>
