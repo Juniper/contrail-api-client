@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "75d66b08_f4de6fd1",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 564
+      },
+      "writtenOn": "2019-10-28T20:07:57Z",
+      "side": 1,
+      "message": "Can we have the following states:\nEXPERIMENTAL\nALPHA\nBETA\nIN_PROGRESS\nPRE_RETIRED",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "821f7aee_c6dc518b",
         "filename": "schema/feature_flag.xsd",
         "patchSetId": 1
