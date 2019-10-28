@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a56657_83765c3e",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 564
+      },
+      "writtenOn": "2019-10-28T19:53:47Z",
+      "side": 1,
+      "message": "We had initially thought about this but don\u0027t plan on doing this for the foreseeable future to avoid complexity in determining the order in which features can be configured. We can remove this link.",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcbd0e1_fa21827f",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 564
+      },
+      "writtenOn": "2019-10-28T19:53:47Z",
+      "side": 1,
+      "message": "This has to be read-only. This is only to show therelease the feature was introduced and should not be modified by the user.",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45fd9910_90d0f54a",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 564
+      },
+      "writtenOn": "2019-10-28T19:53:47Z",
+      "side": 1,
+      "message": "This should again be read-only to show the user the state of the feature (similar to release-info). The developers responsible for the feature should determine the state of the feature they are introducing. We can make this a string as well. This along with release-info can also be automated in a release-note in the future.",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821f7aee_c6dc518b",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 564
+      },
+      "writtenOn": "2019-10-28T19:53:47Z",
+      "side": 1,
+      "message": "Can we add another field \"configured\" a boolean to indicate whether user has configured the feature or not. This will be needed at startup time to populate the db by giving preference to user configuration over any default values defined in the system.",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
