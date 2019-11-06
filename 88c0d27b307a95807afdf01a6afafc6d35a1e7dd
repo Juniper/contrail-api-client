@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc0386b7_5a92a93f",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-11-06T06:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a56657_83765c3e",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebcbd0e1_fa21827f",
         "filename": "schema/feature_flag.xsd",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e5a7ee_99fcf9f6",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-11-06T06:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebcbd0e1_fa21827f",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "faf283a8_10060905",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-11-06T06:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45fd9910_90d0f54a",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75d66b08_f4de6fd1",
         "filename": "schema/feature_flag.xsd",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7126f2f0_e19c7fbb",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-11-06T06:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75d66b08_f4de6fd1",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "821f7aee_c6dc518b",
         "filename": "schema/feature_flag.xsd",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2019-10-28T19:53:47Z",
       "side": 1,
       "message": "Can we add another field \"configured\" a boolean to indicate whether user has configured the feature or not. This will be needed at startup time to populate the db by giving preference to user configuration over any default values defined in the system.",
+      "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5a1d85_4e8bdc3a",
+        "filename": "schema/feature_flag.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2019-11-06T06:50:34Z",
+      "side": 1,
+      "message": "We no need this field, Following will be done during startup,\n1. Create feature flag objects for features in metadata/header file but not in DB\n2. Update only feature_state field for features  already in DB.\n3. Delete feature flag objects for features in DB but not in metadata/header file.",
+      "parentUuid": "821f7aee_c6dc518b",
       "revId": "88c0d27b307a95807afdf01a6afafc6d35a1e7dd",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
