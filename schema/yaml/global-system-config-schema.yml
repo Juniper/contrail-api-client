@@ -25,7 +25,8 @@ schema:
       type: boolean
     autonomous_system:
       $ref: types.json#/definitions/AutonomousSystemType
-      description: 16 bit BGP Autonomous System number for the cluster.
+      description: Autonomous System number for the cluster which is 16 bits by default,
+        but can be changed to 32 bits by setting enable-4byte-as.
       operations: CRUD
       presence: required
     bgp_always_compare_med:
@@ -54,6 +55,12 @@ schema:
         devices.
       operations: CRUD
       presence: optional
+    enable_4byte_as:
+      default: false
+      description: Knob to enable 4 byte Autonomous System number support.
+      operations: CRUD
+      presence: optional
+      type: boolean
     enable_security_policy_draft:
       default: false
       description: ''
