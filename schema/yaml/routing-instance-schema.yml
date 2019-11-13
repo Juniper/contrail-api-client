@@ -29,6 +29,16 @@ schema:
       description: ''
       operations: CRUD
       presence: optional
+    evpn_ipv6_service_chain_information:
+      $ref: types.json#/definitions/ServiceChainInfo
+      description: Internal service chaining information, should not be modified.
+      operations: CRUD
+      presence: system-only
+    evpn_service_chain_information:
+      $ref: types.json#/definitions/ServiceChainInfo
+      description: Internal service chaining information, should not be modified.
+      operations: CRUD
+      presence: system-only
     ipv6_service_chain_information:
       $ref: types.json#/definitions/ServiceChainInfo
       description: Internal service chaining information, should not be modified.

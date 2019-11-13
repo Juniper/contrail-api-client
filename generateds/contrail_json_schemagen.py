@@ -129,7 +129,7 @@ class ContrailJsonSchemaGenerator(object):
                 "description": description}
 
             if self._json_type_map.get(link_type):
-                subJson["$ref"] = "types.json#definitions/" + link_type
+                subJson["$ref"] = "types.json#/definitions/" + link_type
 
             if "derived" in link_info[2]:
                 subJson["derived"] = True
@@ -160,7 +160,7 @@ class ContrailJsonSchemaGenerator(object):
                 if ident.isDerived(parent[0]):
                     subJson["derived"] = True
                 if self._json_type_map.get(link_type):
-                    subJson["$ref"] = "types.json#definitions/" + link_type
+                    subJson["$ref"] = "types.json#/definitions/" + link_type
                 parents[parent[0].getJsonName()] = subJson
 
         id = self._convertHyphensToUnderscores(ident._name)

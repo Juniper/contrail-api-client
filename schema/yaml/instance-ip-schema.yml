@@ -6,6 +6,10 @@ parents: {}
 plural: instance_ips
 prefix: /
 references:
+  flow_node:
+    description: Reference to the flow node that this instance ip is assigned to.
+    operations: CRUD
+    presence: optional
   logical_interface:
     description: Reference to the logical interface that this instance ip is assigned
       to.

@@ -10,7 +10,11 @@ parents:
     presence: optional
 plural: device_images
 prefix: /
-references: {}
+references:
+  hardware:
+    description: linking the hardware that is associated to image
+    operations: CRUD
+    presence: optional
 schema:
   properties:
     device_image_device_family:

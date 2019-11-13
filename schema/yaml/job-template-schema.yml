@@ -25,6 +25,13 @@ schema:
       operations: CRUD
       presence: optional
       type: string
+    job_template_executables:
+      $ref: types.json#/definitions/ExecutableInfoListType
+      collectionType: list
+      description: List of Executables that needs to be Executed
+      operations: CRUD
+      presence: optional
+      wrapper: true
     job_template_input_schema:
       description: 'JSON schema of the job input parameters which will be used to
         validate the job input json or generate UI form for user to enter the job

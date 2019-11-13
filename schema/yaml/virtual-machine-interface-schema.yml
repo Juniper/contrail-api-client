@@ -40,6 +40,10 @@ references:
       interface represents.
     operations: CRUD
     presence: system-only
+  port_profile:
+    description: Port profiles attached to this virtual machine interface
+    operations: CRUD
+    presence: optional
   port_tuple:
     description: ''
     operations: CRUD

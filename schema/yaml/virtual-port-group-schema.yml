@@ -4,13 +4,18 @@ extends:
 id: virtual_port_group
 parents:
   fabric:
-    description: List of link aggregation groups in this fabric.
+    description: List of virtual port groups in this fabric.
+    operations: CRUD
+    presence: optional
+  project:
+    description: List of virtual port groups/trunk ports in this project.
     operations: CRUD
     presence: optional
 plural: virtual_port_groups
 prefix: /
 references:
   physical_interface:
+    $ref: types.json#/definitions/VpgInterfaceParametersType
     description: All the physical interfaces that belong to this link aggregation
       group. The physical interface could belong to the same or different physical
       router

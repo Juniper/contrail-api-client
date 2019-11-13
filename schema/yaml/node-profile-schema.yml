@@ -15,6 +15,17 @@ references:
       the devices
     operations: CRUD
     presence: optional
+  job_template:
+    description: This reference associates the node profile to a job-template that
+      contains a playbook that generates device              specific role config
+      and deploys it to the device. The role-config.config attribtue value must be
+      in JSON              format and conform to the input_schema defined in the job-template.
+    operations: CRUD
+    presence: optional
+  role_definition:
+    description: list of role definitions supported for this node profile
+    operations: CRUD
+    presence: optional
 schema:
   properties:
     node_profile_device_family:

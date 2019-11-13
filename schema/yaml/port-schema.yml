@@ -12,22 +12,16 @@ prefix: /
 references: {}
 schema:
   properties:
-    ip_address:
-      default: ""
-      description: IP Address
-      operations: CRUD
-      presence: optional
-      type: string
     bms_port_info:
       $ref: types.json#/definitions/BaremetalPortInfo
       description: Details of the baremetal server port
       operations: CRUD
       presence: optional
     esxi_port_info:
-      description: Information related to Port-ESXi/vCenter.
       $ref: types.json#/definitions/ESXIProperties
-      presence: optional
+      description: Information related to Port-ESXi/vCenter
       operations: CRUD
+      presence: optional
     label:
       description: Label of the interface representing the use of the interface.
       operations: CRUD

@@ -15,6 +15,15 @@ references:
     description: Reference to BGP peer representing this physical router.
     operations: CRUD
     presence: optional
+  device_chassis:
+    description: Device Chassis info assigned to the physical router during device
+      discovery/onboarding.
+    operations: CRUD
+    presence: optional
+  device_functional_group:
+    description: Device functional group that this physical-router belongs to.
+    operations: CRUD
+    presence: optional
   device_image:
     description: Intended device image for this PRouter. Each PRouter can have one
       and only one device image assigned. If this image is successfully installed
@@ -28,6 +37,19 @@ references:
     presence: optional
   node_profile:
     description: Node profile assigned to the physical router during device discovery/onboarding.
+    operations: CRUD
+    presence: optional
+  overlay_role:
+    description: Overlay roles assigned to this physical router
+    operations: CRUD
+    presence: optional
+  physical_role:
+    description: Physical role assigned to this physical router
+    operations: CRUD
+    presence: optional
+  telemetry_profile:
+    description: Telemetry profile assigned to the physical router by user. Each physical
+      router is associated with only one telemetry profile.
     operations: CRUD
     presence: optional
   virtual_network:
@@ -44,13 +66,12 @@ references:
     presence: optional
 schema:
   properties:
-    physical_router_chassis_id:
-      description: Device chassis identifier which is used in LLDP protocol to identify
-        the peer device. This attribute can be either discovered via the fabric on-boarding
-        workflow or manually specified by the user
+    physical_router_autonomous_system:
+      $ref: types.json#/definitions/AutonomousSystemsType
+      description: Autonomous system configured on the device represented by the physical
+        router.
       operations: CRUD
       presence: optional
-      type: string
     physical_router_dataplane_ip:
       $ref: types.json#/definitions/IpAddress
       description: This is ip address in the ip-fabric(underlay) network that can
@@ -65,6 +86,16 @@ schema:
       operations: CRUD
       presence: required
       type: string
+    physical_router_dhcp_parameters:
+      $ref: types.json#/definitions/DnsmasqLeaseParameters
+      description: Dnsmasq lease parameters for the physical router.
+      operations: CRUD
+      presence: optional
+    physical_router_encryption_type:
+      $ref: types.json#/definitions/CredentialEncryptionType
+      description: Type of encryption used for physical-router-user-credentials.
+      operations: CRUD
+      presence: optional
     physical_router_hostname:
       description: Device host name that can be either discovered during via fabric
         on-boarding workflow or manually set by the user
@@ -88,12 +119,22 @@ schema:
         by the device manager to configure physical router loopback interface.
       operations: CRUD
       presence: optional
+    physical_router_managed_state:
+      $ref: types.json#/definitions/ManagedStateType
+      description: Managed state for the physical router. Used to RMA devices
+      operations: CRUD
+      presence: optional
     physical_router_management_ip:
       $ref: types.json#/definitions/IpAddress
       description: Management ip for this physical router. It is used by the device
         manager to perform netconf and by SNMP collector if enabled.
       operations: CRUD
       presence: required
+    physical_router_management_mac:
+      description: Management mac for this physical router.
+      operations: CRUD
+      presence: optional
+      type: string
     physical_router_os_version:
       description: os version for this physical router. It is updated when device
         is imported or device image is successfully upgraded
@@ -106,6 +147,12 @@ schema:
       operations: CRUD
       presence: required
       type: string
+    physical_router_replicator_loopback_ip:
+      $ref: types.json#/definitions/IpAddress
+      description: This is the loopback ip address for assisted replication. Used
+        by the device manager to configure physical router replicator ip.
+      operations: CRUD
+      presence: optional
     physical_router_role:
       $ref: types.json#/definitions/PhysicalRouterRole
       description: Physical router role (e.g spine or leaf), used by the device manager
@@ -129,6 +176,17 @@ schema:
       description: SNMP credentials for the physical router used by SNMP collector.
       operations: CRUD
       presence: optional
+    physical_router_supplemental_config:
+      description: Supplemental configuration stored during ZTP onboarding.
+      operations: CRUD
+      presence: optional
+      type: string
+    physical_router_underlay_config:
+      description: Brownfield device underlay configuration stored during underlay
+        onboarding. Only valid if physical-router-underlay-managed is false
+      operations: CRUD
+      presence: optional
+      type: string
     physical_router_underlay_managed:
       default: false
       description: Set to true if underlay is configured by device manager. The greenfield
