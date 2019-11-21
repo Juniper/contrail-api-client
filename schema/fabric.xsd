@@ -455,6 +455,38 @@
              'global-system-config', 'data-center-interconnect', ['has'], 'optional', 'CRUD',
              'List of DCI Objects in the system. Each DCI represents an interconnect of Multiple Fabrics.') -->
 
+<xsd:simpleType name="IntentType">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="assisted-replicator"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name="intent-map" type="ifmap:IdentityType"/>
+
+<xsd:element name="intent-map-intent-type" type="IntentType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('intent-map-intent-type', 'intent-map', 'optional', 'CRUD',
+              'Based on this value we determine what intent model we are serving') -->
+
+<xsd:element name="physical-router-intent-map" />
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-intent-map',
+             'physical-router', 'intent-map', ['ref'], 'optional', 'CRUD',
+             'The Physical Routers on which the config needs to be pushed') -->
+
+<xsd:element name="virtual-network-intent-map" />
+<!--#IFMAP-SEMANTICS-IDL
+          Link('virtual-network-intent-map',
+             'virtual-network', 'intent-map',  ['ref'], 'optional', 'CRUD',
+             'All virtual-network objects that get created in the fabric') -->
+
+<xsd:element name="fabric-intent-map" />
+<!--#IFMAP-SEMANTICS-IDL
+          Link('fabric-intent-map',
+             'fabric', 'intent-map',  ['ref'], 'optional', 'CRUD',
+             'Fabric that belongs to this intent map') -->
+
+
 <xsd:element name="fabric" type="ifmap:IdentityType"/>
 
 <xsd:element name="fabric-ztp" type="xsd:boolean"/>
