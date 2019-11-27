@@ -42,8 +42,8 @@ schema:
       type: string
     physical_interface_type:
       $ref: types.json#/definitions/PhysicalInterfaceType
-      description: Physical interface type that can be either regular physical interface
-        or LAG interface.
+      description: Physical interface type that can be either regular/LAG/service/fabric/access
+        link.
       operations: CRUD
       presence: optional
   required: []

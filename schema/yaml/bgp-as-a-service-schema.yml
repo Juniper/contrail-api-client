@@ -35,7 +35,8 @@ schema:
   properties:
     autonomous_system:
       $ref: types.json#/definitions/AutonomousSystemType
-      description: 16 bit BGP Autonomous System number for the cluster.
+      description: Autonomous System number for the cluster which is 16 bits by default,
+        but can be changed to 32 bits by setting enable-4byte-as.
       operations: CRUD
       presence: required
     bgpaas_ip_address:

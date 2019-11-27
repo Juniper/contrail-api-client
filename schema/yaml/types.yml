@@ -1,118 +1,8 @@
 definitions:
-  IdPermsType:
-    type: object
-    properties:
-      enable:
-        type: boolean
-        description: Administratively Enable/Disable this object
-        presence: 'true'
-      description:
-        type: string
-        description: User provided text
-        presence: optional
-      created:
-        presence: system-only
-        type: string
-        description: Time when this object was created
-        format: date-time
-      creator:
-        type: string
-        description: Id of tenant who created this object
-        presence: system-only
-      user_visible:
-        type: boolean
-        description: System created internal objects will have this flag set and will
-          not be visible
-        presence: system-only
-      last_modified:
-        presence: system-only
-        type: string
-        description: Time when this object was created
-        format: date-time
-      permissions:
-        presence: optional
-        description: No longer used, will be removed
-        $ref: base_types.json#/definitions/PermType
-      uuid:
-        presence: 'true'
-        description: UUID of the object, system automatically allocates one if not
-          provided
-        $ref: base_types.json#/definitions/UuidType
-  PermType2:
-    type: object
-    properties:
-      owner:
-        type: string
-        description: Owner tenant of the object
-        presence: 'true'
-      owner_access:
-        presence: 'true'
-        description: Owner permissions of the object
-        $ref: base_types.json#/definitions/AccessType
-      global_access:
-        presence: optional
-        description: Globally(others) shared object and permissions for others of
-          the object
-        $ref: base_types.json#/definitions/AccessType
-      share:
-        items:
-          $ref: base_types.json#/definitions/ShareType
-        type: array
-        description: Selectively shared object, List of (tenant, permissions)
-        presence: optional
-  PermType:
-    type: object
-    properties:
-      owner:
-        type: string
-      owner_access:
-        $ref: base_types.json#/definitions/AccessType
-      other_access:
-        $ref: base_types.json#/definitions/AccessType
-      group:
-        type: string
-      group_access:
-        $ref: base_types.json#/definitions/AccessType
   AccessType:
+    maximum: 7
     minimum: 0
     type: integer
-    maximum: 7
-  ShareType:
-    type: object
-    properties:
-      tenant_access:
-        presence: 'true'
-        description: Allowed permissions in sharing
-        $ref: base_types.json#/definitions/AccessType
-      tenant:
-        type: string
-        description: Name of tenant with whom the object is shared
-        presence: 'true'
-  KeyValuePairs:
-    type: object
-    properties:
-      key_value_pair:
-        items:
-          $ref: base_types.json#/definitions/KeyValuePair
-        type: array
-  KeyValuePair:
-    type: object
-    properties:
-      value:
-        type: string
-      key:
-        type: string
-  UuidType:
-    type: object
-    properties:
-      uuid_mslong:
-        type: "uint64"
-        proto_type: "uint64"
-        go_type: "uint64"
-      uuid_lslong:
-        type: "uint64"
-        proto_type: "uint64"
-        go_type: "uint64"
   AclEntriesType:
     properties:
       acl_rule:
@@ -189,6 +79,10 @@ definitions:
         description: For internal use only
         presence: optional
         type: string
+      host_based_service:
+        description: Forward traffic matching this rule to the project's host based
+          service
+        type: boolean
       log:
         description: Flow records for traffic matching this rule are sent at higher
           priority
@@ -226,6 +120,10 @@ definitions:
       med:
         type: integer
     type: object
+  AdativeSampleRate:
+    maximum: 900
+    minimum: 300
+    type: integer
   AddressAllocationModeType:
     enum:
     - user-defined-subnet-preferred
@@ -443,7 +341,7 @@ definitions:
     - md5
     type: string
   AutonomousSystemType:
-    maximum: 4294967294
+    maximum: 4294967295
     minimum: 1
     type: integer
   AutonomousSystemsType:
@@ -793,6 +691,9 @@ definitions:
       instance_type:
         description: size of instance
         type: string
+      machine_id:
+        description: image (ami) id of instance
+        type: string
       operating_system:
         description: Name of operating system, ex - centos7 or ubuntu16
         enum:
@@ -801,6 +702,9 @@ definitions:
         - centos7
         - redhat
         - rhel7
+        type: string
+      os_version:
+        description: specific version of operating system
         type: string
       roles:
         description: Roles of the cloud instance
@@ -858,6 +762,11 @@ definitions:
         description: DSCP value for DNS traffic
         presence: optional
     type: object
+  CredentialEncryptionType:
+    enum:
+    - none
+    - local
+    type: string
   DataCenterInterconnectModes:
     enum:
     - l3
@@ -988,6 +897,13 @@ definitions:
         presence: optional
         type: integer
     type: object
+  DnsmasqLeaseParameters:
+    properties:
+      client_id:
+        type: string
+      lease_expiry_time:
+        type: integer
+    type: object
   DomainLimitsType:
     properties:
       project_limit:
@@ -1071,6 +987,15 @@ definitions:
         description: vCenter server
         type: string
     type: object
+  ESXIProperties:
+    properties:
+      dvs_id:
+        description: MOid of the Distributed Virtual Switch(DVS) assigned to Port.
+        type: string
+      dvs_name:
+        description: Name of the Distributed Virtual Switch(DVS) assigned to Port.
+        type: string
+    type: object
   EcmpHashingIncludeFields:
     properties:
       destination_ip:
@@ -1099,6 +1024,21 @@ definitions:
         presence: optional
         type: boolean
     type: object
+  EnabledInterfaceParams:
+    properties:
+      name:
+        type: string
+      stats_collection_frequency:
+        $ref: types.json#/definitions/StatsCollectionFrequency
+    type: object
+  EnabledInterfaceType:
+    enum:
+    - all
+    - fabric
+    - service
+    - access
+    - custom
+    type: string
   EncapsulationPrioritiesType:
     properties:
       encapsulation:
@@ -1139,17 +1079,32 @@ definitions:
     maximum: 4095
     minimum: 0
     type: integer
-  NodeType:
-    enum:
-    - private
-    - baremetal
-    - esxi
-    type: string
   EtherType:
     enum:
     - IPv4
     - IPv6
     type: string
+  ExecutableInfoListType:
+    properties:
+      executable_info:
+        items:
+          $ref: types.json#/definitions/ExecutableInfoType
+        type: array
+    type: object
+  ExecutableInfoType:
+    properties:
+      executable_args:
+        description: Optional arguments to be passed to the executable
+        presence: optional
+        type: string
+      executable_path:
+        description: absolute path of the binary to execute
+        presence: 'true'
+        type: string
+      job_completion_weightage:
+        description: Job percentage completion when this executable is completed.
+        type: integer
+    type: object
   ExtCommunityListType:
     properties:
       community:
@@ -1361,6 +1316,50 @@ definitions:
     - HTTP
     - HTTPS
     type: string
+  HostBasedServiceType:
+    default: firewall
+    enum:
+    - firewall
+    type: string
+  IdPermsType:
+    properties:
+      created:
+        description: Time when this object was created
+        format: date-time
+        presence: system-only
+        type: string
+      creator:
+        description: Id of tenant who created this object
+        presence: system-only
+        type: string
+      description:
+        description: User provided text
+        presence: optional
+        type: string
+      enable:
+        description: Administratively Enable/Disable this object
+        presence: 'true'
+        type: boolean
+      last_modified:
+        description: Time when this object was created
+        format: date-time
+        presence: system-only
+        type: string
+      permissions:
+        $ref: types.json#/definitions/PermType
+        description: No longer used, will be removed
+        presence: optional
+      user_visible:
+        description: System created internal objects will have this flag set and will
+          not be visible
+        presence: system-only
+        type: boolean
+      uuid:
+        $ref: types.json#/definitions/UuidType
+        description: UUID of the object, system automatically allocates one if not
+          provided
+        presence: 'true'
+    type: object
   ImportExportType:
     enum:
     - import
@@ -1471,11 +1470,9 @@ definitions:
         description: DHCP options list to be sent via DHCP for  VM(s) in this subnet
         presence: optional
       dhcp_relay_server:
+        $ref: types.json#/definitions/IpAddressType
         description: DHCP relay server IP
         presence: optional
-        items:
-          $ref: types.json#/definitions/IpAddressType
-        type: array
       dns_nameservers:
         description: Tenant DNS servers ip address in tenant DNS method
         items:
@@ -1565,12 +1562,27 @@ definitions:
     - workflow
     - device_operation
     - config
+    - executable
     type: string
   JunosServicePorts:
     properties:
       service_port:
         items:
           type: string
+        type: array
+    type: object
+  KeyValuePair:
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+    type: object
+  KeyValuePairs:
+    properties:
+      key_value_pair:
+        items:
+          $ref: types.json#/definitions/KeyValuePair
         type: array
     type: object
   L4PortType:
@@ -1792,19 +1804,16 @@ definitions:
         description: UUID of the Physical-Port with contrail database
         type: string
     type: object
-  ESXIProperties:
-    properties:
-      dvs_name:
-        description: Name of the Distributed Virtual Switch(DVS) assigned to Port.
-        type: string
-      dvs_id:
-        description: MOid of the Distributed Virtual Switch(DVS) assigned to Port.
-        type: string
-    type: object
   LogicalInterfaceType:
     enum:
     - l2
     - l3
+    type: string
+  LogicalRouterType:
+    default: snat-routing
+    enum:
+    - snat-routing
+    - vxlan-routing
     type: string
   LogicalRouterVirtualNetworkEnumType:
     enum:
@@ -1870,6 +1879,16 @@ definitions:
           type: string
         type: array
     type: object
+  ManagedStateType:
+    default: active
+    enum:
+    - dhcp
+    - rma
+    - activating
+    - active
+    - maintenance
+    - error
+    type: string
   MatchConditionType:
     properties:
       dst_address:
@@ -1935,7 +1954,7 @@ definitions:
         description: The VLAN to be tagged on the traffic for NIC to Mirror
         presence: optional
       routing_instance:
-        description: Internal use only, should be set to -1
+        description: Routing instance for the virtual network which analyzer is in
         presence: 'true'
         type: string
       static_nh_header:
@@ -2035,6 +2054,12 @@ definitions:
     - physical-router
     - end-system
     type: string
+  NodeType:
+    enum:
+    - private
+    - baremetal
+    - esxi
+    type: string
   PathSourceType:
     items:
       enum:
@@ -2053,10 +2078,48 @@ definitions:
     enum:
     - public-peering
     type: string
+  PermType:
+    properties:
+      group:
+        type: string
+      group_access:
+        $ref: types.json#/definitions/AccessType
+      other_access:
+        $ref: types.json#/definitions/AccessType
+      owner:
+        type: string
+      owner_access:
+        $ref: types.json#/definitions/AccessType
+    type: object
+  PermType2:
+    properties:
+      global_access:
+        $ref: types.json#/definitions/AccessType
+        description: Globally(others) shared object and permissions for others of
+          the object
+        presence: optional
+      owner:
+        description: Owner tenant of the object
+        presence: 'true'
+        type: string
+      owner_access:
+        $ref: types.json#/definitions/AccessType
+        description: Owner permissions of the object
+        presence: 'true'
+      share:
+        description: Selectively shared object, List of (tenant, permissions)
+        items:
+          $ref: types.json#/definitions/ShareType
+        presence: optional
+        type: array
+    type: object
   PhysicalInterfaceType:
     enum:
     - regular
     - lag
+    - service
+    - fabric
+    - access
     type: string
   PhysicalRouterRole:
     enum:
@@ -2095,6 +2158,10 @@ definitions:
         description: uri to the playbook location on the file server
         presence: 'true'
         type: string
+      sequence_no:
+        description: Sequence number of the playbook
+        presence: optional
+        type: integer
       vendor:
         description: Vendor name
         presence: optional
@@ -2225,6 +2292,10 @@ definitions:
       term_match_condition:
         $ref: types.json#/definitions/TermMatchConditionType
     type: object
+  PollingInterval:
+    maximum: 3600
+    minimum: 0
+    type: integer
   PortGroupProperties:
     properties:
       miimon:
@@ -2438,6 +2509,11 @@ definitions:
         description: Maximum number of global vrouter configs
         presence: optional
         type: integer
+      host_based_service:
+        $ref: types.json#/definitions/UniqueQuotaType
+        description: Maximum number of host based service. Actually limited to 0 or
+          1 for a project (can not be unlimited or more than 1)
+        presence: optional
       instance_ip:
         description: Maximum number of instance ips
         presence: optional
@@ -2679,6 +2755,10 @@ definitions:
       version:
         type: integer
     type: object
+  SampleRate:
+    maximum: 16777215
+    minimum: 1
+    type: integer
   SecurityGroupIdType:
     maximum: 4294967296
     minimum: 8000000
@@ -2745,6 +2825,8 @@ definitions:
         type: array
       routing_instance:
         type: string
+      sc_head:
+        type: boolean
       service_chain_address:
         $ref: types.json#/definitions/IpAddress
       service_chain_id:
@@ -2898,7 +2980,6 @@ definitions:
         $ref: types.json#/definitions/ServiceInterfaceType
     type: object
   ServiceInterfaceType:
-    format: service_interface_type_format
     type: string
   ServiceModeType:
     enum:
@@ -3000,6 +3081,11 @@ definitions:
     - source-nat
     - loadbalancer
     type: string
+  ServiceVirtualNetworkType:
+    properties:
+      virtual_network_type:
+        $ref: types.json#/definitions/ServiceInterfaceType
+    type: object
   ServiceVirtualizationType:
     enum:
     - virtual-machine
@@ -3013,6 +3099,45 @@ definitions:
     - HTTP_COOKIE
     - APP_COOKIE
     type: string
+  SflowParameters:
+    properties:
+      adaptive_sample_rate:
+        $ref: types.json#/definitions/AdativeSampleRate
+        description: Represents  maximum number of samples that should be generated
+          per line card.
+        presence: optional
+      agent_id:
+        $ref: types.json#/definitions/IpAddress
+        description: IP address to be assigned as the agent ID for the sFlow agent.
+      enabled_interface_params:
+        description: If interface type is set to custom, this represents the list
+          of physical interfaces to be enabled for sflow. User can specify polling
+          interval and sample rate for each interface in this custom list.
+        items:
+          $ref: types.json#/definitions/EnabledInterfaceParams
+        type: array
+      enabled_interface_type:
+        $ref: types.json#/definitions/EnabledInterfaceType
+        description: User can enable sflow either on all interfaces or all fabric
+          ports or all access ports or custom list of interfaces.
+      stats_collection_frequency:
+        $ref: types.json#/definitions/StatsCollectionFrequency
+        description: Represents polling interval and sample rate either at the global
+          level or at per interface level. Polling interval is specified in seconds
+          that the device waits between port statistics update messages. Sample rate
+          is specified as a number (one packet out of number).
+    type: object
+  ShareType:
+    properties:
+      tenant:
+        description: Name of tenant with whom the object is shared
+        presence: 'true'
+        type: string
+      tenant_access:
+        $ref: types.json#/definitions/AccessType
+        description: Allowed permissions in sharing
+        presence: 'true'
+    type: object
   SimpleActionType:
     enum:
     - deny
@@ -3060,6 +3185,53 @@ definitions:
         items:
           type: string
         type: array
+    type: object
+  StatsCollectionFrequency:
+    properties:
+      polling_interval:
+        $ref: types.json#/definitions/PollingInterval
+        presence: optional
+      sample_rate:
+        $ref: types.json#/definitions/SampleRate
+        presence: optional
+    type: object
+  StormControlActionType:
+    items:
+      enum:
+      - interface-shutdown
+      type: string
+    type: array
+  StormControlParameters:
+    properties:
+      bandwidth_percent:
+        description: Configure storm control bandwidth level as percentage
+        presence: 'true'
+        type: integer
+      no_broadcast:
+        description: if set to true, disable broadcast traffic storm control
+        type: boolean
+      no_multicast:
+        description: if set to true, disable muticast traffic storm control
+        type: boolean
+      no_registered_multicast:
+        description: if set to true, disable registered multicast traffic storm control
+        type: boolean
+      no_unknown_unicast:
+        description: if set to true, disable unknown unicast traffic storm control
+        type: boolean
+      no_unregistered_multicast:
+        description: if set to true, disable unregistered multicast traffic storm
+          control
+        type: boolean
+      recovery_timeout:
+        description: Timeout in seconds. This enables the affected interface to recover
+          automatically from the error condition after the specified period of time
+        presence: optional
+        type: integer
+      storm_control_actions:
+        $ref: types.json#/definitions/StormControlActionType
+        description: Default action (Discard) is implicit. In addition, other list
+          of actions can be specified here
     type: object
   StructuredSyslogLinkType:
     properties:
@@ -3179,6 +3351,10 @@ definitions:
     type: string
   U32BitHexInt:
     type: string
+  UniqueQuotaType:
+    maximum: 1
+    minimum: 0
+    type: integer
   UserCredentials:
     properties:
       password:
@@ -3206,6 +3382,13 @@ definitions:
     type: object
   UuidStringType:
     type: string
+  UuidType:
+    properties:
+      uuid_lslong:
+        type: integer
+      uuid_mslong:
+        type: integer
+    type: object
   UveKeysType:
     properties:
       uve_key:
@@ -3243,6 +3426,11 @@ definitions:
       record_name:
         description: DNS name to be resolved
         presence: 'true'
+        type: string
+      record_source_name:
+        description: name of the compute node which sends add for A type or PTR type
+          dns record for vm
+        presence: system-only
         type: string
       record_ttl_seconds:
         description: Time To Live for this DNS record
@@ -3454,6 +3642,11 @@ definitions:
         items:
           $ref: types.json#/definitions/IpamSubnetType
         type: array
+    type: object
+  VpgInterfaceParametersType:
+    properties:
+      ae_num:
+        type: integer
     type: object
   VpnType:
     default: l3

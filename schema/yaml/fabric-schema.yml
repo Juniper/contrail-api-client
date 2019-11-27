@@ -37,6 +37,19 @@ schema:
       operations: CRUD
       presence: optional
       wrapper: true
+    fabric_enterprise_style:
+      default: true
+      description: This attribute indicates whether to use enterprise-style or sp-style
+        configuration in the fabric. True indicated enterprise-style.
+      operations: CRUD
+      presence: optional
+      type: boolean
+    fabric_os_version:
+      description: OS version of the entire fabric. It is updated when image upgrade
+        is chosen during ztp.
+      operations: CRUD
+      presence: optional
+      type: string
     fabric_ztp:
       description: This attribute to indicate if the fabric is zero-touch provisioned
         or not. If this attribute is set to "True", user should not be allowed to
