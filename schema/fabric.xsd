@@ -72,6 +72,20 @@
      </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:complexType name="CliDiffInfoType">
+    <xsd:all>
+        <xsd:element name="username" type="xsd:string"/>
+        <xsd:element name="time" type="xsd:string"/>
+        <xsd:element name="config_changes" type="xsd:string"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="CliDiffListType">
+    <xsd:all>
+        <xsd:element name="commit-diff-info" type="CliDiffInfoType" maxOccurs="unbounded"/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:simpleType name="StormControlActionType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="interface-shutdown"/>
@@ -729,6 +743,21 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('hardware-inventory-inventory-info', 'hardware-inventory', 'optional', 'CRUD',
               'chassis inventory info of the physical router. Stored as json string. Will be used to render chassis hardware details in UI') -->
+<xsd:element name="cli-config" type="ifmap:IdentityType"/>
+
+<xsd:element name="physical-router-cli-config"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('physical-router-cli-config',
+          'physical-router', 'cli-config', ['has'], 'optional', 'CRUD',
+          'CLI commits done on a physical router.') -->
+<xsd:element name="accepted-cli-config" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('accepted-cli-config', 'cli-config', 'optional', 'CRUD',
+              'Aggregated cli accepted configs. This config will be pushed when the device undergoes RMA along with Contrail configuration') -->
+<xsd:element name="commit-diff-list" type="CliDiffListType"/>
+<!--#IFMAP-SEMANTICS-IDL
+          ListProperty('commit-diff-list', 'cli-config', 'optional', 'CRUD',
+              'CLI diff object containing details about the commit such as username, time and the configuration diff') -->
 
 <xsd:element name="physical-interface" type="ifmap:IdentityType"/>
 <xsd:element name="ethernet-segment-identifier" type="xsd:string"/>
@@ -904,6 +933,13 @@
      </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="CommitStateType">
+     <xsd:restriction base='xsd:string'>
+         <xsd:enumeration value='in_sync'/>
+         <xsd:enumeration value='out_of_sync'/>
+     </xsd:restriction>
+</xsd:simpleType>
+
 <xsd:element name="physical-router-device-family" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-device-family', 'physical-router', 'required', 'CRUD',
@@ -1008,6 +1044,11 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('physical-router-dhcp-parameters', 'physical-router', 'optional', 'CRUD',
               'Dnsmasq lease parameters for the physical router.') -->
+
+<xsd:element name="physical-router-cli-commit-state" type='CommitStateType' default='in_sync'/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-router-cli-commit-state', 'physical-router', 'optional', 'CRUD',
+              'CLI commit state for the physical router. Used to check if device is in sync with Contrail managed configs') -->
 
 <xsd:element name="physical-router-managed-state" type='ManagedStateType' default="active"/>
 <!--#IFMAP-SEMANTICS-IDL
