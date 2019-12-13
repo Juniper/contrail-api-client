@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "219f4c75_d5c80fdf",
+        "filename": "schema/fabric.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 510
+      },
+      "writtenOn": "2019-12-13T23:38:03Z",
+      "side": 1,
+      "message": "Still not sure if we need this status field on each element of the diff list. If all accepted and rejected elements of the list are to be committed together, then all elements would end up with the same state. However, we must also consider the case where only SOME of the list elements are selected for accept/reject (leaving them in diffs_pending state). So after thinking about it some more, I don\u0027t think we need this field. I think the list elements will always be inherently diffs_pending if they are on the list. As soon as commit succeeds, the selected list elements will be removed from the list. If the commit fails, the list elements remain on the list as diffs_pending and the failure message goes to the job logs.",
+      "revId": "723ee0b583d85e96638d0bd62d6f07a0c8aab428",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
