@@ -8,21 +8,15 @@ import sys
 import platform
 
 subdirs = [
-    'schema'
+    'schema',
+    'api-lib'
 ]
-
-if platform.system() != 'Windows':
-    subdirs += ['api-lib']
 
 include = ['#/controller/src', '#/build/include', '#src/contrail-common', '#controller/lib']
 
 libpath = ['#/build/lib']
 
-libs = ['boost_system', 'boost_thread', 'log4cplus']
-if sys.platform.startswith('win'):
-    libs.append('contrail-windows')
-else:
-    libs.append('pthread')
+libs = ['boost_system', 'boost_thread', 'log4cplus', 'pthread']
 
 common = DefaultEnvironment().Clone()
 
@@ -34,8 +28,7 @@ else:
 common.Append(LIBPATH = libpath)
 common.Prepend(LIBS = libs)
 
-if not sys.platform.startswith('win'):
-    common.Append(CCFLAGS = '-Wall -Werror -Wsign-compare')
+common.Append(CCFLAGS = '-Wall -Werror -Wsign-compare')
 
 if not sys.platform.startswith('darwin'):
     if platform.system().startswith('Linux'):
