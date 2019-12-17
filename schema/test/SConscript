@@ -19,6 +19,9 @@ env.Append(LIBPATH = env['TOP'] + '/schema')
 env.Append(LIBPATH = env['TOP'] + '/bgp')
 env.Append(LIBPATH = env['TOP'] + '/xml')
 
+if env['CPP_STANDARD'] and env['CPP_STANDARD'] == 'c++11':
+    env.Prepend(LIBS = ['boost_chrono'])
+
 env.Prepend(LIBS = ['db', 'xmpp', 'peer_sandesh', 'sandesh', 'sandeshvns',
                     'process_info', 'io', 'crypto', 'ssl', 'base', 'gunit',
                     'pugixml', 'cassandra_cql', 'SimpleAmqpClient', 'rabbitmq',
