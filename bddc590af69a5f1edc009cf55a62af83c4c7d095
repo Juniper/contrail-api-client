@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7205ee9b_dd0a1a5e",
+        "filename": "schema/test/SConscript",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 822
+      },
+      "writtenOn": "2019-12-20T18:56:39Z",
+      "side": 1,
+      "message": "You can trust in short-circuit evaluation: https://docs.python.org/2/library/stdtypes.html#boolean-operations-and-or-not\n\nthen you can write the more compact expression:\nif \u0027CPP_STANDARD\u0027 in env and env[\u0027CPP_STANDARD\u0027] \u003d\u003d \u0027c++11\u0027:\n\nLet\u0027s get this merged ASAP.",
+      "revId": "bddc590af69a5f1edc009cf55a62af83c4c7d095",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
