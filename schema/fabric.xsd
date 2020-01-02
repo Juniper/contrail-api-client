@@ -1263,6 +1263,8 @@
         <xsd:enumeration value="private"/>
         <xsd:enumeration value="baremetal"/>
         <xsd:enumeration value="esxi"/>
+        <xsd:enumeration value="ovs-compute"/>
+        <xsd:enumeration value="sriov-compute"/>
     </xsd:restriction>
 </xsd:simpleType>
 
