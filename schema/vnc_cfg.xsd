@@ -1537,6 +1537,81 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
      </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:complexType name='VirtualNetworkRoutedPropertiesType'>
+    <xsd:all>
+        <xsd:element name="routed-properties" type="RoutedProperties" maxOccurs="unbounded"
+             description='List of routed properties for virtual network.'/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:simpleType name="RoutingProtocolType">
+    <xsd:restriction base='xsd:string'>
+        <xsd:enumeration value='static-routes'/>
+        <xsd:enumeration value='bgp'/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="RoutingPolicyParameters">
+    <xsd:all>
+        <xsd:element name='import-routing-policy-uuid' type='xsd:string' required='optional' maxOccurs="unbounded"
+             description='list of routing policy uuids used as import policies.'/>
+        <xsd:element name='export-routing-policy-uuid' type='xsd:string' required='optional' maxOccurs="unbounded"
+             description='list of routing policy uuids used as export policies.'/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="StaticRouteParameters">
+    <xsd:all>
+        <xsd:element name='interface-route-table-uuid' type='xsd:string' required='true' maxOccurs="unbounded"
+             description='list of interface route table uuids used to build list of prefixes.'/>
+        <xsd:element name='next-hop-ip-address' type='smi:IpAddress' required='true' maxOccurs="unbounded"
+             description='List of next-hop IP addresses.'/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="BfdParameters">
+    <xsd:all>
+        <xsd:element name='time-interval' type='xsd:integer' required='optional'
+             description='Rx/Tx time interval for BFD session in milliseconds.'/>
+        <xsd:element name='detection-time-multiplier' type='xsd:integer' required='optional'
+             description='Detection time multiplier for BFD session.'/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="BgpParameters">
+    <xsd:all>
+        <xsd:element name='peer-autonomous-system' type='xsd:integer' required='true'
+         description='Peer autonomous system number for this eBGP session.'/>
+    <xsd:element name='peer-ip-address' type='smi:IpAddress' required='true'
+         description='Peer ip address used for this eBGP session.'/>
+    <xsd:element name='hold-time' type='BgpHoldTime' default='0' required='optional'
+         description='BGP hold time in seconds [0-65535], Max time to detect liveliness to peer. Value 0 will result in default value of 90 seconds'/>
+    <xsd:element name='auth-data' type='AuthenticationData' required='optional'
+         description='Authentication related configuration like type, keys etc.'/>
+    <xsd:element name='local-autonomous-system' type='xsd:integer' required='optional'
+         description='BgpRouter specific Autonomous System number if different from global AS number.'/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name='RoutedProperties'>
+    <xsd:all>
+        <xsd:element name='physical-router-uuid' type='xsd:string' required='true'
+             description='Routed properties for particular physical router for this virtual-network.'/>
+        <xsd:element name='routed-interface-ip-address' type='IpAddressType' required='true'
+             description='IP address of the routed interface from the VN subnet.'/>
+        <xsd:element name='routing-protocol' type='RoutingProtocolType' required='true'
+             desription='Protocol used for exchanging route information.'/>
+        <xsd:element name='bgp-params' type='BgpParameters' required='optional'
+             description='BGP parameters such as ASN, peer IP address, authentication method/key.'/>
+        <xsd:element name='static-route-params' type='StaticRouteParameters' required='optional'
+             description='Static route parameters such as interface route table uuid, next hop IP address.'/>
+        <xsd:element name='bfd-params' type='BfdParameters' required='optional'
+             description='BFD parameters such as time interval, detection time multiplier.'/>
+        <xsd:element name='routing-policy-params' type='RoutingPolicyParameters' required='optional'
+             description='List of import/export routing policy uuids.'/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:complexType name='VirtualNetworkType'>
     <xsd:all>
         <xsd:element name='allow-transit' type="xsd:boolean" required='optional'
@@ -1591,18 +1666,24 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
         <xsd:enumeration value='infra'/>
         <xsd:enumeration value='tenant'/>
         <xsd:enumeration value='internal'/>
+        <xsd:enumeration value='routed'/>
     </xsd:restriction>
 </xsd:simpleType>
 
 <xsd:element name="virtual-network-category" type="VirtualNetworkCategory" default="tenant"/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('virtual-network-category', 'virtual-network', 'optional', 'CRUD',
-              'This attribute is to differentiate the infrastructure networks from the tenant networks. Infra-networks could be in-band network for management and control traffic') -->
+              'This attribute is to differentiate the infrastructure networks from the tenant and routed networks. Infra-networks could be in-band network for management and control traffic') -->
 
 <xsd:element name="virtual-network-properties" type="VirtualNetworkType"/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('virtual-network-properties', 'virtual-network', 'optional', 'CRUD',
                'Virtual network miscellaneous configurations.') -->
+
+<xsd:element name="virtual-network-routed-properties" type="VirtualNetworkRoutedPropertiesType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('virtual-network-routed-properties', 'virtual-network', 'optional', 'CRUD',
+               'Attributes for routed virtual networks.') -->
 
 <!-- Ecmp nexthop load balance criteria -->
 <!--#IFMAP-SEMANTICS-IDL

@@ -900,6 +900,11 @@
           Property('virtual-port-group-user-created', 'virtual-port-group', 'optional', 'CRUD',
               'Flag to be set to True when its externally created and False when created internally. Default is set to True') -->
 
+<xsd:element name="virtual-port-group-type" type='VpgType' default="access"/>
+<!--#IFMAP-SEMANTICS-IDL
+               Property('virtual-port-group-type', 'virtual-port-group', 'optional', 'CRUD',
+                   'Type of Virtual port group. It can be either access i.e L2 connectivity or routed.') -->
+
 <xsd:element name="virtual-port-group-physical-interface" type="VpgInterfaceParametersType"/>
 <!--#IFMAP-SEMANTICS-IDL
          Link('virtual-port-group-physical-interface', 'virtual-port-group', 'physical-interface', ['ref'], 'optional', 'CRUD',
@@ -921,6 +926,13 @@
               ['Logical interface type can be L2 or L3.',
                ' L2 - only L2 service is provided, MAC learning is supported.',
                ' L3 - only L3 service is supported and MAC learning is not supported.']) -->
+
+<xsd:simpleType name="VpgType">
+     <xsd:restriction base='xsd:string'>
+         <xsd:enumeration value='access'/>
+         <xsd:enumeration value='routed'/>
+     </xsd:restriction>
+</xsd:simpleType>
 
 <xsd:simpleType name="ManagedStateType">
      <xsd:restriction base='xsd:string'>
