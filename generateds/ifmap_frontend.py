@@ -2445,7 +2445,7 @@ class IFMapApiGenerator(object):
             write(gen_file, '        :returns: :class:`.%s` object' % (camel_name))
             write(gen_file, '        ')
             write(gen_file, '        """')
-            write(gen_file, "        raise NotImplementedError, '%s_read is %%s\\'s responsibility' %% (str(type (self)))" % method_name)
+            write(gen_file, "        raise NotImplementedError('%s_read is %%s\\'s responsibility' %% (str(type (self))))" % method_name)
             write(gen_file, "    # end %s_read" %(method_name))
             write(gen_file, "")
 
@@ -2455,7 +2455,7 @@ class IFMapApiGenerator(object):
             write(gen_file, '        :param obj: :class:`.%s` object' % (camel_name))
             write(gen_file, '        ')
             write(gen_file, '        """')
-            write(gen_file, "        raise NotImplementedError, '%s_update is %%s\\'s responsibility' %% (str(type (self)))" % method_name)
+            write(gen_file, "        raise NotImplementedError('%s_update is %%s\\'s responsibility' %% (str(type (self))))" % method_name)
             write(gen_file, "    # end %s_update" %(method_name))
             write(gen_file, "")
 
@@ -2477,7 +2477,7 @@ class IFMapApiGenerator(object):
                 write(gen_file, '        """')
             else:
                 write(gen_file, '        """List all %ss."""' % (ident_name))
-            write(gen_file, "        raise NotImplementedError, '%ss_list is %%s\\'s responsibility' %% (str(type (self)))" % method_name)
+            write(gen_file, "        raise NotImplementedError('%ss_list is %%s\\'s responsibility' %% (str(type (self))))" % method_name)
 
             write(gen_file, "    # end %ss_list" %(method_name))
             write(gen_file, "")
@@ -2490,12 +2490,12 @@ class IFMapApiGenerator(object):
             write(gen_file, '        :param ifmap_id: IFMAP id of %s' % (ident_name))
             write(gen_file, '        ')
             write(gen_file, '        """')
-            write(gen_file, "        raise NotImplementedError, '%s_delete is %%s\\'s responsibility' %% (str(type (self)))" % method_name)
+            write(gen_file, "        raise NotImplementedError('%s_delete is %%s\\'s responsibility' %% (str(type (self))))" % method_name)
             write(gen_file, "    # end %s_delete" %(method_name))
             write(gen_file, "")
             write(gen_file, "    def get_default_%s_id(self):" %(method_name))
             write(gen_file, '        """Return UUID of default %s."""' %(ident_name))
-            write(gen_file, "        raise NotImplementedError, 'get_default_%s_delete is %%s\\'s responsibility' %% (str(type (self)))" % method_name)
+            write(gen_file, "        raise NotImplementedError('get_default_%s_delete is %%s\\'s responsibility' %% (str(type (self))))" % method_name)
             write(gen_file, "    # end get_default_%s_delete" %(method_name))
             write(gen_file, "")
 
