@@ -16,6 +16,24 @@
       "revId": "8986207a03d880e582aa7951f86fe71040f6fd4b",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cf7fc7_10503c36",
+        "filename": "api-lib/SConscript",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 56
+      },
+      "writtenOn": "2020-01-10T19:43:53Z",
+      "side": 1,
+      "message": "At line 109, we add a command to scons with source setup.py and in line 117 if I use the same source setup.py, the command at line 109 was overwritten by the line at 117.\n\nSo i am creating a new link and using it. let know if there is a better way. thank you",
+      "parentUuid": "19fd250b_132b86b7",
+      "revId": "8986207a03d880e582aa7951f86fe71040f6fd4b",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
