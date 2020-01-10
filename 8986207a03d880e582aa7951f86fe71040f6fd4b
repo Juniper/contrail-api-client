@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19fd250b_132b86b7",
+        "filename": "api-lib/SConscript",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 10
+      },
+      "writtenOn": "2020-01-10T06:04:44Z",
+      "side": 1,
+      "message": "Why do you need to create a setup3.py file? You cannot use setup.py directly?",
+      "revId": "8986207a03d880e582aa7951f86fe71040f6fd4b",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
