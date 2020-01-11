@@ -2,6 +2,8 @@
 # Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
 #
 
+import os
+
 from SCons.Node.FS import Entry as entry_class
 from SCons.Node.FS import File as file_class
 from SCons.Node.FS import Dir as dir_class
@@ -100,12 +102,23 @@ env.Depends(setup_sources_rules, autogen_infra_sources)
 # install everything before building distribution
 env.Depends(sdist_gen, sdist_depends)
 
+def SymLink(target, source, env):
+    os.symlink(os.path.abspath(str(source[0])), os.path.abspath(str(target[0])))
+
 if 'install' in BUILD_TARGETS:
    install_cmd = env.Command(None, 'setup.py',
                              cd_cmd + 'python setup.py install %s' %
                              env['PYTHON_INSTALL_OPT'])
    env.Depends(install_cmd, sdist_depends)
    env.Alias('install', install_cmd)
+   # Install in python3 path
+   setup_link_cmd = env.Command("setup3.py", "setup.py", SymLink)
+   env.Depends(setup_link_cmd, sdist_depends)
+   py3_install_cmd = env.Command(None, 'setup3.py',
+                             cd_cmd + 'python3 setup3.py install %s' %
+                             env['PYTHON_INSTALL_OPT'])
+   env.Depends(py3_install_cmd, sdist_depends)
+   env.Alias('install', py3_install_cmd)
 
 env.Alias('install',
     env.Install(env['INSTALL_CONF'], 'etc/contrail/vnc_api_lib.ini'))
