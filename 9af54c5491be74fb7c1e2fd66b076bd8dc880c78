@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8f35814_276eef92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 558
+      },
+      "writtenOn": "2020-01-13T12:08:49Z",
+      "side": 1,
+      "message": "Please provide permalink to types.yml file from Contrail",
+      "revId": "9af54c5491be74fb7c1e2fd66b076bd8dc880c78",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
