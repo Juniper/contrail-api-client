@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc722af3_8a9c271f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 618
+      },
+      "writtenOn": "2020-01-14T12:32:20Z",
+      "side": 1,
+      "message": "What about adding:\n\nDepends-On: Ie4328c937bc9e913f0de8b53d02651ad3c81f8e4",
+      "revId": "f6c9f0856dc875af2276052b010182a021663108",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6136c01c_eb1b3565",
+        "filename": "schema/yaml/types.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 618
+      },
+      "writtenOn": "2020-01-14T12:32:20Z",
+      "side": 1,
+      "message": "Should the XSD schema be updated as well?",
+      "revId": "f6c9f0856dc875af2276052b010182a021663108",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
