@@ -33,6 +33,24 @@
       "revId": "f6c9f0856dc875af2276052b010182a021663108",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b2cc06_b34ed2d3",
+        "filename": "schema/yaml/types.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 710
+      },
+      "writtenOn": "2020-01-14T12:39:07Z",
+      "side": 1,
+      "message": "According to Ignatious we only had to modify this file. Apart from that I don\u0027t have any information.",
+      "parentUuid": "6136c01c_eb1b3565",
+      "revId": "f6c9f0856dc875af2276052b010182a021663108",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
