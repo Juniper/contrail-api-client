@@ -51,6 +51,24 @@
       "revId": "f6c9f0856dc875af2276052b010182a021663108",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d747d8a9_17f3e888",
+        "filename": "schema/yaml/types.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 618
+      },
+      "writtenOn": "2020-01-15T11:03:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "10b2cc06_b34ed2d3",
+      "revId": "f6c9f0856dc875af2276052b010182a021663108",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
     }
   ]
 }
