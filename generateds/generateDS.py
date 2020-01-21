@@ -1099,6 +1099,21 @@ if __name__ == '__main__':
         dh = XschemaHandler(self)
     ##    parser.setDocumentHandler(dh)
         parser.setContentHandler(dh)
+        infile = self.getInfile()
+        parser.parse(infile)
+        # on MacOS parser.parse closes infile
+        if infile.closed:
+            infile = self.getInfile()
+        root = dh.getRoot()
+        root.annotate()
+    ##     print '-' * 60
+    ##     root.show(sys.stdout, 0)
+    ##     print '-' * 60
+        #debug_show_elements(root)
+        infile.seek(0)
+        self._Generator.generate(root, infile, self.outFilename)
+
+    def getInfile(self):
         if self.xschemaFileName == '-':
             infile = sys.stdin
         else:
@@ -1110,15 +1125,7 @@ if __name__ == '__main__':
                 inpath=self.xschemaFileName)
             outfile.seek(0)
             infile = outfile
-        parser.parse(infile)
-        root = dh.getRoot()
-        root.annotate()
-    ##     print '-' * 60
-    ##     root.show(sys.stdout, 0)
-    ##     print '-' * 60
-        #debug_show_elements(root)
-        infile.seek(0)
-        self._Generator.generate(root, infile, self.outFilename)
+        return infile
 
 
 def showLevel(outfile, level):
