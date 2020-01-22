@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c3fdac_d9090777",
+        "filename": "schema/fabric.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "Is this mentioned anywhere in the UX designs? I don\u0027t see it",
+      "range": {
+        "startLine": 874,
+        "startChar": 19,
+        "endLine": 874,
+        "endChar": 42
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e49ceca_495b2483",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "The UI mentions only a single next hop address. https://projects.invisionapp.com/share/ZNR9YUAGER4#/screens/400188316\n\n1. If it should be an array, then the UX designs have to be modified\n2. If it should be a single IP address, what should the value be for this field? An array containing one element, like so `[\u0027ip address\u0027]`?",
+      "range": {
+        "startLine": 1567,
+        "startChar": 27,
+        "endLine": 1567,
+        "endChar": 46
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b87d86c_5738b61e",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "What are the possible values for this kind of type? any IPv4 and IPv6 address?",
+      "range": {
+        "startLine": 1567,
+        "startChar": 54,
+        "endLine": 1567,
+        "endChar": 67
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7006b7c_9cbfc4ad",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "In which units should the time interval be provided? Milliseconds? Microseconds? Seconds?\n\nThe UI mentions milliseconds https://projects.invisionapp.com/share/ZNR9YUAGER4#/screens/400188321",
+      "range": {
+        "startLine": 1574,
+        "startChar": 27,
+        "endLine": 1574,
+        "endChar": 40
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b5d3f8_c666034a",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "I don\u0027t see this field specified in the designs:\nhttps://projects.invisionapp.com/share/ZNR9YUAGER4#/screens/400188322\n\nShould it be omitted in the UI?",
+      "range": {
+        "startLine": 1587,
+        "startChar": 23,
+        "endLine": 1587,
+        "endChar": 32
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dab8dc_85012e68",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "In the UI I only see a field called _md5 Authentication Key_. How should the payload look like when the key (a string) is provided by the user?\n\nhttps://projects.invisionapp.com/share/ZNR9YUAGER4#/screens/400188322",
+      "range": {
+        "startLine": 1589,
+        "startChar": 23,
+        "endLine": 1589,
+        "endChar": 32
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525329ec_df8a1fce",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "I don\u0027t see the form inputs for these values in the UX designs:\nhttps://projects.invisionapp.com/share/ZNR9YUAGER4#/screens/400188319\n\nShould they be ignored by the UI and left empty in the payload?",
+      "range": {
+        "startLine": 1610,
+        "startChar": 27,
+        "endLine": 1610,
+        "endChar": 48
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef33371_8fd2552e",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1683,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "From the UX designs, I see that all those properties that are stored on VNs are configurable in the Logical Router\u0027s create/edit form.\n\nTherefore, when creating/editing a Logical Router, the UI will have to make multiple API calls to update all connected VNs. Then, this is request chaining, which, according to current rules, **must not** be done by the UI. The backend should expose a single endpoint that will be fed all the data from the Logical Router\u0027s create/edit form and make necessary changes (create/edit the LR, update connected VNs).",
+      "range": {
+        "startLine": 1683,
+        "startChar": 19,
+        "endLine": 1683,
+        "endChar": 52
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22e63b4_d78cfc61",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-22T12:06:21Z",
+      "side": 1,
+      "message": "Is this field specified anywhere in the UI? I don\u0027t see it on the UX designs",
+      "range": {
+        "startLine": 3062,
+        "startChar": 19,
+        "endLine": 3062,
+        "endChar": 44
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
