@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad56644a_df7d62c8",
+        "filename": "schema/fabric.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Answer from Parag:\n\nPlease see below UX mock up : https://projects.invisionapp.com/share/ZNR9YUAGER4#/395897268_CEM-4455\n\nIn this UX, click on VPG, then click on create, this will show Create VPG screen. Under this screen, Virtual Port Group Type has been added  With 2 radio buttons Layer 2 or Routed. This radio button value represents virtual-port-group-type",
+      "parentUuid": "79c3fdac_d9090777",
+      "range": {
+        "startLine": 874,
+        "startChar": 19,
+        "endLine": 874,
+        "endChar": 42
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e49ceca_495b2483",
         "filename": "schema/vnc_cfg.xsd",
         "patchSetId": 3
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "3e1dfaeb_29b8aa16",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Answer from Parag:\n\n@Ankur Tandon can confirm this. As per my understanding, it should be single value in list and of type IP address (Ipv4 or IPv6).",
+      "parentUuid": "2b87d86c_5738b61e",
+      "range": {
+        "startLine": 1567,
+        "startChar": 54,
+        "endLine": 1567,
+        "endChar": 67
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a012c2b_13b7edab",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Answer from Parag:\n\n@Ankur Tandon can confirm this. As per my understanding, it should be #2 single value in list and of type IP address (Ipv4 or IPv6).",
+      "parentUuid": "3e49ceca_495b2483",
+      "range": {
+        "startLine": 1567,
+        "startChar": 27,
+        "endLine": 1567,
+        "endChar": 46
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7006b7c_9cbfc4ad",
         "filename": "schema/vnc_cfg.xsd",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0cda25_03bf0c51",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Answer from Parag:\n\nCorrect, Its milliseconds.",
+      "parentUuid": "e7006b7c_9cbfc4ad",
+      "range": {
+        "startLine": 1574,
+        "startChar": 27,
+        "endLine": 1574,
+        "endChar": 40
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f91f8f41_fe06cecd",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Answer from Parag:\n\nYes, it can be omitted in UI as its not covered in UX design.",
+      "parentUuid": "b9b5d3f8_c666034a",
+      "range": {
+        "startLine": 1587,
+        "startChar": 23,
+        "endLine": 1587,
+        "endChar": 32
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95dab8dc_85012e68",
         "filename": "schema/vnc_cfg.xsd",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c036355_472ef188",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Answer from Parag:\n\n@Ankur Tandon can confirm this. As per my understanding, it is single string (value can be either KeyBasedAuthentication or PasswordBasedAuthentication)\n\n---\n\nOk, I will use a string here. I see that `AuthenticationData` is defined in the schema files. I can probably figure out the data structure. It may be different than a simple string.",
+      "parentUuid": "95dab8dc_85012e68",
+      "range": {
+        "startLine": 1589,
+        "startChar": 23,
+        "endLine": 1589,
+        "endChar": 32
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "71044855_a5fd9b39",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Answer from Parag:\n\nThis property will be used for routing policy association with routed VN in future. In current UX design, that is not covered. So leave it as it is (at create, empty).",
+      "parentUuid": "525329ec_df8a1fce",
+      "range": {
+        "startLine": 1610,
+        "startChar": 27,
+        "endLine": 1610,
+        "endChar": 48
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ef33371_8fd2552e",
         "filename": "schema/vnc_cfg.xsd",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2020-01-22T12:06:21Z",
       "side": 1,
       "message": "From the UX designs, I see that all those properties that are stored on VNs are configurable in the Logical Router\u0027s create/edit form.\n\nTherefore, when creating/editing a Logical Router, the UI will have to make multiple API calls to update all connected VNs. Then, this is request chaining, which, according to current rules, **must not** be done by the UI. The backend should expose a single endpoint that will be fed all the data from the Logical Router\u0027s create/edit form and make necessary changes (create/edit the LR, update connected VNs).",
+      "range": {
+        "startLine": 1683,
+        "startChar": 19,
+        "endLine": 1683,
+        "endChar": 52
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8cca0d_8633d0b8",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1683,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Yup, it looks like the plan was to introduce request chaining. It will be discussed by Parag, Ankur, Atul, Jacopo.",
+      "parentUuid": "1ef33371_8fd2552e",
       "range": {
         "startLine": 1683,
         "startChar": 19,
@@ -206,6 +398,30 @@
       "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5dfdef_ef7252d9",
+        "filename": "schema/vnc_cfg.xsd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 775
+      },
+      "writtenOn": "2020-01-23T10:01:30Z",
+      "side": 1,
+      "message": "Answer from Parag:\n\nAgree. Current UX workflow does not have included this, this will be done in future.",
+      "parentUuid": "e22e63b4_d78cfc61",
+      "range": {
+        "startLine": 3062,
+        "startChar": 19,
+        "endLine": 3062,
+        "endChar": 44
+      },
+      "revId": "46f183e93fd1ec5fe50999f5324f3494cf6cbcfc",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
     }
   ]
 }
