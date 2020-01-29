@@ -2533,14 +2533,6 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'virtual-router', 'sub-cluster', ['ref'], 'optional', 'CRUD',
           'Reference of vrouter to sub-cluster.') -->
 
-
-<xsd:element name="sub-cluster" type="ifmap:IdentityType"/>
-
-<xsd:element name="sub-cluster-asn" type="AutonomousSystemType"/>
-<!--#IFMAP-SEMANTICS-IDL
-     Property('sub-cluster-asn', 'sub-cluster' , 'required', 'CRUD',
-              'AS number of that cluster.') -->
-
 <xsd:element name="virtual-router-virtual-machine"/>
 <!--#IFMAP-SEMANTICS-IDL
     Link('virtual-router-virtual-machine',
@@ -3761,5 +3753,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 
 <!-- Host Based Service  -->
 <xsd:include schemaLocation='host_based_service.xsd'/>
+
+<!-- Sub-cluster  -->
+<xsd:include schemaLocation='sub_cluster.xsd'/>
 
 </xsd:schema>
