@@ -27,6 +27,8 @@
 <xsd:simpleType name="FeatureIdType">
     <xsd:restriction base="xsd:string">
         <xsd:enumeration value="default"/>
+        <xsd:enumeration value="__test_feature_1__"/>
+        <xsd:enumeration value="__test_feature_2__"/>
     </xsd:restriction>
 </xsd:simpleType>
 
