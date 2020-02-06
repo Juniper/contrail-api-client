@@ -707,7 +707,7 @@ definitions:
         description: Roles of the cloud instance
         items:
           enum:
-          - compute_node
+          - compute
           - controller
           - gateway
           - k8s_master
