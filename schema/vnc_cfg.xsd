@@ -3054,6 +3054,23 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
          Property('flow-node-inband-interface', 'flow-node', 'optional', 'CRUD',
               'In-Band interface name used for this flow node.') -->
 
+<xsd:element name="contrail-insight-node" type="ifmap:IdentityType"/>
+<xsd:element name="global-system-config-contrail-insight-node"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('global-system-config-contrail-insight-node',
+          'global-system-config', 'contrail-insight-node', ['has'], 'admin-only', 'CRUD',
+          'Contrail insight node is object representing a logical node in system which serves telemetry in Contrail.') -->
+
+<xsd:element name="contrail-insight-node-ip-address" type="IpAddressType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('contrail-insight-node-ip-address', 'contrail-insight-node', 'admin-only', 'CRUD',
+              'Ip address of the contrail insight node, set while provisioning.') -->
+
+<xsd:element name="contrail-insight-node-port" type="xsd:integer"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('contrail-insight-node-port', 'contrail-insight-node', 'admin-only', 'CRUD',
+              'Port on which contrail insight is running, set while provisioning.') -->
+
 <xsd:element name="devicemgr-node" type="ifmap:IdentityType"/>
 <xsd:element name="global-system-config-devicemgr-node"/>
 <!--#IFMAP-SEMANTICS-IDL
