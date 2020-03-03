@@ -35,6 +35,10 @@ references:
     description: Fabric that this physical-router belongs to.
     operations: CRUD
     presence: optional
+  intent_map:
+    description: The Physical Routers on which the config needs to be pushed
+    operations: CRUD
+    presence: optional
   node_profile:
     description: Node profile assigned to the physical router during device discovery/onboarding.
     operations: CRUD
@@ -70,6 +74,12 @@ schema:
       $ref: types.json#/definitions/AutonomousSystemsType
       description: Autonomous system configured on the device represented by the physical
         router.
+      operations: CRUD
+      presence: optional
+    physical_router_cli_commit_state:
+      $ref: types.json#/definitions/CommitStateType
+      description: CLI commit state for the physical router. Used to check if device
+        is in sync with Contrail managed configs
       operations: CRUD
       presence: optional
     physical_router_dataplane_ip:

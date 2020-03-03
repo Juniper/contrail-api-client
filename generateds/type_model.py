@@ -8,11 +8,12 @@ import re
 
 from ifmap_global import getCppType, getJavaType, IsGeneratedType, CamelCase
 
+
+KEYWORDS = {'static' : '_static'}
+
+
 def CppVariableName(varname):
-    keywords = ['static']
-    if varname in keywords:
-        varname = '_' + varname;
-    return varname
+    return KEYWORDS.get(varname, varname)
         
 class MemberInfo(object):
     def __init__(self):

@@ -16,6 +16,10 @@ references:
     description: Back reference to virtual network associated to the BGP VPN resource
     operations: CRUD
     presence: optional
+  intent_map:
+    description: All virtual-network objects that get created in the fabric
+    operations: CRUD
+    presence: optional
   multicast_policy:
     description: Reference to multicast policy. Each multicast policy has a list of           (S,G)
       Addresses.
@@ -185,8 +189,8 @@ schema:
     virtual_network_category:
       $ref: types.json#/definitions/VirtualNetworkCategory
       description: This attribute is to differentiate the infrastructure networks
-        from the tenant networks. Infra-networks could be in-band network for management
-        and control traffic
+        from the tenant and routed networks. Infra-networks could be in-band network
+        for management and control traffic
       operations: CRUD
       presence: optional
     virtual_network_fat_flow_protocols:
@@ -205,6 +209,11 @@ schema:
     virtual_network_properties:
       $ref: types.json#/definitions/VirtualNetworkType
       description: Virtual network miscellaneous configurations.
+      operations: CRUD
+      presence: optional
+    virtual_network_routed_properties:
+      $ref: types.json#/definitions/VirtualNetworkRoutedPropertiesType
+      description: Attributes for routed virtual networks.
       operations: CRUD
       presence: optional
   required: []
