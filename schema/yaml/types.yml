@@ -293,24 +293,21 @@ definitions:
         type: integer
     type: object
   AttachmentAddressType:
-    properties:
-      status:
-        type: string
     type: object
   AttachmentInfoType:
     properties:
-      static:
-        $ref: types.json#/definitions/ProtocolStaticType
       bgp:
         $ref: types.json#/definitions/ProtocolBgpType
       ospf:
         $ref: types.json#/definitions/ProtocolOspfType
-      state:
-        enum:
-        - up
-        - down
-        - adminDown
-        type: string
+      state:
+        enum:
+        - up
+        - down
+        - adminDown
+        type: string
+      static:
+        $ref: types.json#/definitions/ProtocolStaticType
     type: object
   AuthenticationData:
     properties:
@@ -441,6 +438,17 @@ definitions:
         $ref: types.json#/definitions/BaremetalProperties
         description: Details of baremetal hardware for scheduler
     type: object
+  BfdParameters:
+    properties:
+      detection_time_multiplier:
+        description: Detection time multiplier for BFD session.
+        presence: optional
+        type: integer
+      time_interval:
+        description: Rx/Tx time interval for BFD session in milliseconds.
+        presence: optional
+        type: integer
+    type: object
   BgpAsPathLoopCount:
     maximum: 16
     minimum: 0
@@ -470,6 +478,31 @@ definitions:
     maximum: 65535
     minimum: 0
     type: integer
+  BgpParameters:
+    properties:
+      auth_data:
+        $ref: types.json#/definitions/AuthenticationData
+        description: Authentication related configuration like type, keys etc.
+        presence: optional
+      hold_time:
+        $ref: types.json#/definitions/BgpHoldTime
+        description: BGP hold time in seconds [0-65535], Max time to detect liveliness
+          to peer. Value 0 will result in default value of 90 seconds
+        presence: optional
+      local_autonomous_system:
+        description: BgpRouter specific Autonomous System number if different from
+          global AS number.
+        presence: optional
+        type: integer
+      peer_autonomous_system:
+        description: Peer autonomous system number for this eBGP session.
+        presence: 'true'
+        type: integer
+      peer_ip_address:
+        $ref: types.json#/definitions/IpAddress
+        description: Peer ip address used for this eBGP session.
+        presence: 'true'
+    type: object
   BgpPeeringAttributes:
     properties:
       session:
@@ -680,7 +713,24 @@ definitions:
     properties:
       vlan_tag:
         $ref: types.json#/definitions/Dot1QTagType
-        description: VLAN tag of the incoming packet that maps the virtual-machine-interface to bridge domain
+        description: VLAN tag of the incoming packet that maps the                      virtual-machine-interface
+          to bridge domain
+    type: object
+  CliDiffInfoType:
+    properties:
+      config_changes:
+        type: string
+      time:
+        type: string
+      username:
+        type: string
+    type: object
+  CliDiffListType:
+    properties:
+      commit_diff_info:
+        items:
+          $ref: types.json#/definitions/CliDiffInfoType
+        type: array
     type: object
   CloudInstanceInfo:
     properties:
@@ -694,11 +744,11 @@ definitions:
         description: image (ami) id of instance
         type: string
       operating_system:
-        description: Name of operating system, ex - centos7 or ubuntu18
-        enum:
-        - ubuntu18
-        - centos7
-        - rhel7
+        description: Name of operating system, ex - centos7 or ubuntu18
+        enum:
+        - ubuntu18
+        - centos7
+        - rhel7
         type: string
       os_version:
         description: specific version of operating system
@@ -706,19 +756,24 @@ definitions:
       roles:
         description: Roles of the cloud instance
         items:
-          enum:
-          - compute_node
-          - controller
-          - gateway
-          - k8s_master
-          - vrouter
-          - bare_node
-          type: string
+          enum:
+          - compute_node
+          - controller
+          - gateway
+          - k8s_master
+          - vrouter
+          - bare_node
         type: array
       volume_size:
         description: Size of the volume for the cloud instance
         type: integer
     type: object
+  CommitStateType:
+    default: in_sync
+    enum:
+    - in_sync
+    - out_of_sync
+    type: string
   CommunityAttribute:
     items:
       type: string
@@ -1133,6 +1188,18 @@ definitions:
           $ref: types.json#/definitions/ProtocolType
         type: array
     type: object
+  FeatureIdType:
+    enum:
+    - default
+    type: string
+  FeatureStateType:
+    enum:
+    - experimental
+    - alpha
+    - beta
+    - in-progress
+    - pre-retired
+    type: string
   FieldNamesList:
     properties:
       field_names:
@@ -1366,6 +1433,10 @@ definitions:
       import_export:
         $ref: types.json#/definitions/ImportExportType
     type: object
+  IntentType:
+    enum:
+    - assisted-replicator
+    type: string
   InterfaceMapType:
     properties:
       port_info:
@@ -2690,11 +2761,57 @@ definitions:
         description: Ip prefix/len format prefix
         type: string
     type: object
+  RoutedProperties:
+    properties:
+      bfd_params:
+        $ref: types.json#/definitions/BfdParameters
+        description: BFD parameters such as time interval, detection time multiplier.
+        presence: optional
+      bgp_params:
+        $ref: types.json#/definitions/BgpParameters
+        description: BGP parameters such as ASN, peer IP address, authentication method/key.
+        presence: optional
+      physical_router_uuid:
+        description: Routed properties for particular physical router for this virtual-network.
+        presence: 'true'
+        type: string
+      routed_interface_ip_address:
+        $ref: types.json#/definitions/IpAddressType
+        description: IP address of the routed interface from the VN subnet.
+        presence: 'true'
+      routing_policy_params:
+        $ref: types.json#/definitions/RoutingPolicyParameters
+        description: List of import/export routing policy uuids.
+        presence: optional
+      routing_protocol:
+        $ref: types.json#/definitions/RoutingProtocolType
+        presence: 'true'
+      static_route_params:
+        $ref: types.json#/definitions/StaticRouteParameters
+        description: Static route parameters such as interface route table uuid, next
+          hop IP address.
+        presence: optional
+    type: object
   RoutingBridgingRolesType:
     properties:
       rb_roles:
         items:
           type: string
+        type: array
+    type: object
+  RoutingPolicyParameters:
+    properties:
+      export_routing_policy_uuid:
+        description: list of routing policy uuids used as export policies.
+        items:
+          type: string
+        presence: optional
+        type: array
+      import_routing_policy_uuid:
+        description: list of routing policy uuids used as import policies.
+        items:
+          type: string
+        presence: optional
         type: array
     type: object
   RoutingPolicyServiceInstanceType:
@@ -2709,6 +2826,11 @@ definitions:
       sequence:
         $ref: types.json#/definitions/SequenceNumberType
     type: object
+  RoutingProtocolType:
+    enum:
+    - static-routes
+    - bgp
+    type: string
   RpfModeType:
     enum:
     - enable
@@ -2751,6 +2873,11 @@ definitions:
       version:
         type: integer
     type: object
+  SampleDirection:
+    enum:
+    - ingress
+    - egress
+    type: string
   SampleRate:
     maximum: 16777215
     minimum: 1
@@ -3167,6 +3294,19 @@ definitions:
           $ref: types.json#/definitions/StaticRouteType
         type: array
     type: object
+  StaticRouteParameters:
+    properties:
+      interface_route_table_uuid:
+        description: list of interface route table uuids used to build list of prefixes.
+        items:
+          type: string
+        presence: 'true'
+        type: array
+      next_hop_ip_address:
+        $ref: types.json#/definitions/IpAddress
+        description: List of next-hop IP addresses.
+        presence: 'true'
+    type: object
   StaticRouteType:
     properties:
       community:
@@ -3184,6 +3324,9 @@ definitions:
     type: object
   StatsCollectionFrequency:
     properties:
+      direction:
+        $ref: types.json#/definitions/SampleDirection
+        presence: optional
       polling_interval:
         $ref: types.json#/definitions/PollingInterval
         presence: optional
@@ -3555,6 +3698,7 @@ definitions:
     - infra
     - tenant
     - internal
+    - routed
     type: string
   VirtualNetworkPolicyType:
     properties:
@@ -3566,6 +3710,14 @@ definitions:
         $ref: types.json#/definitions/TimerType
         description: Timer to specify when the policy can be active
         presence: optional
+    type: object
+  VirtualNetworkRoutedPropertiesType:
+    properties:
+      routed_properties:
+        description: List of routed properties for virtual network.
+        items:
+          $ref: types.json#/definitions/RoutedProperties
+        type: array
     type: object
   VirtualNetworkType:
     properties:
@@ -3644,6 +3796,12 @@ definitions:
       ae_num:
         type: integer
     type: object
+  VpgType:
+    default: access
+    enum:
+    - access
+    - routed
+    type: string
   VpnType:
     default: l3
     enum:

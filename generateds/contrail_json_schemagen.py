@@ -8,6 +8,8 @@ import os
 import re
 import json
 
+import type_model
+
 try:
     import pyaml
     pyaml_found = True
@@ -225,6 +227,10 @@ class ContrailJsonSchemaGenerator(object):
                 subJson['description'] = dataMember.xsd_object.description
             if(dataMember.xsd_object.required):
                 subJson['presence'] = dataMember.xsd_object.required
+
+            for k, v in type_model.KEYWORDS.items():
+                if v == dataMember.membername:
+                    dataMember.membername = k
             self._json_type_map[ctype.getName(
             )]["properties"][dataMember.membername] = subJson
         return self._json_type_map[ctype.getName()]
@@ -279,7 +285,50 @@ class ContrailJsonSchemaGenerator(object):
                 "references": {},
                 "schema": {"type": "object",
                            "required": [],
-                           "properties": {}}}
+                           "properties": {
+                                          "uuid": {
+                                            "presence": "true",
+                                            "description": "UUID of the object, system automatically allocates one if not provided",
+                                            "type": "string"
+                                          },
+                                          "name": {
+                                            "presence": "true",
+                                            "description": "Name of the object, defaults to 'default-<resource-type>'",
+                                            "type": "string",
+                                            "nullable": "false"
+                                          },
+                                          "parent_uuid": {
+                                            "presence": "optional",
+                                            "description": "UUID of the parent object",
+                                            "type": "string"
+                                          },
+                                          "parent_type": {
+                                            "presence": "optional",
+                                            "description": "Parent resource type",
+                                            "type": "string"
+                                          },
+                                          "fq_name": {
+                                            "presence": "true",
+                                            "description": "FQ Name of the object",
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "configuration_version": {
+                                            "operations": "CRUD",
+                                            "presence": "optional",
+                                            "description": "Configuration Version for the object.",
+                                            "type": "integer",
+                                            "sql": "bigint"
+                                          },
+                                          "href": {
+                                            "operations": "R",
+                                            "presence": "service",
+                                            "description": "Instance reference URL",
+                                            "type": "string"
+                                          }
+                                       } }}
 
         for ident in list(self._identifier_map.values()):
             self._objectsList.append(ident._name)

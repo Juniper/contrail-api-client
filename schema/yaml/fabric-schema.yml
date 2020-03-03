@@ -11,6 +11,10 @@ parents:
 plural: fabrics
 prefix: /
 references:
+  intent_map:
+    description: Fabric that belongs to this intent map
+    operations: CRUD
+    presence: optional
   node_profile:
     $ref: types.json#/definitions/SerialNumListType
     description: node profiles assignd to the fabric. The serial number list on the
