@@ -817,6 +817,11 @@
              'global-system-config', 'device-image', ['has'], 'optional', 'CRUD',
              'list of device image info for the images that get uploaded to the system.') -->
 
+<xsd:element name="device-image-file-name" type="xsd:string"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('device-image-file-name', 'device-image', 'required', 'CRUD',
+              'Name of the device image. As of now, for Juniper devices, it will be used by device manager during image upgrade to send additional flag for vmhost based REs.') -->
+
 <xsd:element name="device-image-vendor-name" type="xsd:string"/>
 <!--#IFMAP-SEMANTICS-IDL
           Property('device-image-vendor-name', 'device-image', 'required', 'CRUD',
