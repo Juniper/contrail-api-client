@@ -106,6 +106,8 @@ definitions:
     - reject
     - accept
     - next
+    - external-ospf-type-1
+    - external-ospf-type-2
     type: string
   ActionUpdateType:
     properties:
@@ -805,6 +807,11 @@ definitions:
     - none
     - local
     type: string
+  DataCenterInterConnectType:
+    enum:
+    - inter_fabric
+    - intra_fabric
+    type: string
   DataCenterInterconnectModes:
     enum:
     - l3
@@ -1150,6 +1157,11 @@ definitions:
           type: string
         type: array
     type: object
+  ExternalRouteType:
+    enum:
+    - ospf-type-1
+    - ospf-type-2
+    type: string
   FabricNetworkTag:
     properties:
       network_type:
@@ -1161,6 +1173,12 @@ definitions:
     - loopback
     - ip-fabric
     - pnf-servicechain
+    type: string
+  FamilyType:
+    enum:
+    - inet
+    - inet-vpn
+    - evpn
     type: string
   FatFlowIgnoreAddressType:
     enum:
@@ -1865,6 +1883,28 @@ definitions:
     - l2
     - l3
     type: string
+  LogicalRouterPRListParams:
+    properties:
+      logical_router_uuid:
+        description: stores destination logical router uuid for dci intra-fabric type.
+        presence: 'true'
+        type: string
+      physical_router_uuid_list:
+        description: list of physical routers uuid exists in current destination logical-router
+          and user has selected this PR for dci intra-fabric route leaks.
+        items:
+          type: string
+        presence: 'true'
+        type: array
+    type: object
+  LogicalRouterPRListType:
+    properties:
+      logical_router_list:
+        description: List of Destination LRs properties
+        items:
+          $ref: types.json#/definitions/LogicalRouterPRListParams
+        type: array
+    type: object
   LogicalRouterType:
     default: snat-routing
     enum:
@@ -2121,15 +2161,20 @@ definitions:
   PathSourceType:
     items:
       enum:
-      - bgp
       - xmpp
-      - static
       - service-chain
-      - aggregate
       - interface
       - interface-static
       - service-interface
       - bgpaas
+      - bgp
+      - static
+      - aggregate
+      - direct
+      - pim
+      - evpn
+      - ospf
+      - ospf3
       type: string
     type: array
   PeeringServiceType:
@@ -2342,6 +2387,8 @@ definitions:
         items:
           $ref: types.json#/definitions/PolicyTermType
         type: array
+      term_type:
+        $ref: types.json#/definitions/TermType
     type: object
   PolicyTermType:
     properties:
@@ -2434,6 +2481,17 @@ definitions:
       start_port:
         $ref: types.json#/definitions/L4PortType
         presence: 'true'
+    type: object
+  PrefixListMatchType:
+    properties:
+      interface_route_table_uuid:
+        description: list of interface route table uuids used to build list of prefixes.
+        items:
+          type: string
+        presence: 'true'
+        type: array
+      prefix_type:
+        $ref: types.json#/definitions/PrefixType
     type: object
   PrefixMatchType:
     properties:
@@ -2697,6 +2755,38 @@ definitions:
     maximum: 65535
     minimum: 1
     type: integer
+  RouteFType:
+    enum:
+    - exact
+    - longer
+    - orlonger
+    - prefix-length-range
+    - through
+    - upto
+    type: string
+  RouteFilterProperties:
+    properties:
+      route:
+        description: route filter IP address or host name.
+        presence: 'true'
+        type: string
+      route_type:
+        $ref: types.json#/definitions/RouteFType
+      route_type_value:
+        description: 'Valid only for through, upto or prefix-length-range RouteFType.
+          Format: for prefix-length-range it stores ''/min-length-/max-length''. through
+          should be string, upto stores ''/number'''
+        presence: optional
+        type: string
+    type: object
+  RouteFilterType:
+    properties:
+      route_filter_properties:
+        description: List of route filter properties.
+        items:
+          $ref: types.json#/definitions/RouteFilterProperties
+        type: array
+    type: object
   RouteListType:
     properties:
       route:
@@ -3433,11 +3523,26 @@ definitions:
     properties:
       action:
         $ref: types.json#/definitions/ActionType
+      as_path_expand:
+        description: Valid only for network-device TermType. string should be in format
+          of AS number(s) seperated by spaces
+        presence: optional
+        type: string
+      as_path_prepend:
+        description: Valid only for network-device TermType. string should be in format
+          of AS number(s) seperated by spaces
+        presence: optional
+        type: string
       update:
         $ref: types.json#/definitions/ActionUpdateType
     type: object
   TermMatchConditionType:
     properties:
+      as_path:
+        items:
+          type: integer
+        presence: optional
+        type: array
       community:
         type: string
       community_list:
@@ -3452,13 +3557,43 @@ definitions:
         type: array
       extcommunity_match_all:
         type: boolean
+      external:
+        $ref: types.json#/definitions/ExternalRouteType
+        presence: optional
+      family:
+        $ref: types.json#/definitions/FamilyType
+        presence: optional
+      local_pref:
+        presence: optional
+        type: integer
+      nlri_route_type:
+        description: list of integer values in range of 1 to 10 inclusive.
+        items:
+          type: integer
+        presence: optional
+        type: array
       prefix:
         items:
           $ref: types.json#/definitions/PrefixMatchType
         type: array
+      prefix_list:
+        description: list of prefixes from interface route table uuids with prefix
+          types.
+        items:
+          $ref: types.json#/definitions/PrefixListMatchType
+        presence: optional
+        type: array
       protocol:
         $ref: types.json#/definitions/PathSourceType
+      route_filter:
+        $ref: types.json#/definitions/RouteFilterType
+        presence: optional
     type: object
+  TermType:
+    enum:
+    - vrouter
+    - network-device
+    type: string
   TimerType:
     properties:
       end_time:
