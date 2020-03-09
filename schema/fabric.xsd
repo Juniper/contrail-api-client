@@ -377,6 +377,28 @@
     </xsd:restriction>
 </xsd:simpleType>
 
+<xsd:simpleType name="DataCenterInterConnectType" default='inter_fabric'>
+    <xsd:restriction base='xsd:string'>
+        <xsd:enumeration value='inter_fabric'/>
+        <xsd:enumeration value='intra_fabric'/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="LogicalRouterPRListType">
+    <xsd:all>
+        <xsd:element name="logical-router-list" type="LogicalRouterPRListParams" maxOccurs="unbounded"
+             description='List of Destination LRs properties'/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="LogicalRouterPRListParams">
+    <xsd:all>
+        <xsd:element name="logical-router-uuid" type="xsd:string" required='true' description="stores destination logical router uuid for dci intra-fabric type."/>
+        <xsd:element name="physical-router-uuid-list" type="xsd:string" required='true' maxOccurs="unbounded"
+            description="list of physical routers uuid exists in current destination logical-router and user has selected this PR for dci intra-fabric route leaks."/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:element name="job-template" type="ifmap:IdentityType"/>
 
 <xsd:element name="global-system-config-job-template"/>
@@ -464,18 +486,35 @@
 <!--#IFMAP-SEMANTICS-IDL
           Link('data-center-interconnect-virtual-network',
              'data-center-interconnect', 'virtual-network', ['ref'], 'optional', 'CRUD',
-             'reference to auto created internal virtual network, used for connecting different data centers') -->
+             'reference to auto created internal virtual network, used for connecting different data centers for DCI type inter-fabric. For intra-fabric type DCI, if user does not provided any DCI-routing-policy then this refs holds list of tenant virtual networks refs provided and selected by users. this refs will be list of tenant VN which existed in source LR for intra-fabric type DCI. routes will be leak only for this list of VNs subnets in intra-fabric DCI.') -->
 
 <xsd:element name="data-center-interconnect-configured-route-target-list" type="RouteTargetList"/>
 <!--#IFMAP-SEMANTICS-IDL
      Property('data-center-interconnect-configured-route-target-list', 'data-center-interconnect', 'optional', 'CRUD',
               'List of route targets that represent this logical router, all virtual networks connected to this DCI will have this as their route target list.') -->
 
+<xsd:element name="data-center-interconnect-type" type='DataCenterInterConnectType'
+             description='DCI Type. inter-fabric type is across the two fabrics. intra-fabric type is within a single fabric. For intra-fabric type, DCI-virtual-network-refs, DCI-routing-policy and destination-physical-router-list properties should have valid values. It gets used to leak the routes from first entry defined in DCI-logical-router-refs as source LR to destination LR(s) defined in DCI-logical-router-refs second and on wards entries'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('data-center-interconnect-type', 'data-center-interconnect', 'optional', 'CRUD',
+              'Defines type of DCI, inter-fabric is across two fabric. intra-fabric is single fabric.') -->
+
+<xsd:element name="data-center-interconnect-routing-policy"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('data-center-interconnect-routing-policy', 'data-center-interconnect', 'routing-policy', ['ref'], 'optional', 'CRUD',
+              'Used only if DCI-type is intra-fabric. it stores the List of routing policies for this DCI to be used as import policies between logical routers. if any single or more routing policy defined in this property then DCI-virtual-network-refs property value will be ignored for route leaks route-filter.') -->
+
+<xsd:element name="destination-physical-router-list" type='LogicalRouterPRListType'
+             description='Used only if DCI-type is intra-fabric. it stores the List of physical router uuids per destination logical router. this physical router must be existed in respective destination logical router and user has selected for route to be leaks on this PR for intra-fabric DCI type. User selects this PR(s) per destination LR to leak routes from source LR to destination LR on this list of PRs only.'/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('destination-physical-router-list', 'data-center-interconnect', 'optional', 'CRUD',
+              'holds List of physical router uuid of destination LR(s) in intra-fabric type DCI object') -->
+
 <xsd:element name="global-system-config-data-center-interconnect"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('global-system-config-data-center-interconnect',
              'global-system-config', 'data-center-interconnect', ['has'], 'optional', 'CRUD',
-             'List of DCI Objects in the system. Each DCI represents an interconnect of Multiple Fabrics.') -->
+             'List of DCI Objects in the system. Each DCI represents an interconnect of Multiple Fabrics or interconnect of LRs in same fabric.') -->
 
 <xsd:simpleType name="IntentType">
      <xsd:restriction base="xsd:string">
