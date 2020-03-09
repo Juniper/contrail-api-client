@@ -5,7 +5,7 @@ id: data_center_interconnect
 parents:
   global_system_config:
     description: List of DCI Objects in the system. Each DCI represents an interconnect
-      of Multiple Fabrics.
+      of Multiple Fabrics or interconnect of LRs in same fabric.
     operations: CRUD
     presence: optional
 plural: data_center_interconnects
@@ -16,9 +16,20 @@ references:
       belongs to different fabric
     operations: CRUD
     presence: optional
+  routing_policy:
+    description: Used only if DCI-type is intra-fabric. it stores the List of routing
+      policies for this DCI to be used as import policies between logical routers.
+      if any single or more routing policy defined in this property then DCI-virtual-network-refs
+      property value will be ignored for route leaks route-filter.
+    operations: CRUD
+    presence: optional
   virtual_network:
     description: reference to auto created internal virtual network, used for connecting
-      different data centers
+      different data centers for DCI type inter-fabric. For intra-fabric type DCI,
+      if user does not provided any DCI-routing-policy then this refs holds list of
+      tenant virtual networks refs provided and selected by users. this refs will
+      be list of tenant VN which existed in source LR for intra-fabric type DCI. routes
+      will be leak only for this list of VNs subnets in intra-fabric DCI.
     operations: CRUD
     presence: optional
 schema:
@@ -43,6 +54,18 @@ schema:
     data_center_interconnect_mode:
       $ref: types.json#/definitions/DataCenterInterconnectModes
       description: Data center interconnect mode one of L2 stretch or L3
+      operations: CRUD
+      presence: optional
+    data_center_interconnect_type:
+      $ref: types.json#/definitions/DataCenterInterConnectType
+      description: Defines type of DCI, inter-fabric is across two fabric. intra-fabric
+        is single fabric.
+      operations: CRUD
+      presence: optional
+    destination_physical_router_list:
+      $ref: types.json#/definitions/LogicalRouterPRListType
+      description: holds List of physical router uuid of destination LR(s) in intra-fabric
+        type DCI object
       operations: CRUD
       presence: optional
   required: []
