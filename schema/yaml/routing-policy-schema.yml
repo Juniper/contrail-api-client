@@ -30,5 +30,10 @@ schema:
       description: ''
       operations: CRUD
       presence: optional
+    term_type:
+      $ref: types.json#/definitions/TermType
+      description: ''
+      operations: CRUD
+      presence: optional
   required: []
   type: object
