@@ -100,8 +100,8 @@ targetNamespace="http://www.contrailsystems.com/2012/BGP-CONFIG/0">
             <xsd:element name="bgp" type="ProtocolBgpType"/>
             <xsd:element name="ospf" type="ProtocolOspfType"/>
         </xsd:choice>
-        <xsd:element name="state">
-            <xsd:simpleType>
+        <xsd:element name="state" type="ProtocolStateType">
+            <xsd:simpleType name="ProtocolStateType">
                 <xsd:restriction base="xsd:string">
                     <enumeration value="up"/>
                     <enumeration value="down"/>

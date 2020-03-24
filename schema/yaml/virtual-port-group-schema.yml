@@ -39,6 +39,12 @@ schema:
       operations: CR
       presence: required
       type: string
+    virtual_port_group_type:
+      $ref: types.json#/definitions/VpgType
+      description: Type of Virtual port group. It can be either access i.e L2 connectivity
+        or routed.
+      operations: CRUD
+      presence: optional
     virtual_port_group_user_created:
       default: true
       description: Flag to be set to True when its externally created and False when
