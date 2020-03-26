@@ -96,6 +96,7 @@ sdist_gen = env.Command('dist/contrail-api-client-{}.tar.gz'.format(version),
 env.Default(sdist_gen)
 
 # generated files depend on autogeneration infra parts
+env.Depends(autogen_infra_sources, remote_setup_sources_rules)
 env.Depends(generated_rule, [autogen_infra_sources, autogen_sources])
 env.Depends(setup_sources_rules, autogen_infra_sources)
 
