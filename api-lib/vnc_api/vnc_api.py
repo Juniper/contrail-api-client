@@ -1261,6 +1261,19 @@ class VncApi(object):
     # end execute_job
 
     @check_homepage
+    def abort_job(self, job_execution_ids=None, abort_mode=None):
+        body = dict()
+        body['input'] = {
+            'job_execution_ids': job_execution_ids or [],
+            'abort_mode': abort_mode or 'force'
+        }
+        json_body = json.dumps(body)
+        uri = self._action_uri['abort-job']
+        content = self._request_server(OP_POST, uri, data=json_body)
+        return json.loads(content)
+    # end abort_job
+
+    @check_homepage
     def ref_update(self, obj_type, obj_uuid, ref_type, ref_uuid,
                    ref_fq_name, operation, attr=None):
         if ref_type.endswith(('_refs', '-refs')):
