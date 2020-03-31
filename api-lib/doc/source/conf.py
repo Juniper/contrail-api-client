@@ -21,6 +21,7 @@ import sys, os
 sys.path.insert(0, os.path.abspath('../vnc_cfg_api_server'))
 sys.path.insert(0, os.path.abspath('../'))
 sys.path.insert(0, os.path.abspath('../../../api-lib'))
+sys.path.insert(0, os.path.abspath('../../../api-lib/vnc_api'))
 sys.path.insert(0, os.path.abspath('../../../sandesh/library/python'))
 
 # -- General configuration -----------------------------------------------------
