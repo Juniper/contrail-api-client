@@ -2605,7 +2605,7 @@ class IFMapApiGenerator(object):
         write(gen_file, "import fixtures")
         write(gen_file, "import testtools")
         write(gen_file, "")
-        write(gen_file, "from %s_test import *" %(gen_type_pfx))
+        write(gen_file, "from vnc_api.gen.%s_test import *" %(gen_type_pfx))
         write(gen_file, "")
         class_name = CamelCase(os.path.basename(gen_fname.split('.py')[0]))
         write(gen_file, "class %s(testtools.TestCase, fixtures.TestWithFixtures):" %(class_name))
