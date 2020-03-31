@@ -2126,6 +2126,8 @@ definitions:
     - private
     - baremetal
     - esxi
+    - ovs-compute
+    - sriov-compute
     type: string
   PathSourceType:
     items:
