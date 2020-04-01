@@ -6,15 +6,19 @@ from __future__ import print_function
 from builtins import object
 import os
 import re
+import sys
 import json
 
 import type_model
 
 try:
     import pyaml
-    pyaml_found = True
+    yaml_parser = "pyaml"
 except ImportError:
-    pyaml_found = False
+    import yaml
+    yaml_parser = "PyYAML"
+except ImportError:
+    yaml_parser = None
 
 
 class ContrailJsonSchemaGenerator(object):
@@ -30,6 +34,18 @@ class ContrailJsonSchemaGenerator(object):
         # map which will hold the schema for the types which will be generated below
         self._json_type_map = {}
         self._objectsList = []
+
+    def yaml_dump(self, data, indent=2, safe=True):
+        if yaml_parser == 'pyaml':
+            return pyaml.dumps(data, indent=indent, safe=safe)
+        elif yaml_parser == 'PyYAML':
+            if safe:
+                return yaml.safe_dump(data, indent=indent, default_flow_style=False)
+            else:
+                return yaml.dump(data, indent=indent, default_flow_style=False)
+        else:
+            print("please install pyaml or PyYAML")
+            sys.exit(1)
 
     # For mapping the js data type given the ctype or jtype
     def _getJSDataType(self, type):
@@ -177,7 +193,7 @@ class ContrailJsonSchemaGenerator(object):
                       "schema": {"type": "object",
                                  "required": required,
                                  "properties": propertiesJSON}}
-        file.write(pyaml.dumps(jsonSchema, indent=2, safe=True))
+        file.write(self.yaml_dump(jsonSchema))
 
     def _getSubJS(self, type, dataMember):
         ret = {}
@@ -265,8 +281,8 @@ class ContrailJsonSchemaGenerator(object):
             "$ref": "types.json#/definitions/" + simple_type}
 
     def Generate(self, dirname):
-        if pyaml_found == False:
-            print("please install pyaml")
+        if not yaml_parser:
+            print("please install pyaml or PyYAML")
             sys.exit(1)
 
         if not os.path.exists(dirname):
@@ -340,12 +356,12 @@ class ContrailJsonSchemaGenerator(object):
         # Generate the base schema
         objFileName = os.path.join(dirname, "base.yml")
         objFile = self._parser.makeFile(objFileName)
-        objFile.write(pyaml.dumps(base, indent=2, safe=True))
+        objFile.write(self.yaml_dump(base))
 
         typeFileName = os.path.join(dirname, "types.yml")
         typeFile = self._parser.makeFile(typeFileName)
         typeJson = {"definitions": self._json_type_map}
-        typeFile.write(pyaml.dumps(typeJson, indent=2, safe=True))
+        typeFile.write(self.yaml_dump(typeJson))
 
         print("Done!")
         print("Schemas generated under directory: " + dirname)

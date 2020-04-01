@@ -293,6 +293,7 @@ definitions:
         type: integer
     type: object
   AttachmentAddressType:
+    properties: {}
     type: object
   AttachmentInfoType:
     properties:
@@ -300,12 +301,8 @@ definitions:
         $ref: types.json#/definitions/ProtocolBgpType
       ospf:
         $ref: types.json#/definitions/ProtocolOspfType
-      state:
-        enum:
-        - up
-        - down
-        - adminDown
-        type: string
+      state:
+        $ref: types.json#/definitions/ProtocolStateType
       static:
         $ref: types.json#/definitions/ProtocolStaticType
     type: object
@@ -744,11 +741,7 @@ definitions:
         description: image (ami) id of instance
         type: string
       operating_system:
-        description: Name of operating system, ex - centos7 or ubuntu18
-        enum:
-        - ubuntu18
-        - centos7
-        - rhel7
+        description: Name of operating system, ex - centos7 or ubuntu16
         type: string
       os_version:
         description: specific version of operating system
@@ -756,13 +749,7 @@ definitions:
       roles:
         description: Roles of the cloud instance
         items:
-          enum:
-          - compute_node
-          - controller
-          - gateway
-          - k8s_master
-          - vrouter
-          - bare_node
+          type: string
         type: array
       volume_size:
         description: Size of the volume for the cloud instance
@@ -1191,6 +1178,8 @@ definitions:
   FeatureIdType:
     enum:
     - default
+    - __test_feature_1__
+    - __test_feature_2__
     type: string
   FeatureStateType:
     enum:
@@ -2469,6 +2458,8 @@ definitions:
       area:
         type: integer
     type: object
+  ProtocolStateType:
+    type: string
   ProtocolStaticType:
     properties:
       route:
@@ -3394,6 +3385,10 @@ definitions:
     - forward-unprocessed
     - forward-processed
     type: string
+  SubClusterIdType:
+    maximum: 4294967295
+    minimum: 1
+    type: integer
   SubnetListType:
     properties:
       subnet:
