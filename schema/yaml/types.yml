@@ -3542,9 +3542,47 @@ definitions:
         description: Default action (Discard) is implicit. In addition, other list
           of actions can be specified here
     type: object
+  StructuredSyslogDSCPMap:
+    properties:
+      dscpListIPv4:
+        items:
+          $ref: types.json#/definitions/StructuredSyslogDSCPType
+        type: array
+      dscpListIPv6:
+        items:
+          $ref: types.json#/definitions/StructuredSyslogDSCPType
+        type: array
+    type: object
+  StructuredSyslogDSCPType:
+    properties:
+      alias_code:
+        type: string
+      dscp_value:
+        type: string
+    type: object
+  StructuredSyslogLANSegmentList:
+    properties:
+      LANSegmentList:
+        items:
+          $ref: types.json#/definitions/StructuredSyslogLANSegmentType
+        type: array
+    type: object
+  StructuredSyslogLANSegmentType:
+    properties:
+      network_ranges:
+        type: string
+      vpn:
+        type: string
+    type: object
   StructuredSyslogLinkType:
     properties:
+      link_type:
+        type: string
+      metadata:
+        type: string
       overlay:
+        type: string
+      traffic_destination:
         type: string
       underlay:
         type: string
