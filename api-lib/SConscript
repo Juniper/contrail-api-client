@@ -49,6 +49,9 @@ setup_sources = [
     'tox.ini',
 ]
 
+generated_yaml_schema_files = [Dir(env['TOP']).abspath + '/schema/yaml/base.yml']
+sync_yaml_schema = env.SyncSchema(generated_yaml_schema_files,
+                             repo_top + '/schema/all_cfg.xsd')
 setup_sources_rules = []
 for file in setup_sources:
     entry = Entry(repo_top + '/api-lib/%s' % file)
@@ -101,7 +104,7 @@ env.Depends(generated_rule, [autogen_infra_sources, autogen_sources])
 env.Depends(setup_sources_rules, autogen_infra_sources)
 
 # install everything before building distribution
-env.Depends(sdist_gen, sdist_depends)
+env.Depends(sdist_gen, [sync_yaml_schema, sdist_depends])
 
 def SymLink(target, source, env):
     os.symlink(os.path.abspath(str(source[0])), os.path.abspath(str(target[0])))
