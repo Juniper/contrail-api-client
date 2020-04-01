@@ -293,6 +293,7 @@ definitions:
         type: integer
     type: object
   AttachmentAddressType:
+    properties: {}
     type: object
   AttachmentInfoType:
     properties:
@@ -300,12 +301,8 @@ definitions:
         $ref: types.json#/definitions/ProtocolBgpType
       ospf:
         $ref: types.json#/definitions/ProtocolOspfType
-      state:
-        enum:
-        - up
-        - down
-        - adminDown
-        type: string
+      state:
+        $ref: types.json#/definitions/ProtocolStateType
       static:
         $ref: types.json#/definitions/ProtocolStaticType
     type: object
@@ -494,6 +491,11 @@ definitions:
           global AS number.
         presence: optional
         type: integer
+      multihop_ttl:
+        description: time-to-live (TTL) value in the BGP packets to control how far
+          they propagate.
+        presence: optional
+        type: integer
       peer_autonomous_system:
         description: Peer autonomous system number for this eBGP session.
         presence: 'true'
@@ -501,6 +503,10 @@ definitions:
       peer_ip_address:
         $ref: types.json#/definitions/IpAddress
         description: Peer ip address used for this eBGP session.
+        presence: optional
+      peer_ip_address_list:
+        $ref: types.json#/definitions/IpAddress
+        description: Peer ip address list used for this eBGP session.
         presence: 'true'
     type: object
   BgpPeeringAttributes:
@@ -744,11 +750,7 @@ definitions:
         description: image (ami) id of instance
         type: string
       operating_system:
-        description: Name of operating system, ex - centos7 or ubuntu18
-        enum:
-        - ubuntu18
-        - centos7
-        - rhel7
+        description: Name of operating system, ex - centos7 or ubuntu16
         type: string
       os_version:
         description: specific version of operating system
@@ -756,13 +758,7 @@ definitions:
       roles:
         description: Roles of the cloud instance
         items:
-          enum:
-          - compute_node
-          - controller
-          - gateway
-          - k8s_master
-          - vrouter
-          - bare_node
+          type: string
         type: array
       volume_size:
         description: Size of the volume for the cloud instance
@@ -817,6 +813,11 @@ definitions:
     enum:
     - none
     - local
+    type: string
+  DataCenterInterConnectType:
+    enum:
+    - inter_fabric
+    - intra_fabric
     type: string
   DataCenterInterconnectModes:
     enum:
@@ -1163,6 +1164,11 @@ definitions:
           type: string
         type: array
     type: object
+  ExternalRouteType:
+    enum:
+    - ospf-type-1
+    - ospf-type-2
+    type: string
   FabricNetworkTag:
     properties:
       network_type:
@@ -1174,6 +1180,13 @@ definitions:
     - loopback
     - ip-fabric
     - pnf-servicechain
+    - overlay-loopback
+    type: string
+  FamilyType:
+    enum:
+    - inet
+    - inet-vpn
+    - evpn
     type: string
   FatFlowIgnoreAddressType:
     enum:
@@ -1191,6 +1204,8 @@ definitions:
   FeatureIdType:
     enum:
     - default
+    - __test_feature_1__
+    - __test_feature_2__
     type: string
   FeatureStateType:
     enum:
@@ -1876,6 +1891,28 @@ definitions:
     - l2
     - l3
     type: string
+  LogicalRouterPRListParams:
+    properties:
+      logical_router_uuid:
+        description: stores destination logical router uuid for dci intra-fabric type.
+        presence: 'true'
+        type: string
+      physical_router_uuid_list:
+        description: list of physical routers uuid exists in current destination logical-router
+          and user has selected this PR for dci intra-fabric route leaks.
+        items:
+          type: string
+        presence: 'true'
+        type: array
+    type: object
+  LogicalRouterPRListType:
+    properties:
+      logical_router_list:
+        description: List of Destination LRs properties
+        items:
+          $ref: types.json#/definitions/LogicalRouterPRListParams
+        type: array
+    type: object
   LogicalRouterType:
     default: snat-routing
     enum:
@@ -2129,18 +2166,62 @@ definitions:
     - ovs-compute
     - sriov-compute
     type: string
+  OspfAreaType:
+    enum:
+    - nssa
+    - stub
+    - backbone
+    type: string
+  OspfParameters:
+    properties:
+      advertise_loopback:
+        description: Boolean to enable advertising loopback address.
+        presence: optional
+        type: boolean
+      area_id:
+        $ref: types.json#/definitions/IpAddress
+        description: OSPF area ID
+        presence: 'true'
+      area_type:
+        $ref: types.json#/definitions/OspfAreaType
+        description: OSPF area type
+        presence: 'true'
+      auth_data:
+        $ref: types.json#/definitions/AuthenticationData
+        description: Authentication related configuration like type, keys etc.
+        presence: optional
+      dead_interval:
+        description: Specifies how long OSPF waits before declaring that a neighboring
+          routing device is unavailable
+        presence: optional
+        type: integer
+      hello_interval:
+        description: Specifies the length of time, in seconds, before the routing
+          device sends a hello packet out of an interface.
+        presence: optional
+        type: integer
+      orignate_summary_lsa:
+        description: Boolean to enable originating summary LSA.
+        presence: optional
+        type: boolean
+    type: object
   PathSourceType:
     items:
       enum:
-      - bgp
       - xmpp
-      - static
       - service-chain
-      - aggregate
       - interface
       - interface-static
       - service-interface
       - bgpaas
+      - bgp
+      - static
+      - aggregate
+      - direct
+      - pim
+      - evpn
+      - ospf
+      - ospf3
       type: string
     type: array
   PeeringServiceType:
@@ -2200,6 +2281,27 @@ definitions:
     - e2-vrr
     - pnf
     type: string
+  PimMode:
+    enum:
+    - sparse
+    - sparse-dense
+    - dense
+    type: string
+  PimParameters:
+    properties:
+      enable_all_interfaces:
+        description: Boolean to enable PIM on all interfaces.
+        presence: optional
+        type: boolean
+      mode:
+        $ref: types.json#/definitions/PimMode
+        description: Pim mode.
+        presence: optional
+      rp_ip_address:
+        $ref: types.json#/definitions/IpAddress
+        description: Static rendezvous point IP address.
+        presence: 'true'
+    type: object
   PlaybookInfoListType:
     properties:
       playbook_info:
@@ -2446,6 +2548,17 @@ definitions:
         $ref: types.json#/definitions/L4PortType
         presence: 'true'
     type: object
+  PrefixListMatchType:
+    properties:
+      interface_route_table_uuid:
+        description: list of interface route table uuids used to build list of prefixes.
+        items:
+          type: string
+        presence: 'true'
+        type: array
+      prefix_type:
+        $ref: types.json#/definitions/PrefixType
+    type: object
   PrefixMatchType:
     properties:
       prefix:
@@ -2469,6 +2582,8 @@ definitions:
       area:
         type: integer
     type: object
+  ProtocolStateType:
+    type: string
   ProtocolStaticType:
     properties:
       route:
@@ -2706,6 +2821,38 @@ definitions:
     maximum: 65535
     minimum: 1
     type: integer
+  RouteFType:
+    enum:
+    - exact
+    - longer
+    - orlonger
+    - prefix-length-range
+    - through
+    - upto
+    type: string
+  RouteFilterProperties:
+    properties:
+      route:
+        description: route filter IP address or host name.
+        presence: 'true'
+        type: string
+      route_type:
+        $ref: types.json#/definitions/RouteFType
+      route_type_value:
+        description: 'Valid only for through, upto or prefix-length-range RouteFType.
+          Format: for prefix-length-range it stores ''/min-length-/max-length''. through
+          should be string, upto stores ''/number'''
+        presence: optional
+        type: string
+    type: object
+  RouteFilterType:
+    properties:
+      route_filter_properties:
+        description: List of route filter properties.
+        items:
+          $ref: types.json#/definitions/RouteFilterProperties
+        type: array
+    type: object
   RouteListType:
     properties:
       route:
@@ -2773,10 +2920,28 @@ definitions:
         $ref: types.json#/definitions/BgpParameters
         description: BGP parameters such as ASN, peer IP address, authentication method/key.
         presence: optional
+      logical_router_uuid:
+        description: Routed properties for particular logical router for this virtual-network.
+        presence: 'true'
+        type: string
+      loopback_ip_address:
+        $ref: types.json#/definitions/IpAddressType
+        description: IP address of the loopback interface from the overlay loopback
+          subnet.
+        presence: optional
+      ospf_params:
+        $ref: types.json#/definitions/OspfParameters
+        description: OSPF parameters such as area ID, area type, hello-interval, dead-interval,
+          authentication method/key.
+        presence: optional
       physical_router_uuid:
         description: Routed properties for particular physical router for this virtual-network.
         presence: 'true'
         type: string
+      pim_params:
+        $ref: types.json#/definitions/PimParameters
+        description: PIM parameters such as RP IP address, mode.
+        presence: optional
       routed_interface_ip_address:
         $ref: types.json#/definitions/IpAddressType
         description: IP address of the routed interface from the VN subnet.
@@ -2787,6 +2952,7 @@ definitions:
         presence: optional
       routing_protocol:
         $ref: types.json#/definitions/RoutingProtocolType
+        description: Protocol used for exchanging route information.
         presence: 'true'
       static_route_params:
         $ref: types.json#/definitions/StaticRouteParameters
@@ -2832,6 +2998,8 @@ definitions:
     enum:
     - static-routes
     - bgp
+    - ospf
+    - pim
     type: string
   RpfModeType:
     enum:
@@ -3374,9 +3542,47 @@ definitions:
         description: Default action (Discard) is implicit. In addition, other list
           of actions can be specified here
     type: object
+  StructuredSyslogDSCPMap:
+    properties:
+      dscpListIPv4:
+        items:
+          $ref: types.json#/definitions/StructuredSyslogDSCPType
+        type: array
+      dscpListIPv6:
+        items:
+          $ref: types.json#/definitions/StructuredSyslogDSCPType
+        type: array
+    type: object
+  StructuredSyslogDSCPType:
+    properties:
+      alias_code:
+        type: string
+      dscp_value:
+        type: string
+    type: object
+  StructuredSyslogLANSegmentList:
+    properties:
+      LANSegmentList:
+        items:
+          $ref: types.json#/definitions/StructuredSyslogLANSegmentType
+        type: array
+    type: object
+  StructuredSyslogLANSegmentType:
+    properties:
+      network_ranges:
+        type: string
+      vpn:
+        type: string
+    type: object
   StructuredSyslogLinkType:
     properties:
+      link_type:
+        type: string
+      metadata:
+        type: string
       overlay:
+        type: string
+      traffic_destination:
         type: string
       underlay:
         type: string
@@ -3394,6 +3600,10 @@ definitions:
     - forward-unprocessed
     - forward-processed
     type: string
+  SubClusterIdType:
+    maximum: 4294967295
+    minimum: 1
+    type: integer
   SubnetListType:
     properties:
       subnet:
@@ -3438,11 +3648,29 @@ definitions:
     properties:
       action:
         $ref: types.json#/definitions/ActionType
+      as_path_expand:
+        description: Valid only for network-device TermType. string should be in format
+          of AS number(s) seperated by spaces
+        presence: optional
+        type: string
+      as_path_prepend:
+        description: Valid only for network-device TermType. string should be in format
+          of AS number(s) seperated by spaces
+        presence: optional
+        type: string
+      external:
+        $ref: types.json#/definitions/ExternalRouteType
+        presence: optional
       update:
         $ref: types.json#/definitions/ActionUpdateType
     type: object
   TermMatchConditionType:
     properties:
+      as_path:
+        items:
+          type: integer
+        presence: optional
+        type: array
       community:
         type: string
       community_list:
@@ -3457,13 +3685,43 @@ definitions:
         type: array
       extcommunity_match_all:
         type: boolean
+      external:
+        $ref: types.json#/definitions/ExternalRouteType
+        presence: optional
+      family:
+        $ref: types.json#/definitions/FamilyType
+        presence: optional
+      local_pref:
+        presence: optional
+        type: integer
+      nlri_route_type:
+        description: list of integer values in range of 1 to 10 inclusive.
+        items:
+          type: integer
+        presence: optional
+        type: array
       prefix:
         items:
           $ref: types.json#/definitions/PrefixMatchType
         type: array
+      prefix_list:
+        description: list of prefixes from interface route table uuids with prefix
+          types.
+        items:
+          $ref: types.json#/definitions/PrefixListMatchType
+        presence: optional
+        type: array
       protocol:
         $ref: types.json#/definitions/PathSourceType
+      route_filter:
+        $ref: types.json#/definitions/RouteFilterType
+        presence: optional
     type: object
+  TermType:
+    enum:
+    - vrouter
+    - network-device
+    type: string
   TimerType:
     properties:
       end_time:
@@ -3720,6 +3978,11 @@ definitions:
         items:
           $ref: types.json#/definitions/RoutedProperties
         type: array
+      shared_across_all_lrs:
+        description: Allow sharing of this routed virtual network across all LR's
+          in the system.
+        presence: optional
+        type: boolean
     type: object
   VirtualNetworkType:
     properties:
