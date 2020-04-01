@@ -28,6 +28,11 @@ schema:
       operations: CRUD
       presence: optional
       type: string
+    structured_syslog_lan_segment_list:
+      $ref: types.json#/definitions/StructuredSyslogLANSegmentList
+      description: vpn to                                   network-ranges mapping
+      operations: CRUD
+      presence: optional
     structured_syslog_linkmap:
       $ref: types.json#/definitions/StructuredSyslogLinkmap
       description: overlay to                                   underlay mapping

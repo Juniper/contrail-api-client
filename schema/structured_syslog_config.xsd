@@ -55,12 +55,42 @@
     <xsd:all>
         <xsd:element name="overlay" type="xsd:string"/>
         <xsd:element name="underlay" type="xsd:string"/>
+        <xsd:element name="link-type" type="xsd:string"/>
+        <xsd:element name="traffic-destination" type="xsd:string"/>
+        <xsd:element name="metadata" type="xsd:string"/>
     </xsd:all>
 </xsd:complexType>
 
 <xsd:complexType name="StructuredSyslogLinkmap">
     <xsd:all>
         <xsd:element name="links" type="StructuredSyslogLinkType" maxOccurs="unbounded"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="StructuredSyslogLANSegmentType">
+    <xsd:all>
+        <xsd:element name="vpn" type="xsd:string"/>
+        <xsd:element name="network-ranges" type="xsd:string"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="StructuredSyslogLANSegmentList">
+    <xsd:all>
+        <xsd:element name="LANSegmentList" type="StructuredSyslogLANSegmentType" maxOccurs="unbounded"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="StructuredSyslogDSCPType">
+    <xsd:all>
+        <xsd:element name="dscp-value" type="xsd:string"/>
+        <xsd:element name="alias-code" type="xsd:string"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="StructuredSyslogDSCPMap">
+    <xsd:all>
+        <xsd:element name="dscpListIPv4" type="StructuredSyslogDSCPType" maxOccurs="unbounded"/>
+        <xsd:element name="dscpListIPv6" type="StructuredSyslogDSCPType" maxOccurs="unbounded"/>
     </xsd:all>
 </xsd:complexType>
 
@@ -145,6 +175,43 @@
                                   'structured-syslog-hostname-record',
                                   'optional', 'CRUD', 'overlay to
                                    underlay mapping') -->
+<xsd:element name="structured-syslog-lan-segment-list" type="StructuredSyslogLANSegmentList" />
+<!--#IFMAP-SEMANTICS-IDL Property('structured-syslog-lan-segment-list',
+                                  'structured-syslog-hostname-record',
+                                  'optional', 'CRUD', 'vpn to
+                                   network-ranges mapping') -->
+
+
+<xsd:element name="structured-syslog-tenant-record" type="ifmap:IdentityType"
+     description="mapping Tenant to other entities"/>
+<xsd:element name="structured-syslog-config-structured-syslog-tenant-record"
+     description="mapping Tenant to other entities"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Link('structured-syslog-config-structured-syslog-tenant-record',
+          'structured-syslog-config', 'structured-syslog-tenant-record',
+          ['has'], 'optional', 'CRUD', 'List of
+          structured-syslog-tenant-record that are applicable to objects
+          anchored under structured-syslog-config.')-->
+<xsd:element name="structured-syslog-tenantaddr" type="xsd:string" />
+<!--#IFMAP-SEMANTICS-IDL Property('structured-syslog-tenantaddr',
+                                  'structured-syslog-tenant-record',
+                                  'required', 'CRUD', 'The tenant address') -->
+<xsd:element name="structured-syslog-tenant" type="xsd:string" />
+<!--#IFMAP-SEMANTICS-IDL Property('structured-syslog-tenant',
+                                  'structured-syslog-tenant-record',
+                                  'required', 'CRUD', 'The tenant name') -->
+<xsd:element name="structured-syslog-tenant-tags" type="xsd:string" />
+<!--#IFMAP-SEMANTICS-IDL Property('structured-syslog-tenant-tags',
+                                  'structured-syslog-tenant-record',
+                                  'optional', 'CRUD', 'tags
+                                   corresponding to the tenant') -->
+<xsd:element name="structured-syslog-dscpmap" type="StructuredSyslogDSCPMap" />
+<!--#IFMAP-SEMANTICS-IDL Property('structured-syslog-dscpmap',
+                                  'structured-syslog-tenant-record',
+                                  'optional', 'CRUD', 'dscp to
+                                   Alias mapping') -->
+
+
 
 <xsd:element name="structured-syslog-application-record"
                     type="ifmap:IdentityType"
