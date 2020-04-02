@@ -30,8 +30,6 @@ def str_to_class(class_name, module_name):
     try:
         return reduce(getattr, class_name.split("."), sys.modules[module_name])
     except Exception as e:
-        logger = logging.getLogger(module_name)
-        logger.warn("Exception: %s", str(e))
         return None
 # end str_to_class
 
