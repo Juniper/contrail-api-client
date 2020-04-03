@@ -2003,7 +2003,7 @@ class IFMapApiGenerator(object):
         self.res_xsd = importlib.import_module('.resource_xsd', package='vnc_api.gen')
 
         # list of attributes we can skip
-        self.skip_list = ["id_perms"]
+        self.skip_list = []
         #self.ref_special_handling_list = {}
         #self.ref_special_handling_list['virtual-machine-interface'] = 'virtual_network_refs'
         #self.ref_special_handling_list['instance-ip'] = 'virtual_network_refs'
