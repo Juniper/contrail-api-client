@@ -494,6 +494,11 @@ definitions:
           global AS number.
         presence: optional
         type: integer
+      multihop_ttl:
+        description: Time-to-live (TTL) value in the BGP packets to control how
+          far they propagate.
+        presence: optional
+        type: integer
       peer_autonomous_system:
         description: Peer autonomous system number for this eBGP session.
         presence: 'true'
@@ -1174,6 +1179,7 @@ definitions:
     - loopback
     - ip-fabric
     - pnf-servicechain
+    - overlay-loopback
     type: string
   FatFlowIgnoreAddressType:
     enum:
@@ -2129,6 +2135,45 @@ definitions:
     - ovs-compute
     - sriov-compute
     type: string
+  OspfAreaType:
+    enum:
+    - nssa
+    - stub
+    - backbone
+    type: string
+  OspfParameters:
+    properties:
+      advertise_loopback:
+        description: Boolean to enable advertising loopback address.
+        presence: optional
+        type: boolean
+      area_id:
+        $ref: types.json#/definitions/IpAddress
+        description: OSPF area ID
+        presence: 'true'
+      area_type:
+        $ref: types.json#/definitions/OspfAreaType
+        description: OSPF area type
+        presence: 'true'
+      auth_data:
+        $ref: types.json#/definitions/AuthenticationData
+        description: Authentication related configuration like type, keys etc.
+        presence: optional
+      dead_interval:
+        description: Specifies how long OSPF waits before declaring that a neighboring routing
+          device is unavailable.
+        presence: optional
+        type: integer
+      hello_interval:
+        description: Specifies the length of time, in seconds, before the routing device sends a
+          hello packet out of an interface.
+        presence: optional
+        type: integer
+      orignate_summary_lsa:
+        description: Boolean to enable originating summary LSA.
+        presence: optional
+        type: boolean
+    type: object
   PathSourceType:
     items:
       enum:
@@ -2181,6 +2226,27 @@ definitions:
           $ref: types.json#/definitions/ShareType
         presence: optional
         type: array
+    type: object
+  PimMode:
+    enum:
+    - sparse
+    - sparse-dense
+    - dense
+    type: string
+  PimParameters:
+    properties:
+      enable_all_interfaces:
+        description: Boolean to enable PIM on all interfaces
+        presence: optional
+        type: boolean
+      mode:
+        $ref: types.json#/definitions/PimMode
+        description: Pim mode.
+        presence: optional
+      rp_ip_address:
+        $ref: types.json#/definitions/IpAddress
+        description: Static rendezvous point IP address.
+        presence: 'true'
     type: object
   PhysicalInterfaceType:
     enum:
@@ -2773,6 +2839,23 @@ definitions:
         $ref: types.json#/definitions/BgpParameters
         description: BGP parameters such as ASN, peer IP address, authentication method/key.
         presence: optional
+      logical_router_uuid:
+        description: Routed properties for particular logical router for this virtual-network.
+        presence: 'true'
+        type: string
+      loopback_ip_address:
+        $ref: types.json#/definitions/IpAddressType
+        description: IP address of the loopback interface from the overlay loopback subnet.
+        precense: optional
+      ospf_params:
+        $ref: types.json#/definitions/OspfParameters
+        description: OSPF parameters such as area ID, area type, hello-interval, dead-interval,
+          authentication method/key.
+        presence: optional
+      pim_params:
+        $ref: types.json#/definitions/PimParameters
+        description: PIM parameters such as RP IP address, mode.
+        presence: optional
       physical_router_uuid:
         description: Routed properties for particular physical router for this virtual-network.
         presence: 'true'
@@ -2832,6 +2915,8 @@ definitions:
     enum:
     - static-routes
     - bgp
+    - ospf
+    - pim
     type: string
   RpfModeType:
     enum:
