@@ -8,6 +8,10 @@
 import os
 import sys
 import rules
+
+# Add local protoc binary path 
+os.environ["PATH"] += os.pathsep + './bin'
+
 conf = Configure(DefaultEnvironment(ENV = os.environ))
 env = rules.SetupBuildEnvironment(conf)
 env['api_repo_path'] = '#'

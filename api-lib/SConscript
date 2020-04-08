@@ -3,6 +3,7 @@
 #
 
 import os
+import glob
 
 from SCons.Node.FS import Entry as entry_class
 from SCons.Node.FS import File as file_class
@@ -13,7 +14,9 @@ env = BuildEnv.Clone()
 
 cd_cmd = 'cd ' + Dir('.').path + ' && '
 
+env_top = Dir(env['TOP']).abspath
 repo_top = env['api_repo_path']
+api_lib_path =  Dir(repo_top).abspath + '/api-lib'
 
 autogen_infra_sources = [
     repo_top + '/generateds/generateDS.py',
@@ -49,13 +52,74 @@ setup_sources = [
     'tox.ini',
 ]
 
-generated_yaml_schema_files = [Dir(env['TOP']).abspath + '/schema/yaml/base.yml']
+# Make sure XML and YAML schema are in sync
+yaml_schema_dir = Dir(env['TOP']).abspath + '/schema/yaml'
+generated_yaml_schema_files = [yaml_schema_dir + '/base.yml']
 # Remove target files, to force scons to build SyncSchema always
-for tgt_file in generated_yaml_schema_files:
-    if os.path.exists(tgt_file):
-        os.remove(tgt_file)
+#for tgt_file in generated_yaml_schema_files:
+#    if os.path.exists(tgt_file):
+#        os.remove(tgt_file)
 sync_yaml_schema = env.SyncSchema(generated_yaml_schema_files,
                              repo_top + '/schema/all_cfg.xsd')
+
+# Download dependent go modules
+go_mod = env.GoMod(
+    api_lib_path + '/go.sum',
+    env_top + '/api-lib/gomod.logs',
+    sub_cmd='download',
+    retries=5)
+
+# Install contrailschema binary, which is used to gen code from schema
+# with template
+contrailschema_src = 'github.com/Juniper/asf/cmd/contrailschema'
+contrailschema_install_cmd = 'go install %s' % contrailschema_src
+
+go_codegen_tool = env.Command(
+    'contrailschema',
+    None,
+    contrailschema_install_cmd,
+    chdir=api_lib_path)
+env.Depends(go_codegen_tool, [sync_yaml_schema, go_mod])
+
+# Generate proto, client and service interfaces
+models_import_path = 'github.com/Juniper/contrail-api-client/api-lib/pkg/models'
+services_import_path = '/github.com/Juniper/contrail-api-client/api-lib/pkg/services'
+go_vnc_client_cmd = "ENV_TOP=%s contrailschema generate --no-regenerate \
+     --schemas %s \
+    --models-import-path %s \
+    --services-import-path %s \
+    --template-config" % (env_top + '/api-lib',
+                          yaml_schema_dir,
+                          models_import_path,
+                          services_import_path)
+
+template_config = api_lib_path + '/tools/go_vncapi_gen_template.yaml'
+
+go_vnc_api_files =  ['/api-lib/pkg/vncapi/gen_client_http.go',
+                     '/api-lib/pkg/services/gen_service_interface.go']
+proto_files = ['/api-lib/proto/'+ models_import_path + '/gen_model.proto',
+               '/api-lib/proto/' + services_import_path + '/gen_service.proto']
+gen_go_vnc_api_files = [env_top + go_file for go_file in go_vnc_api_files]
+gen_proto_files = [env_top + proto_file for proto_file in proto_files]
+
+go_vnc_client_gen = env.Command(
+    [gen_go_vnc_api_files, gen_proto_files],
+    template_config,
+    go_vnc_client_cmd + ' $SOURCE')
+env.Depends(go_vnc_client_gen, go_codegen_tool)
+
+# Generate models and services struct from proto
+protoc_go_gen = env.ProtocGenGoVncApi(gen_proto_files)
+env.Depends(protoc_go_gen, go_vnc_client_gen)
+
+#Make sure generated go vncapi client code is up-to-date with YAML schema
+pb_go_files = [api_lib_path + '/pkg/models/gen_model.pb.go',
+               api_lib_path + '/pkg/services/gen_service.pb.go']
+vnc_api_files_go = [repo_top + go_file for go_file in go_vnc_api_files] 
+xsd_schemas = [repo_top + xsd for xsd in glob.glob("schema/*.xsd")]
+sync_goclient_schema = env.SyncGoVncClient([vnc_api_files_go, pb_go_files], xsd_schemas)
+env.Depends(sync_goclient_schema, protoc_go_gen)
+
 setup_sources_rules = []
 for file in setup_sources:
     entry = Entry(repo_top + '/api-lib/%s' % file)
@@ -108,7 +172,7 @@ env.Depends(generated_rule, [autogen_infra_sources, autogen_sources])
 env.Depends(setup_sources_rules, autogen_infra_sources)
 
 # install everything before building distribution
-env.Depends(sdist_gen, [sync_yaml_schema, sdist_depends])
+env.Depends(sdist_gen, [sync_goclient_schema, sdist_depends])
 
 def SymLink(target, source, env):
     os.symlink(os.path.abspath(str(source[0])), os.path.abspath(str(target[0])))
