@@ -17,6 +17,7 @@ from SCons.Builder import Builder
 from SCons.Action import Action
 from SCons.Errors import convert_to_BuildError
 from SCons.Script import AddOption, GetOption, SetOption
+from SCons.Tool.install import copyFunc
 from distutils.version import LooseVersion, StrictVersion
 import json
 import SCons.Util
@@ -27,6 +28,7 @@ import subprocess
 import platform
 import getpass
 import warnings
+import shlex
 
 def GetPlatformInfo(env):
     '''
@@ -1361,8 +1363,14 @@ def SetupBuildEnvironment(conf):
     env.AddMethod(SandeshGenPyFunc, "SandeshGenPy")
     env.AddMethod(SandeshGenDocFunc, "SandeshGenDoc")
     env.AddMethod(GoCniFunc, "GoCniBuild")
+    env.AddMethod(GoBuildFunc, "GoBuild")
+    env.AddMethod(GoModFunc, "GoMod")
+    env.AddMethod(GoListFunc, "GoList")
+    env.AddMethod(GoTestFunc, "GoTest")
     env.AddMethod(ThriftGenCppFunc, "ThriftGenCpp")
     env.AddMethod(SchemaSyncFunc, "SyncSchema")
+    env.AddMethod(ProtocGenGoVncApiFunc, "ProtocGenGoVncApi")
+    env.AddMethod(GoVncClientSyncFunc, "SyncGoVncClient")
     ThriftSconsEnvPyFunc(env)
     env.AddMethod(ThriftGenPyFunc, "ThriftGenPy")
     CreateIFMapBuilder(env)
@@ -1384,6 +1392,142 @@ def SetupBuildEnvironment(conf):
     env.AddMethod(CppEnableExceptions, "CppEnableExceptions")
     return env
 # SetupBuildEnvironment
+
+
+def GoSetupCommon(env, goCommand='', changeWorkingDir=True,
+                  workingDir=None, retries=1, log_file=None):
+    if not env.Detect('go'):
+        raise SCons.Errors.StopError('No go command detected on system')
+
+    if goCommand != '':
+        args = shlex.split(goCommand)
+        if not changeWorkingDir:
+            workingDir = None
+        popen_env = env['ENV']
+        #popen_env['GOROOT'] = env.Dir('#/third_party/go').abspath
+        #popen_env['GOPATH'] = env.Dir('#/controller').abspath
+        max_tries = retries
+        while retries:
+            retries -= 1
+            try:
+                print ("Trying (%s) attempt(%s of %s)..." % (
+                    goCommand, (max_tries - retries), max_tries))
+                process = subprocess.Popen(args,
+                                           cwd=workingDir,
+                                           stdout=subprocess.PIPE,
+                                           stderr=subprocess.STDOUT,
+                                           stdin=subprocess.PIPE,
+                                           env=popen_env)
+                # Write stdout to file,stdout and out variable as soon as it is
+                # available
+                out = ""
+                with process.stdout:
+                    if log_file:
+                        with open(log_file, "a+") as fd:
+                            for line in iter(process.stdout.readline, b''):
+                                out += line
+                                sys.stdout.write(line)
+                                fd.write(line)
+                    else:
+                        for line in iter(process.stdout.readline, b''):
+                            out += line
+                            sys.stdout.write(line)
+                process.wait()
+                if process.returncode != 0:
+                    if not retries:
+                        raise SCons.Errors.StopError(goCommand + ' failed')
+                else:
+                    return out
+            except Exception as e:
+                raise SCons.Errors.StopError(
+                    goCommand + ' got exception' + str(e))
+
+
+def GoModule(target, source, env):
+    gomod_cmd = "go mod " + env['GOMOD_SUBCMD']
+    source_dir = env.Dir(str(source[0]).rsplit('/', 1)[0] + "/").abspath
+    GoSetupCommon(
+        env,
+        gomod_cmd,
+        True,
+        source_dir,
+        retries=env['GOMOD_RETRIES'],
+        log_file=str(
+            target[0].abspath))
+
+
+def GoSconsEnvModFunc(env):
+    gomod = Builder(action=GoModule)
+    env.Append(BUILDERS={'GoSconsMod': gomod})
+
+
+def GoModFunc(env, source, target, sub_cmd='tidy', retries=1):
+    env['GOMOD_SUBCMD'] = sub_cmd
+    env['GOMOD_RETRIES'] = retries
+    GoSconsEnvModFunc(env)
+    return env.GoSconsMod(target, source)
+
+
+def GoBuilder(target, source, env):
+    gobuild_cmd = "go build -a -ldflags \"-B 0x767ec1a0fea882d05faf39b84c29ea9878808f1d\" -o " + \
+        str(target[0].abspath) + " " + str(source[0].abspath)
+    source_dir = env.Dir(str(source[0]).rsplit('/', 1)[0] + "/").abspath
+    GoSetupCommon(env, gobuild_cmd, True, source_dir)
+
+
+def GoSconsEnvBuildFunc(env):
+    gobuild = Builder(action=GoBuilder)
+    env.Append(BUILDERS={'GoSconsBuild': gobuild})
+
+
+def GoBuildFunc(env, source, target):
+    GoSconsEnvBuildFunc(env)
+    target_path = env.Dir(str(target).rsplit('/', 1)[0] + "/").abspath
+    MkdirP(target_path)
+    return env.GoSconsBuild(target, source)
+
+def GoListFunc(env, gomod_dir, fmt, module):
+    golist_cmd = 'go list -f "%s" -m %s' % (fmt, module)
+    out = GoSetupCommon(env, golist_cmd, True, gomod_dir)
+    return out.strip()
+
+
+def GoListTestDirs(env):
+    """Lists directories that contain _test.go files
+       either inside Go package (.TestGoFiles) or
+       outside Go package (.XTestGoFiles, e.g. in "foo_test" package)
+    """
+    golist_cmd = "go list -f '{{if (or .TestGoFiles .XTestGoFiles)}}{{.Dir}}{{end}}' ./..."
+    test_dirs = GoSetupCommon(env, golist_cmd, True, env['GO_TEST_ROOT'])
+    return " ".join(test_dirs.split("\n"))
+
+
+def GoTester(target, source, env):
+    test_root = env['GO_TEST_ROOT']
+    gotest_cmd = 'go test -v %s' % GoListTestDirs(env)
+    GoSetupCommon(env, gotest_cmd, True, str(test_root),
+                  log_file=str(target[0].abspath))
+
+
+def GoSconsEnvTestFunc(env):
+    gotest = Builder(action=GoTester)
+    env.Append(BUILDERS={'GoSconsTest': gotest})
+
+
+def GoTestFunc(env, target, test_root):
+    env['GO_TEST_ROOT'] = test_root
+    GoSconsEnvTestFunc(env)
+    return env.GoSconsTest(target, None)
+
+
+def MkdirP(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
 
 
 def SchemaSyncBuilder(target, source, env):
@@ -1427,3 +1571,103 @@ def SchemaSyncSconsEnvBuildFunc(env):
 def SchemaSyncFunc(env, target, source):
     SchemaSyncSconsEnvBuildFunc(env)
     return env.SchemaSyncSconsBuild(target, source)
+
+
+def ProtocGoVncApiBuilder(target, source, env):
+    if not env.Detect('protoc'):
+        dec_str = "#" * 80
+        print ("%s\n\nprotoc compiler not detected on system !" % dec_str)
+        print ("Install it by executing ./api-lib/tools/install_protoc.sh\n\n%s" %
+               dec_str)
+        raise SCons.Errors.StopError(
+            'protoc Compiler not detected on system')
+    protoc = env.WhereIs('protoc')
+    gomod_dir = env.Dir(env["api_repo_path"]).abspath + "/api-lib"
+    protobuf = env.GoList(gomod_dir, '{{ .Dir }}', 'github.com/gogo/protobuf')
+    asf = env.GoList(gomod_dir, '{{ .Dir }}', 'github.com/Juniper/asf')
+    # M options in protoc are definitions of go import substitutions
+    # in resulting go files
+    # see: https://github.com/gogo/protobuf/blob/master/README#L239
+    apilib_build_dir = env.Dir(env['TOP']).abspath + '/api-lib'
+    gogofaster = "Mgoogle/protobuf/field_mask.proto=github.com/gogo/protobuf/types," +\
+                  "Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types," +\
+                  "Mgoogle/protobuf/empty.proto=github.com/gogo/protobuf/types," +\
+                  "Mpkg/services/baseservices/base.proto=" +\
+                  "github.com/Juniper/asf/pkg/services/baseservices:%s " %\
+                      apilib_build_dir
+    for tgt, src in zip(target, source):
+        src = src.abspath
+        protoc_cmd = protoc +\
+            ' --proto_path=' + protobuf +\
+            ' --proto_path=' + protobuf + '/protobuf' +\
+            ' --proto_path=' + apilib_build_dir + '/proto'\
+            ' --proto_path=' + asf +\
+            ' --gogofaster_out=' + gogofaster + src
+        print(protoc_cmd)
+        code = subprocess.call(protoc_cmd, shell=True)
+        if code != 0:
+            raise SCons.Errors.StopError(
+                'protobuf %s generation failed' % src)
+        # Copy pb.go to api-lib build dir
+        target_file = apilib_build_dir + '/pkg/' + tgt.abspath.split('/pkg/')[1]
+        target_dir = os.path.dirname(target_file)
+        if not os.path.exists(target_dir):
+            os.makedirs(target_dir)
+        source_file = tgt.abspath
+        copyFunc(target_file, source_file, env)
+        # Run go tool to fix old style code
+        gotool_cmd = "go tool fix " +  target_file
+        GoSetupCommon(env, gotool_cmd)
+        # Format the generated files
+        fmt_cmd = "find %s/pkg -name 'gen_*.go' -exec go fmt {} \;" % apilib_build_dir
+        code = subprocess.call(fmt_cmd, shell=True)
+        if code != 0:
+            raise SCons.Errors.StopError(
+                'Formating generated go files failed')
+
+
+def ProtocSconsEnvGoVncApiFunc(env):
+    protoc_gobuild = Builder(action=ProtocGoVncApiBuilder)
+    env.Append(BUILDERS = {'ProtocGoVncApi' : protoc_gobuild})
+
+
+def ProtocGenGoVncApiFunc(env, proto_files):
+    ProtocSconsEnvGoVncApiFunc(env)
+    suffix = '.pb.go'
+    targets = []
+    for proto_file in proto_files:
+        basename = Basename(proto_file).replace('/proto/', '/')
+        targets.append(basename + suffix)
+    return env.ProtocGoVncApi(targets, proto_files)
+
+
+def GoVncClientSyncBuilder(target, source, env):
+    for tgt in target:
+        target_file =  tgt.abspath
+        target_dir = os.path.dirname(target_file)
+        if not os.path.exists(target_dir):
+            os.makedirs(target_dir)
+        source_file = env.Dir(env['TOP']).abspath + target_file.split('/contrail-api-client')[1]
+        copyFunc(target_file, source_file, env)
+
+    # Ensure the yaml schema diff is commited 
+    go_vncclient_status_cmd = "git status --porcelain -- api-lib/pkg"
+    output = subprocess.check_output(
+        go_vncclient_status_cmd, shell=True, cwd=env.Dir(env['api_repo_path']).abspath)
+    if output != "":
+        dec_str = "#" * 80
+        print ("%s\n\nSchema modified!!!" % dec_str)
+        print ("Please add Go VncClient changes in %s/* to your commit\n\n%s" %
+               (env['api_repo_path'] + 'api-lib/pkg', dec_str))
+        raise SCons.Errors.StopError(
+            "Schema and Go VncClient are out of sync!")
+
+
+def GoVncClientSyncSconsEnvBuildFunc(env):
+    go_vncclient_build = Builder(action=GoVncClientSyncBuilder)
+    env.Append(BUILDERS={'GoVncClientSyncSconsBuild': go_vncclient_build})
+
+
+def GoVncClientSyncFunc(env, target, source):
+    GoVncClientSyncSconsEnvBuildFunc(env)
+    return env.GoVncClientSyncSconsBuild(target, source)
