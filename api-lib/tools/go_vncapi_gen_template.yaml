@@ -1,0 +1,16 @@
+- type: all
+  template_path: pkg/client/client_http.go.tmpl
+  module: github.com/Juniper/asf
+  output_dir: build/pkg/vncapi
+- type: all
+  template_path: pkg/models/model.proto.tmpl
+  module: github.com/Juniper/asf
+  output_dir: proto/github.com/contrail-api-client/api-lib/pkg/models
+- type: all
+  template_path: pkg/services/service.proto.tmpl
+  module: github.com/Juniper/asf
+  output_dir: proto/github.com/contrail-api-client/api-lib/pkg/services
+- type: all
+  template_path: pkg/services/service_interface.go.tmpl
+  module: github.com/Juniper/asf
+  output_dir: build/pkg/services
