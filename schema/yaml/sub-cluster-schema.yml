@@ -13,6 +13,12 @@ schema:
       description: AS number of that cluster.
       operations: CRUD
       presence: required
+    sub_cluster_id:
+      $ref: types.json#/definitions/SubClusterIdType
+      description: Unique 16 or 32 bit ID assigned to this sub-cluster. User can define
+        the ID he wants to use.
+      operations: R
+      presence: system-only
   required:
   - sub_cluster_asn
   type: object

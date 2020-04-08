@@ -13,7 +13,9 @@ env = BuildEnv.Clone()
 
 cd_cmd = 'cd ' + Dir('.').path + ' && '
 
+env_top = Dir(env['TOP']).abspath
 repo_top = env['api_repo_path']
+api_lib_path =  Dir(repo_top).abspath + '/api-lib'
 
 autogen_infra_sources = [
     repo_top + '/generateds/generateDS.py',
@@ -48,6 +50,67 @@ setup_sources = [
     'test-requirements.txt',
     'tox.ini',
 ]
+
+# Make sure XML and YAML schema are in sync
+yaml_schema_dir = Dir(env['TOP']).abspath + '/schema/yaml'
+generated_yaml_schema_files = [yaml_schema_dir + '/base.yml']
+# Remove target files, to force scons to build SyncSchema always
+for tgt_file in generated_yaml_schema_files:
+    if os.path.exists(tgt_file):
+        os.remove(tgt_file)
+sync_yaml_schema = env.SyncSchema(generated_yaml_schema_files,
+                             repo_top + '/schema/all_cfg.xsd')
+
+# Download dependent go modules
+go_mod = env.GoMod(
+    api_lib_path + '/go.sum',
+    env_top + '/api-lib/gomod.logs',
+    sub_cmd='download',
+    retries=5)
+
+# Install contrailschema binary, which is used to gen code from schema
+# with template
+contrailschema_src = 'github.com/Juniper/asf/cmd/contrailschema'
+contrailschema_install_cmd = 'go install %s' % contrailschema_src
+
+go_codegen_tool = env.Command(
+    'contrailschema',
+    None,
+    contrailschema_install_cmd,
+    chdir=api_lib_path)
+env.Depends(go_codegen_tool, [sync_yaml_schema, go_mod])
+
+# Generate proto, client and service interfaces
+models_import_path = 'github.com/Juniper/contrail-api-client/api-lib/pkg/models'
+services_import_path = '/github.com/Juniper/contrail-api-client/api-lib/pkg/services'
+go_vnc_client_cmd = "ENV_TOP=%s contrailschema generate --no-regenerate \
+     --schemas %s \
+    --models-import-path %s \
+    --services-import-path %s \
+    --template-config" % (env_top + '/api-lib',
+                          yaml_schema_dir,
+                          models_import_path,
+                          services_import_path)
+
+template_config = api_lib_path + '/tools/go_vncapi_gen_template.yaml'
+gen_go_vnc_api_files = [env_top + '/api-lib/pkg/vncapi/gen_client_http.go',
+                        env_top + '/api-lib/pkg/services/gen_service_interface.go']
+
+go_vnc_client_gen = env.Command(
+    gen_go_vnc_api_files,
+    template_config,
+    go_vnc_client_cmd + ' $SOURCE')
+env.Depends(go_vnc_client_gen, go_codegen_tool)
+
+# Generate models and services struct from proto
+proto_files = [env_top + '/api-lib/proto/github.com/contrail-api-client/api-lib/pkg/services/gen_service.proto',
+               env_top + '/api-lib/proto/github.com/contrail-api-client/api-lib/pkg/models/gen_model.proto']
+protoc_go_gen = env.ProtocGenGo(proto_files)
+env.Depends(protoc_go_gen, go_vnc_client_gen)
+
+# Make sure generated go vncapi client code is up-to-date with YAML schema
+#sync_client_schema = env.SyncGoVncClient(gen_go_vnc_api_files,
+#                             repo_top + '/schema/yaml/base.yml')
 
 setup_sources_rules = []
 for file in setup_sources:
@@ -101,7 +164,7 @@ env.Depends(generated_rule, [autogen_infra_sources, autogen_sources])
 env.Depends(setup_sources_rules, autogen_infra_sources)
 
 # install everything before building distribution
-env.Depends(sdist_gen, sdist_depends)
+env.Depends(sdist_gen, [protoc_go_gen, sdist_depends])
 
 def SymLink(target, source, env):
     os.symlink(os.path.abspath(str(source[0])), os.path.abspath(str(target[0])))
