@@ -115,7 +115,7 @@ def SymLink(target, source, env):
 
 if 'install' in BUILD_TARGETS:
    install_cmd = env.Command(None, 'setup.py',
-                             cd_cmd + 'python setup.py install %s' %
+                             cd_cmd + 'python setup.py sdist install %s' %
                              env['PYTHON_INSTALL_OPT'])
    env.Depends(install_cmd, sdist_depends)
    env.Alias('install', install_cmd)
@@ -123,7 +123,7 @@ if 'install' in BUILD_TARGETS:
    setup_link_cmd = env.Command("setup3.py", "setup.py", SymLink)
    env.Depends(setup_link_cmd, sdist_depends)
    py3_install_cmd = env.Command(None, 'setup3.py',
-                             cd_cmd + 'python3 setup3.py install %s' %
+                             cd_cmd + 'python3 setup3.py sdist install %s' %
                              env['PYTHON_INSTALL_OPT'])
    env.Depends(py3_install_cmd, sdist_depends)
    env.Alias('install', py3_install_cmd)
