@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "265dc073_2dd9b62f",
+        "filename": "api-lib/vnc_api/vnc_api.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 64
+      },
+      "writtenOn": "2020-04-14T00:59:24Z",
+      "side": 1,
+      "message": "@joe Could you add a simple doc to the function? explaining what it does, args, arg types, return type\n\nfor example:\ndef abort_job(self, job_execution_ids, abort_mode):\n\"\"\"\nabort_job does...\nthrows this exception on...\n   : Args:\n   : job_execution_ids: UUID(s)\n   : abort_mode: mode, string\n   :             mode1: what it does\n   :             mode2: what it does\n   : return:\n   : return type: JSON\n   :\n\"\"\"\n\nI\u0027ll approve this review, but can you write one and add this in another review? Thanks!",
+      "revId": "feb57ae1d72e6cc917b3c25a525af2890c2f08d3",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d2e6de8_bca3a50a",
         "filename": "api-lib/vnc_api/vnc_api.py",
         "patchSetId": 1
