@@ -1,0 +1,6 @@
+definitions:
+  AttachmentAddressType:
+    properties:
+      status:
+        type: string
+    type: object
