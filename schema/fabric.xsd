@@ -144,7 +144,7 @@
 <xsd:complexType name="StatsCollectionFrequency">
     <xsd:all>
         <xsd:element name="sample-rate" type="SampleRate" required="optional" default="2000"/>
-        <xsd:element name="polling-interval" type="PollingInterval" required="optional" default="20"/>
+        <xsd:element name="polling-interval" type="PollingInterval" required="optional" default="0"/>
         <xsd:element name="direction" type="SampleDirection" required="optional"/>
     </xsd:all>
 </xsd:complexType>
