@@ -1260,6 +1260,35 @@ class VncApi(object):
         return json.loads(content)
     # end execute_job
 
+
+    @check_homepage
+    def abort_job(self, job_execution_ids=None, abort_mode=None):
+        """ Abort job
+        Aborts a currently running fabric job and all associated
+        child processes.
+        If the fabric job is no longer running, we quietly return.
+        : Args:
+        : job_execution_ids: List of UUID(s)
+        : abort_mode: mode, string
+        :             graceful: aborts fabric job after finishing the current
+                                playbook. This is the default
+        :             force: aborts immediately, similar to kill -9
+        : return:
+        : return type: JSON, currently always returns {}
+        : return 400 in case of validation error
+        :
+        """
+        body = dict()
+        body['input'] = {
+            'job_execution_ids': job_execution_ids or [],
+            'abort_mode': abort_mode or 'force'
+        }
+        json_body = json.dumps(body)
+        uri = self._action_uri['abort-job']
+        content = self._request_server(OP_POST, uri, data=json_body)
+        return json.loads(content)
+    # end abort_job
+
     @check_homepage
     def ref_update(self, obj_type, obj_uuid, ref_type, ref_uuid,
                    ref_fq_name, operation, attr=None):
