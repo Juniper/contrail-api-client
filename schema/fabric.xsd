@@ -187,6 +187,7 @@
          <xsd:enumeration value="loopback"/>
          <xsd:enumeration value="ip-fabric"/>
          <xsd:enumeration value="pnf-servicechain"/>
+         <xsd:enumeration value="overlay-loopback"/>
      </xsd:restriction>
 </xsd:simpleType>
 
