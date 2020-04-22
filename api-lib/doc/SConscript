@@ -23,7 +23,7 @@ if any(os.access(os.path.join(path, 'sphinx-apidoc'), os.X_OK)
     )
     apidoc_rule = env.Command(sphinxapidocs, '', sphinx_cmd)
     env.Depends(apidoc_rule,
-                File('%s/api-lib/vnc_api/gen/__init__.py' % env['TOP']))
+                File('%s/api-lib/vnc_api/gen/contrail_openapi.rst' % env['TOP']))
 
     userdoc_rule = env.Install(
         Dir('.'), Glob('#src/contrail-api-client/api-lib/doc/source/*'))
