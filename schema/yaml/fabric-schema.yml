@@ -33,6 +33,14 @@ references:
     presence: optional
 schema:
   properties:
+    disable_vlan_vn_uniqueness_check:
+      default: false
+      description: This attribute indicates whether complex validations for VLAN-VN
+        uniqueness check should be done for enterprise style VPGs in the fabric. Default
+        behaviour is to enable all the validations.
+      operations: CRUD
+      presence: optional
+      type: boolean
     fabric_credentials:
       $ref: types.json#/definitions/DeviceCredentialList
       collectionType: list
