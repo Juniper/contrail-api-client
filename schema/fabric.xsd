@@ -616,6 +616,11 @@
           Property('fabric-enterprise-style', 'fabric', 'optional', 'CRUD',
               'This attribute indicates whether to use enterprise-style or sp-style configuration in the fabric. True indicated enterprise-style.') -->
 
+<xsd:element name="disable-vlan-vn-uniqueness-check" type="xsd:boolean" default='false'/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('fabric-disable-vlan-vn-uniqueness-check', 'fabric', 'optional', 'CRUD',
+              'This attribute indicates whether complex validations for VLAN-VN uniqueness check should be done for enterprise style VPGs in the fabric. Default behaviour is to enable all the validations.') -->
+
 <xsd:element name="hardware" type="ifmap:IdentityType"
     description="This resource contains the information about the device hardware info. This resource name must follow the convention: '[vendor name]-[hardware platform name]', for example, 'juniper-mx80'."/>
 
