@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf9eb6dd_0e99bf44",
+        "filename": "schema/fabric.xsd",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 64
+      },
+      "writtenOn": "2020-04-29T19:04:49Z",
+      "side": 1,
+      "message": "As per the discussion, this validation would be disabled by default.",
+      "revId": "81a091a7b44e9ac649f9fbed61dd64e31ebab12f",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
