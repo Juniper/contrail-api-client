@@ -67,6 +67,11 @@ schema:
       operations: CRUD
       presence: optional
       type: boolean
+    fast_convergence_parameters:
+      $ref: types.json#/definitions/FastConvergenceParametersType
+      description: Fast Convergence parameters.
+      operations: CRUD
+      presence: optional
     graceful_restart_parameters:
       $ref: types.json#/definitions/GracefulRestartParametersType
       description: Graceful Restart parameters
