@@ -1120,6 +1120,17 @@ definitions:
     - ip-fabric
     - pnf-servicechain
     type: string
+  FastConvergenceParametersType:
+   properties:
+     enable:
+       description: Enable/Disable knob for all Fast-Convergence parameters to take
+         effect
+       type: boolean
+     xmpp_hold_time:
+       $ref: types.json#/definitions/XmppHoldTimeType
+       description: The negotiated XMPP hold-time (in seconds) for sessions between
+         the control and data plane
+   type: object
   FatFlowIgnoreAddressType:
     enum:
     - none
@@ -3677,3 +3688,7 @@ definitions:
     maximum: 16777215
     minimum: 1
     type: integer
+  XmppHoldTimeType:
+   maximum: 90
+   minimum: 1
+   type: integer
