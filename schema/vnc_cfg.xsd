@@ -975,6 +975,21 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
     </xsd:all>
 </xsd:complexType>
 
+<xsd:simpleType name="XmppHoldTimeType">
+     <xsd:restriction base="xsd:integer">
+         <xsd:minInclusive value="1"/>
+         <xsd:maxInclusive value="90"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="FastConvergenceParametersType">
+    <xsd:all>
+        <xsd:element name="enable" type="xsd:boolean" default="false" description="Enable/Disable knob for all Fast-Convergence parameters to take effect"/>
+        <xsd:element name="nh-reachability-check" type="xsd:boolean" default="false" description="Enable next-hop reachability checks in control plane for routes in underlay for faster convergence"/>
+        <xsd:element name="xmpp-hold-time" type="XmppHoldTimeType" default="90" description="The negotiated XMPP hold-time (in seconds) for sessions between the control and data plane"/>
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:complexType name="PortTranslationPool">
         <xsd:element name="protocol" type="xsd:string"/>
         <xsd:element name="port-range"    type="PortType"  required='exclusive'
@@ -1058,6 +1073,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
 <!--#IFMAP-SEMANTICS-IDL
      Property('rd-cluster-seed', 'global-system-config', 'optional', 'CRUD',
               'Used to create collision-free route distinguishers.') -->
+
+<xsd:element name="fast-convergence-parameters" type="FastConvergenceParametersType"/>
+<!--#IFMAP-SEMANTICS-IDL
+     Property('fast-convergence-parameters', 'global-system-config', 'optional',
+              'CRUD', 'Fast Convergence parameters.') -->
 
 <xsd:element name="ip-fabric-subnets" type="SubnetListType"/>
 <!--#IFMAP-SEMANTICS-IDL
