@@ -70,12 +70,12 @@ autogen_cmd = '%s -f -o %s -g ifmap-frontend' % (
     autogen_script, Dir('vnc_api/gen/resource').path)
 
 env.Append(ENV={'HEAT_BUILDTOP': Dir(env['TOP']).abspath})
-
+env.Append(TARFLAGS='-c -z -f')
 generated_files = ['vnc_api/gen/contrail_openapi.rst']
 generated_rule = env.Command(generated_files,
                              repo_top + '/schema/all_cfg.xsd',
                              autogen_cmd + ' $SOURCE')
-
+#
 
 remote_setup_sources = [
     ("", repo_top + '/LICENSE'),
@@ -87,8 +87,8 @@ remote_setup_sources_rules = []
 for dest, file in remote_setup_sources:
     remote_setup_sources_rules.append(env.Install(dest, file))
 
-doc_sources_rules = SConscript(dirs=['doc'], exports='BuildEnv')
 
+doc_sources_rules = SConscript(dirs=['doc'], exports='BuildEnv')
 sdist_depends = [remote_setup_sources_rules]
 sdist_depends.extend(generated_rule)
 sdist_depends.extend(setup_sources_rules)
@@ -97,11 +97,17 @@ sdist_depends.extend(doc_sources_rules)
 version_file_path = File(repo_top + '/base/version.info').abspath
 with open(version_file_path, 'r') as f:
     version = f.read().strip('\n').strip('\t')
+
+doctar = env.Tar('contrail-api-docs-{0}.tar.tgz'.format(version),
+	os.path.join(env['ENV']['PWD'], Dir('.').path, 'doc', 'source', 'contrail-config', 'html'))
+
+
+env.Depends(doctar, doc_sources_rules)
+sdist_depends.extend(doctar)
 sdist_gen = env.Command('dist/contrail-api-client-{}.tar.gz'.format(version),
-                        'setup.py', cd_cmd + 'python setup.py sdist')
+    'setup.py', cd_cmd + 'python setup.py sdist')
 
 env.Default(sdist_gen)
-
 # generated files depend on autogeneration infra parts
 env.Depends(autogen_infra_sources, remote_setup_sources_rules)
 env.Depends(generated_rule, [autogen_infra_sources, autogen_sources])
@@ -111,22 +117,24 @@ env.Depends(setup_sources_rules, autogen_infra_sources)
 env.Depends(sdist_gen, [sync_yaml_schema, sdist_depends])
 
 def SymLink(target, source, env):
-    os.symlink(os.path.abspath(str(source[0])), os.path.abspath(str(target[0])))
+   os.symlink(os.path.abspath(str(source[0])), os.path.abspath(str(target[0])))
 
 if 'install' in BUILD_TARGETS:
-   install_cmd = env.Command(None, 'setup.py',
-                             cd_cmd + 'python setup.py install %s' %
-                             env['PYTHON_INSTALL_OPT'])
-   env.Depends(install_cmd, sdist_depends)
-   env.Alias('install', install_cmd)
-   # Install in python3 path
-   setup_link_cmd = env.Command("setup3.py", "setup.py", SymLink)
-   env.Depends(setup_link_cmd, sdist_depends)
-   py3_install_cmd = env.Command(None, 'setup3.py',
-                             cd_cmd + 'python3 setup3.py install %s' %
-                             env['PYTHON_INSTALL_OPT'])
-   env.Depends(py3_install_cmd, sdist_depends)
-   env.Alias('install', py3_install_cmd)
+	install_cmd = env.Command(None, 'setup.py',
+        cd_cmd + 'python setup.py install %s' %
+		env['PYTHON_INSTALL_OPT'])
+			
+	env.Depends(install_cmd, sdist_depends)
+	env.Alias('install', install_cmd)
+
+	# Install in python3 path
+	setup_link_cmd = env.Command("setup3.py", "setup.py", SymLink)
+	env.Depends(setup_link_cmd, sdist_depends)
+	py3_install_cmd = env.Command(None, 'setup3.py',
+		cd_cmd + 'python3 setup3.py install %s' %
+		env['PYTHON_INSTALL_OPT'])
+    env.Depends(py3_install_cmd, sdist_depends)
+	env.Alias('install', py3_install_cmd)
 
 env.Alias('install',
     env.Install(env['INSTALL_CONF'], 'etc/contrail/vnc_api_lib.ini'))
