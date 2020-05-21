@@ -181,6 +181,67 @@
     </xsd:all>
 </xsd:complexType>
 
+<xsd:complexType name="QualityOfServiceParams">
+    <xsd:all>
+        <xsd:element name="untrust-interface" type="xsd:boolean" default="false"/>
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:simpleType name="LacpMode">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="active"/>
+         <xsd:enumeration value="passive"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="LacpInterval">
+     <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="fast"/>
+         <xsd:enumeration value="slow"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="LacpParams">
+    <xsd:all>
+        <xsd:element name="lacp-enable" type="xsd:boolean" default="false"
+            description="Enable or disable this option for configuring LACP related params" />
+        <xsd:element name="lacp-interval" type="LacpInterval"
+            description= "Timer interval for periodic transmission of LACP packets. Fast mode receives packets every second. Slow mode receives packets every 30 seconds." />
+       <xsd:element name="lacp-mode" type="LacpMode"
+            description= "Configure this mode to active to initiate transmission of LACP packets and respond to LACP packets. LACP packets are not exchanged with passive mode." />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:simpleType name="PortMtu">
+    <xsd:restriction base="xsd:integer">
+        <xsd:minInclusive value="256"/>
+        <xsd:maxInclusive value="9216"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="PortParameters">
+    <xsd:all>
+        <xsd:element name="port-disable" type="xsd:boolean" default="false"/>
+        <xsd:element name="port-mtu" type="PortMtu" />
+        <xsd:element name="port-description" type="xsd:string" />
+    </xsd:all>
+</xsd:complexType>
+
+<xsd:complexType name="PortProfileParameters">
+    <xsd:all>
+       <xsd:element name="port-params" type="PortParameters"
+            description= "User can select this option to configure port parameters such as description, MTU and port enable or disable." />
+       <xsd:element name="flow-control" type="xsd:boolean" default="false"
+            description= "User can enable this option to configure flow control." />
+       <xsd:element name="lacp-params" type="LacpParams"
+            description= "Represents LACP configuration parameters." />
+       <xsd:element name="bpdu-loop-protection" type="xsd:boolean" default="false"
+            description= "User can enable this option to prevent loops on edge interfaces. This is applied on unit with family ethernet-switching." />
+       <xsd:element name="qos-params" type="QualityOfServiceParams"
+            description= "This is to configure any parameters affecting quality of service" />
+    </xsd:all>
+</xsd:complexType>
+
 <xsd:simpleType name="FabricNetworkType">
      <xsd:restriction base="xsd:string">
          <xsd:enumeration value="management"/>
@@ -825,6 +886,21 @@
           Property('physical-interface-port-id', 'physical-interface', 'optional', 'CRUD',
               'port id of this physical interface. This port id is used in LLDP to identify a physical port on the peering device') -->
 
+<xsd:element name="physical-interface-flow-control" type="xsd:boolean" default="false"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-interface-flow-control', 'physical-interface', 'optional', 'CRUD',
+              'User can enable this option to configure flow control on the physical interface.') -->
+
+<xsd:element name="physical-interface-lacp-force-up" type="xsd:boolean" default="false"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-interface-lacp-force-up', 'physical-interface', 'optional', 'CRUD',
+              'User can enable this option to make LACP up and running. This is applicable only on individual member physical interfaces of a VPG.') -->
+
+<xsd:element name="physical-interface-port-params" type="PortParameters"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('physical-interface-port-params', 'physical-interface', 'optional', 'CRUD',
+              'User can select this option to configure port parameters such as description, MTU and port enable or disable.') -->
+
 <xsd:element name="physical-router-physical-interface"/>
 <!--#IFMAP-SEMANTICS-IDL
           Link('physical-router-physical-interface',
@@ -853,6 +929,16 @@
 <!--#IFMAP-SEMANTICS-IDL
           Property('logical-interface-vlan-tag', 'logical-interface', 'optional', 'CRUD',
               'VLAN tag (.1Q) classifier for this logical interface.') -->
+
+<xsd:element name="logical-interface-port-params" type="PortParameters"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('logical-interface-port-params', 'logical-interface', 'optional', 'CRUD',
+              'User can select this option to configure port parameters such as description, MTU and port enable or disable.') -->
+
+<xsd:element name="logical-interface-qos-params" type="QualityOfServiceParams"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('logical-interface-qos-params', 'logical-interface', 'optional', 'CRUD',
+              'This is to configure any parameters affecting quality of service.') -->
 
 <xsd:element name="device-image" type="ifmap:IdentityType"/>
 
@@ -1529,6 +1615,10 @@
 <!--#IFMAP-SEMANTICS-IDL
      Link('project-port-profile', 'project', 'port-profile', ['has'], 'optional', 'CRUD',
         'Encapsulates port configurations like storm control etc') -->
+<xsd:element name="port-profile-params" type="PortProfileParameters"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Property('port-profile-params', 'port-profile', 'optional', 'CRUD',
+              'This is to configure port attributes.') -->
 <xsd:element name="port-profile-storm-control-profile"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('port-profile-storm-control-profile', 'port-profile', 'storm-control-profile', ['ref'], 'optional', 'CRUD',

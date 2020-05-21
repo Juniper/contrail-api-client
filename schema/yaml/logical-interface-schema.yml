@@ -21,6 +21,17 @@ references:
     presence: optional
 schema:
   properties:
+    logical_interface_port_params:
+      $ref: types.json#/definitions/PortParameters
+      description: User can select this option to configure port parameters such as
+        description, MTU and port enable or disable.
+      operations: CRUD
+      presence: optional
+    logical_interface_qos_params:
+      $ref: types.json#/definitions/QualityOfServiceParams
+      description: This is to configure any parameters affecting quality of service.
+      operations: CRUD
+      presence: optional
     logical_interface_type:
       $ref: types.json#/definitions/LogicalInterfaceType
       operations: CRUD

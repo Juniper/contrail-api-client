@@ -29,6 +29,20 @@ schema:
       operations: CRUD
       presence: optional
       type: string
+    physical_interface_flow_control:
+      default: false
+      description: User can enable this option to configure flow control on the physical
+        interface.
+      operations: CRUD
+      presence: optional
+      type: boolean
+    physical_interface_lacp_force_up:
+      default: false
+      description: User can enable this option to make LACP up and running. This is
+        applicable only on individual member physical interfaces of a VPG.
+      operations: CRUD
+      presence: optional
+      type: boolean
     physical_interface_mac_addresses:
       $ref: types.json#/definitions/MacAddressesType
       description: MAC addresses on this physical interface.
@@ -40,6 +54,12 @@ schema:
       operations: CRUD
       presence: optional
       type: string
+    physical_interface_port_params:
+      $ref: types.json#/definitions/PortParameters
+      description: User can select this option to configure port parameters such as
+        description, MTU and port enable or disable.
+      operations: CRUD
+      presence: optional
     physical_interface_type:
       $ref: types.json#/definitions/PhysicalInterfaceType
       description: Physical interface type that can be either regular/LAG/service/fabric/access
