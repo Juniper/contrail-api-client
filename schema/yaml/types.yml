@@ -1671,6 +1671,32 @@ definitions:
     maximum: 65535
     minimum: -1
     type: integer
+  LacpInterval:
+    enum:
+    - fast
+    - slow
+    type: string
+  LacpMode:
+    enum:
+    - active
+    - passive
+    type: string
+  LacpParams:
+    properties:
+      lacp_enable:
+        description: Enable or disable this option for configuring LACP related params
+        type: boolean
+      lacp_interval:
+        $ref: types.json#/definitions/LacpInterval
+        description: Timer interval for periodic transmission of LACP packets. Fast
+          mode receives packets every second. Slow mode receives packets every 30
+          seconds.
+      lacp_mode:
+        $ref: types.json#/definitions/LacpMode
+        description: Configure this mode to active to initiate transmission of LACP
+          packets and respond to LACP packets. LACP packets are not exchanged with
+          passive mode.
+    type: object
   LinklocalServiceEntryType:
     properties:
       ip_fabric_DNS_service_name:
@@ -2511,6 +2537,40 @@ definitions:
         items:
           $ref: types.json#/definitions/PortMap
         type: array
+    type: object
+  PortMtu:
+    maximum: 9216
+    minimum: 256
+    type: integer
+  PortParameters:
+    properties:
+      port_description:
+        type: string
+      port_disable:
+        type: boolean
+      port_mtu:
+        $ref: types.json#/definitions/PortMtu
+    type: object
+  PortProfileParameters:
+    properties:
+      Port_COS_Untrust:
+        description: Enabling this option causes an interface to be not trusted. Untrusting
+          an interface is achieved by applying 802.1 IP untrust classifier configuration.
+        type: boolean
+      bpdu_loop_protection:
+        description: User can enable this option to prevent loops on edge interfaces.
+          This is applied on unit with family ethernet-switching.
+        type: boolean
+      flow_control:
+        description: User can enable this option to configure flow control.
+        type: boolean
+      lacp_params:
+        $ref: types.json#/definitions/LacpParams
+        description: Represents LACP configuration parameters.
+      port_params:
+        $ref: types.json#/definitions/PortParameters
+        description: User can select this option to configure port parameters such
+          as description, MTU and port enable or disable.
     type: object
   PortSpeedType:
     enum:

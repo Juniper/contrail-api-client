@@ -15,6 +15,11 @@ references:
     operations: CRUD
     presence: optional
 schema:
-  properties: {}
+  properties:
+    port_profile_params:
+      $ref: types.json#/definitions/PortProfileParameters
+      description: This is to configure port attributes.
+      operations: CRUD
+      presence: optional
   required: []
   type: object
