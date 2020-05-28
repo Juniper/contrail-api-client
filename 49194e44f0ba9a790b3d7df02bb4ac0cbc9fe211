@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79589b80_1004d869",
+        "filename": "schema/yaml/logical-interface-schema.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 837
+      },
+      "writtenOn": "2020-05-28T14:02:11Z",
+      "side": 1,
+      "message": "The design has changed, I am resolving the comment.",
+      "parentUuid": "8c8ca827_fd96fe8e",
+      "revId": "49194e44f0ba9a790b3d7df02bb4ac0cbc9fe211",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c62305_09821613",
         "filename": "schema/yaml/physical-interface-schema.yml",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "49194e44f0ba9a790b3d7df02bb4ac0cbc9fe211",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346bcc9c_cd963162",
+        "filename": "schema/yaml/physical-interface-schema.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 837
+      },
+      "writtenOn": "2020-05-28T14:02:11Z",
+      "side": 1,
+      "message": "The design has changed, I am resolving the comment.",
+      "parentUuid": "70c62305_09821613",
+      "revId": "49194e44f0ba9a790b3d7df02bb4ac0cbc9fe211",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": false
     }
   ]
 }
