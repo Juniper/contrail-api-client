@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e3773de_3f0f21e6",
+        "filename": "schema/yaml/types.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2717,
+      "author": {
+        "id": 854
+      },
+      "writtenOn": "2020-06-08T14:53:22Z",
+      "side": 1,
+      "message": "I would not call this Qos as this is really a COS trust. QOS is still missing and it will create confusion with this fix. Maybe \"Port_COS_Trust\" ?",
+      "range": {
+        "startLine": 2717,
+        "startChar": 2,
+        "endLine": 2717,
+        "endChar": 24
+      },
+      "revId": "3aa127c57f7630a67234f9960bcb780cf46db5db",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
+    }
+  ]
+}
