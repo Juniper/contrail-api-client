@@ -22,6 +22,30 @@
       "revId": "3aa127c57f7630a67234f9960bcb780cf46db5db",
       "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5ae226_2061f0d3",
+        "filename": "schema/yaml/types.yml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2717,
+      "author": {
+        "id": 504
+      },
+      "writtenOn": "2020-06-08T19:32:43Z",
+      "side": 1,
+      "message": "Ok sure. However I have named the new param as \"Port_COS_Untrust\" (default false). This is so as to align with currently existing behavior of trusting all interfaces by default. If the user wants to untrust an interface then the user can simply check this box. Please let me know if you think it should be other way round instead.",
+      "parentUuid": "5e3773de_3f0f21e6",
+      "range": {
+        "startLine": 2717,
+        "startChar": 2,
+        "endLine": 2717,
+        "endChar": 24
+      },
+      "revId": "3aa127c57f7630a67234f9960bcb780cf46db5db",
+      "serverId": "c72cd27d-1743-4a55-84a4-cd13b8400c52",
+      "unresolved": true
     }
   ]
 }
