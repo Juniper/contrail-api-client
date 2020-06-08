@@ -1,2 +1,1 @@
-# contrail-api
-Contrail api client bindings
+Content was moved to https://github.com/tungstenfabric/tf-api-client
