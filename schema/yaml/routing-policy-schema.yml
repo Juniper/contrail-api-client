@@ -11,6 +11,10 @@ parents:
 plural: routing_policys
 prefix: /
 references:
+  interface_route_table:
+    description: Reference to interface route table attached to routing policy.
+    operations: CRUD
+    presence: optional
   routing_instance:
     $ref: types.json#/definitions/RoutingPolicyType
     description: ''

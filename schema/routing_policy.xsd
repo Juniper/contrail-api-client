@@ -14,6 +14,11 @@
 <!--#IFMAP-SEMANTICS-IDL
      Property('term-type', 'routing-policy') -->
 
+<xsd:element name="routing-policy-interface-route-table"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('routing-policy-interface-route-table', 'routing-policy', 'interface-route-table', ['ref'], 'optional', 'CRUD',
+              'Reference to interface route table attached to routing policy.') -->
+
 <xsd:complexType name='PolicyStatementType'>
     <xsd:element name='term' type='PolicyTermType' maxOccurs='unbounded'/>
 </xsd:complexType>
