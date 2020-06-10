@@ -1188,6 +1188,21 @@ definitions:
     - inet-vpn
     - evpn
     type: string
+  FastConvergenceParametersType:
+    properties:
+      enable:
+        description: Enable/Disable knob for all Fast-Convergence parameters to take
+          effect
+        type: boolean
+      nh_reachability_check:
+        description: Enable next-hop reachability checks in control plane for routes
+          in underlay for faster convergence
+        type: boolean
+      xmpp_hold_time:
+        $ref: types.json#/definitions/XmppHoldTimeType
+        description: The negotiated XMPP hold-time (in seconds) for sessions between
+          the control and data plane
+    type: object
   FatFlowIgnoreAddressType:
     enum:
     - none
@@ -4098,5 +4113,9 @@ definitions:
     type: string
   VxlanNetworkIdentifierType:
     maximum: 16777215
+    minimum: 1
+    type: integer
+  XmppHoldTimeType:
+    maximum: 90
     minimum: 1
     type: integer
