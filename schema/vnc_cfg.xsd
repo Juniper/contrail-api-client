@@ -2842,6 +2842,11 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
           'interface-route-table', 'service-instance', ['ref', 'derived'], 'optional', 'CRUD',
           'Reference to interface route table attached to (service instance, interface), This is used to add interface static routes to service instance interface.') -->
 
+<xsd:element name="interface-route-table-routing-policy"/>
+<!--#IFMAP-SEMANTICS-IDL
+          Link('interface-route-table-routing-policy', 'interface-route-table', 'routing-policy', ['ref'], 'optional', 'CRUD',
+              'Reference to interface route table attached to routing policy.') -->
+
 <xsd:element name="routing-policy-service-instance" type="RoutingPolicyServiceInstanceType"/>
 <!--#IFMAP-SEMANTICS-IDL
      Link('routing-policy-service-instance',
