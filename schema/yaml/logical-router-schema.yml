@@ -15,6 +15,11 @@ references:
     description: Back reference to logical router associated to the BGP VPN resource
     operations: CRUD
     presence: optional
+  fabric:
+    description: Reference to fabric, this link enables to identify which fabric,
+      the device this LR belongs to is on.
+    operations: CRUD
+    presence: optional
   physical_router:
     description: Reference to physical router, when this link is present device manager
       configures logical router associated route targets/interfaces on the Physical

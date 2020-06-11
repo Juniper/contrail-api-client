@@ -3158,6 +3158,12 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
          'logical-router', 'physical-router', ['ref'], 'optional', 'CRUD',
          'Reference to physical router, when this link is present device manager configures logical router associated route targets/interfaces on the Physical Router.') -->
 
+<xsd:element name="logical-router-fabric"/>
+<!--#IFMAP-SEMANTICS-IDL
+    Link('logical-router-fabric',
+         'logical-router', 'fabric', ['ref'], 'optional', 'CRUD',
+         'Reference to fabric, this link enables to identify which fabric, the device this LR belongs to is on.') -->
+
 <xsd:element name="config-node" type="ifmap:IdentityType"/>
 <xsd:element name="global-system-config-config-node"/>
 <!--#IFMAP-SEMANTICS-IDL
