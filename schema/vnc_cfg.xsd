@@ -342,6 +342,8 @@ targetNamespace="http://www.contrailsystems.com/2012/VNC-CONFIG/0">
              description='timestamp when security group rule object gets created'/>
         <xsd:element name="last-modified"     type="xsd:dateTime" required='optional'
              description='timestamp when security group rule object gets updated'/>
+        <xsd:element name="description"       type="xsd:string" required='optional'
+             description='User provided text'/>
 
 
     </xsd:all>

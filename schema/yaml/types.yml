@@ -2210,6 +2210,10 @@ definitions:
           $ref: types.json#/definitions/PortType
         presence: 'true'
         type: array
+      description:
+        description: User provided text
+        presence: optional
+        type: string
     type: object
   PolicyStatementType:
     properties:
